@@ -1,2 +1,2 @@
-# config
+# Config
 Configuration and ide
