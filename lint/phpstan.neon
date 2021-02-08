@@ -1,0 +1,31 @@
+###########
+# PHPSTAN #
+###########
+# https://phpstan.org/config-reference
+
+# https://github.com/phpstan/phpstan
+# https://github.com/phpstan/phpstan-symfony
+
+
+# includes:
+# 	- extension.neon
+#     - rules.neon
+
+parameters:
+    level: 8
+    tmpDir: ../var/phpstan
+    paths:
+        - ../config
+        - ../src
+        - ../tests
+
+    excludes_analyse:
+        # ignore
+        - **/Resources/*
+
+    checkMissingIterableValueType: true
+    checkGenericClassInNonGenericObjectType: true
+
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Call to an undefined method [a-zA-Z0-9\\_]+::doFoo\(\)#'

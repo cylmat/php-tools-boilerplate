@@ -1,11 +1,7 @@
-# VSCode
-
-`code --list-extensions | % { "code --install-extension $_" }`
-
-```
 {
   "recommendations": [
     "bmewburn.vscode-intelephense-client",
+    "dbaeumer.vscode-eslint",
     "donjayamanne.githistory",
     "eamodio.gitlens",
     "felixfbecker.php-debug",
@@ -13,8 +9,7 @@
     "mhutchie.git-graph",
     "ms-azuretools.vscode-docker",
     "ms-vscode-remote.remote-containers",
-    "ms-vscode-remote.remote-wsl",
+    "stylelint.vscode-stylelint",
     "whatwedo.twig"
   ]
 }
-```
