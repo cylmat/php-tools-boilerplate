@@ -35,10 +35,6 @@ linters:
 	bin/phpmd src ansi lint/phpmd.xml --reportfile=STDOUT
 	bin/phpstan analyse --level 8 --configuration lint/phpstan.neon
 
-psalm:
-	# PSALM - really slow
-	bin/psalm
-
 ###########
 # TESTING #
 ###########

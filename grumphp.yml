@@ -129,20 +129,22 @@ grumphp:
       # 
       # composer update --lock
       # composer 'normalize' '--no-update-lock'
-    #   composer_normalize:
-    #         indent_size: ~
-    #         indent_style: ~
-    #         no_update_lock: true
-    #         # Composer-normalize command
-    #         use_standalone: true
-    #         verbose: false
+      # composer_normalize:
+      #       indent_size: ~
+      #       indent_style: ~
+      #       no_update_lock: true
+      #       # Composer-normalize command
+      #       use_standalone: true
+      #       verbose: false
 
+      ### Composer require-checker
+      # Can be installed from phar
       # github: maglnet/composer-require-checker
-    #   composer_require_checker:
-    #         composer_file: 'composer.json'
-    #         config_file: ~
-    #         ignore_parse_errors: false
-    #         triggered_by: ['composer.json', 'composer.lock', '*.php']
+      #   composer_require_checker:
+      #         composer_file: 'composer.json'
+      #         config_file: ~
+      #         ignore_parse_errors: false
+      #         triggered_by: ['composer.json', 'composer.lock', '*.php']
 
 
 
