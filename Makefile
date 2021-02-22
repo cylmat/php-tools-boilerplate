@@ -1,21 +1,7 @@
-SHELL := /bin/bash
-
-define see-cron
-	cat /var/log/cron.log
-endef
-
-tests:
-	symfony console doctrine:fixtures:load -n
-	symfony php bin/phpunit
-.PHONY: tests
-
-install-cron:
-	apt update
-	apt install -y rsync cron
-
 ###########
 # GRUMPHP #
 ###########
+
 grump-pre: 
 	bin/grumphp git:pre-commit
 	bin/grumphp run 
@@ -33,6 +19,7 @@ compose-update:
 ###########
 # LINTERS #
 ###########
+
 fix:
 	# php-cs-fixer: NO autofix before commit on GrumPhp
 	bin/php-cs-fixer fix --config lint/.php_cs
@@ -46,7 +33,6 @@ linters:
 
 	# PHPMD /path/to/source report_format ruleset --reportfile=reports/phpmd.log
 	bin/phpmd src ansi lint/phpmd.xml --reportfile=STDOUT
-	bin/phpmnd src config
 	bin/phpstan analyse --level 8 --configuration lint/phpstan.neon
 
 psalm:
@@ -56,6 +42,7 @@ psalm:
 ###########
 # TESTING #
 ###########
+
 test-gen:
 	bin/phpunitgen --config=config/phpunitgen.yml src tests
 
@@ -67,8 +54,8 @@ cover:
 
 testing:
 	bin/infection --configuration=lint/infection.json
-	bin/phpunit --configuration config/phpunit.xml
+	bin/paratest -c config/phpunit.xml
 	  # or
 	bin/pest --configuration config/phpunit.xml
-	  # or (phpunit in parallele)
-	bin/paratest -c config/phpunit.xml
+	  # or
+	bin/phpunit --configuration config/phpunit.xml

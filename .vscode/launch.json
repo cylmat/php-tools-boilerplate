@@ -1,6 +1,6 @@
 // .vscode/launch.json
 /*
- * Host -Remote
+ * Host-Remote
  *
  * Sources files on host
  * Php running on container
@@ -16,7 +16,7 @@
 
             // MANDATORY
             "pathMappings": {
-                "/var/www/<source_dir>": "${workspaceFolder}/<source_dir>"
+                "/var/www": "${workspaceFolder}"
             },
             "xdebugSettings": {
                 "max_data": 65535,

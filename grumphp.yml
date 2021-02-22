@@ -25,6 +25,39 @@ grumphp:
         variables: {}
         paths: []
 
+    # bin/grumphp run --testsuite=TESTSUITE
+    testsuites: 
+      lint:
+          tasks:
+            # first...
+            - phpcsfixer
+            - phpparser
+            # ...then
+            # phan (need 'php-ast' extension)
+            - phpcpd
+            - phpcs
+            - phplint
+            - phpmd
+            - phpstan
+
+      test:
+          tasks:
+            - paratest
+            - pest
+            - phpunit
+
+      # Specify the test-suite for the git:commit-msg command:
+      # git_commit_msg:
+      #     tasks: []
+
+      # Specify the test-suite for the git:pre-commit command:
+      # git_pre_commit:
+      #     tasks: 
+      #       - phpcs
+      #       - phpcsfixer
+
+    extensions: []
+
     # https://github.com/phpro/grumphp/blob/master/doc/tasks.md
     tasks: 
 
@@ -76,9 +109,9 @@ grumphp:
           match_word: false
 
       # max git filesize
-      file_size:
-            max_size: 100M
-            ignore_patterns: []
+      # file_size:
+      #       max_size: 100M
+      #       ignore_patterns: []
 
       ############
       # COMPOSER #
@@ -158,7 +191,6 @@ grumphp:
 
       # static analyzer 
       # github: phan/phan
-      #
       # NEED php-ast extension
       # phan:
       #       config_file: lint/phan.config.php
@@ -213,22 +245,6 @@ grumphp:
           ruleset: ['lint/phpmd.xml', 'unusedcode']
           triggered_by: ['php']
 
-      # Magic numbers
-      # github: povils/phpmnd
-      phpmnd:
-          directory: 'src'
-          # whitelist_patterns: []
-          # exclude: []
-          # exclude_name: []
-          # exclude_path: []
-          # extensions: []
-          # hint: true
-          # ignore_funcs: []
-          # ignore_numbers: []
-          # ignore_strings: []
-          # strings: false
-          # triggered_by: ['php']
-
       # Finding php errors
       # github: phpstan/phpstan
       phpstan:
@@ -255,19 +271,6 @@ grumphp:
       #       suite: ~
       #       test: ~
 
-      # PHPUnit, PhpSpec and Codeception
-      # github: infection/infection
-      # infection:
-      #     threads: ~
-      #     test_framework: ~
-      #     only_covered: false
-      #     configuration: ~
-      #     min_msi: ~
-      #     min_covered_msi: ~
-      #     mutators: []
-      #     ignore_patterns: []
-      #     triggered_by: [php]
-      
       # Php paralleles tests
       # github: brianium/paratest
       #
@@ -395,38 +398,3 @@ grumphp:
       #       parse_constant: false
       #       parse_custom_tags: false
       
-    # bin/grumphp run --testsuite=TESTSUITE
-    testsuites: 
-      lint:
-          tasks:
-            # first...
-            - phpcsfixer
-            - phpparser
-            # ...then
-            # phan (need 'php-ast' extension)
-            - phpcpd
-            - phpcs
-            - phplint
-            - phpmd
-            - phpmnd
-            - phpstan
-
-      test:
-          tasks:
-            # infection
-            - paratest
-            - pest
-            - phpunit
-            # phpunitbridge
-
-      # Specify the test-suite for the git:commit-msg command:
-      # git_commit_msg:
-      #     tasks: []
-
-      # Specify the test-suite for the git:pre-commit command:
-      # git_pre_commit:
-      #     tasks: 
-      #       - phpcs
-      #       - phpcsfixer
-
-    extensions: []

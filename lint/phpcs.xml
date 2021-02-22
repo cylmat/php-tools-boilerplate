@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#using-a-default-configuration-file -->
+<!-- https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xml.dist -->
+
 <ruleset name="Application" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
@@ -18,8 +20,8 @@
     <file>../public/</file>
     <file>../src/</file>
 
-    <exclude-pattern>*/tests/*</exclude-pattern>
     <exclude-pattern>**/Resources/*</exclude-pattern>
+    <exclude-pattern>lint/*</exclude-pattern>
 
     <rule ref="PSR12">
         <exclude name="Generic.Files.LineLength"/>
