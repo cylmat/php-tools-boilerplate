@@ -34,14 +34,14 @@ grumphp:
       # Specify the test-suite for the git:pre-commit command:
       git_pre_commit:
           tasks: 
-            - phpcs
+            - phpparser
             - phpcsfixer
 
       lint:
           tasks:
             # first...
-            - phpcsfixer
             - phpparser
+            - phpcsfixer
             # ...then
             # phan (need 'php-ast' extension)
             - phpcpd
