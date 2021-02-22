@@ -2,7 +2,7 @@
 
 namespace App\Tests;
 
-use App;
+use App\Sample;
 use PHPUnit\Framework\TestCase;
 
 class SampleTest extends TestCase
@@ -11,9 +11,9 @@ class SampleTest extends TestCase
     {
     }
 
-    public function testSample()
+    public function testSample(): void
     {
         $sample = new Sample();
-        $this->assertEqual(5, $sample->sample(4));
+        $this->assertEquals(5, $sample->sample(4));
     }
 }

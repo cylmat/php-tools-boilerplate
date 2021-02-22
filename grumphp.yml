@@ -36,6 +36,7 @@ grumphp:
           tasks: 
             - phpparser
             - phpcsfixer
+            - phpstan
 
       lint:
           tasks:
