@@ -1,3 +1,4 @@
+[![cylmat](https://github.com/cylmat/config/actions/workflows/build.yml/badge.svg)](https://github.com/cylmat/config/actions/workflows/build.yml)
 [![cylmat](https://circleci.com/gh/cylmat/config.svg?style=shield)](https://circleci.com/gh/cylmat/config)
 
 # Configuration
