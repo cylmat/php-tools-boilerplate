@@ -27,6 +27,16 @@ grumphp:
 
     # bin/grumphp run --testsuite=TESTSUITE
     testsuites: 
+      # Specify the test-suite for the git:commit-msg command:
+      # git_commit_msg:
+      #     tasks: []
+
+      # Specify the test-suite for the git:pre-commit command:
+      git_pre_commit:
+          tasks: 
+            - phpcs
+            - phpcsfixer
+
       lint:
           tasks:
             # first...
@@ -45,16 +55,6 @@ grumphp:
             - paratest
             - pest
             - phpunit
-
-      # Specify the test-suite for the git:commit-msg command:
-      # git_commit_msg:
-      #     tasks: []
-
-      # Specify the test-suite for the git:pre-commit command:
-      # git_pre_commit:
-      #     tasks: 
-      #       - phpcs
-      #       - phpcsfixer
 
     extensions: []
 
@@ -96,7 +96,7 @@ grumphp:
         metadata:
             priority: 1000
 
-      # only with git add, git commit
+      # only with git add and git commit
       git_blacklist:
           keywords:
               - "var_dump"
@@ -152,9 +152,8 @@ grumphp:
       # LINTER #
       ##########
 
-      # codestyle checks 
+      ### Codestyle checks 
       # github: friendsofphp/php-cs-fixer
-      #
       # NB: (no auto-fix) https://github.com/wearejust/grumphp-extra-tasks
       phpcsfixer:
             # allow_risky: true
@@ -173,7 +172,7 @@ grumphp:
             metadata:
               priority: 1
 
-      # Analyse les fonctions blacklistées
+      ### Analyse black-listed functions
       # github: nikic/PHP-Parser
       phpparser:
         visitors:
@@ -186,16 +185,16 @@ grumphp:
         metadata:
             priority: 2
 
-      # static analyzer 
+      ### Static analyzer 
       # github: phan/phan
-      # NEED php-ast extension
+      # Err: Need php-ast extension, have to run from cli
       # phan:
       #       config_file: lint/phan.config.php
       #       output_mode: text
       #       output: null
       #       triggered_by: [php]
 
-      # Copy detector duplicated lines
+      ### Copy detector duplicated lines
       # github: sebastian/phpcpd
       phpcpd:
             directory: ['./src']
@@ -205,7 +204,7 @@ grumphp:
             min_tokens: 70
             triggered_by: ['php']
 
-      # Bad coding standards
+      ### Bad coding standards
       # github: squizlabs/PHP_CodeSniffer
       phpcs:
             standard: lint/phpcs.xml # []
@@ -222,10 +221,9 @@ grumphp:
             # triggered_by: [php]
             # exclude: []
 
-      # Syntax errors
+      ### Syntax errors
       # github: php-parallel-lint/php-parallel-lint
-      #
-      # NO CONFIG FILE
+      # - No config file needed -
       phplint:
             exclude: []
             jobs: ~
@@ -233,7 +231,7 @@ grumphp:
             ignore_patterns: []
             triggered_by: ['php', 'phtml']
 
-      # Bad coding standards
+      ### Bad coding standards
       # github: phpmd/phpmd
       phpmd:
           whitelist_patterns: []
@@ -242,7 +240,7 @@ grumphp:
           ruleset: ['lint/phpmd.xml', 'unusedcode']
           triggered_by: ['php']
 
-      # Finding php errors
+      ### Finding php errors
       # github: phpstan/phpstan
       phpstan:
             configuration: lint/phpstan.neon
@@ -260,7 +258,7 @@ grumphp:
       # TESTING #
       ###########
 
-      # Full-stack tests
+      ### Full-stack tests
       # github: codeception/codeception
       # codeception:
       #       config_file: ~
@@ -268,11 +266,10 @@ grumphp:
       #       suite: ~
       #       test: ~
 
-      # Php paralleles tests
+      ### Php paralleles tests
       # github: brianium/paratest
-      #
-      ### BUG: Cannot open file !!!
-      ### phpunit.xml need to be on the root folder
+      # BUG, cannot open file:
+      # phpunit.xml need to be on the root folder
       paratest:
           # configuration: ~
           # processes: auto
@@ -289,7 +286,7 @@ grumphp:
           # testsuite: null
           # verbose: false
 
-      # Testing beautify PhpUnit
+      ### Beautify PhpUnit report
       # github: pestphp/pest
       pest:
           config_file: phpunit.xml
@@ -297,7 +294,7 @@ grumphp:
           # group: []
           # always_execute: true
 
-      # PHPUNIT
+      ### PhpUnit
       # github: phpunit/phpunit
       phpunit:
         config_file: phpunit.xml
@@ -305,19 +302,13 @@ grumphp:
           # group: []
           # always_execute: true
 
+      ### PhpSpec
       # github: phpspec/phpspec
       # phpspec:
       #       config_file: ~
       #       format: ~
       #       stop_on_failure: false
       #       verbose: false
-
-      # github: symfony/phpunit-bridge
-      # phpunitbridge:
-      #       config_file: phpunit.xml
-            # testsuite: ~
-            # group: []
-            # always_execute: false
 
       #######################################################################################
 
@@ -336,29 +327,16 @@ grumphp:
       #       task: ~
       #       triggered_by: [php]
 
-      # automated PHP tasks
-      # consolidation/robo
+      # Automated PHP tasks
+      # github: consolidation/robo
       # robo:
       #       load_from: ~
       #       task: ~
       #       triggered_by: [php]
       
-      #################
-      #
-      #################
-
-      # doctrine_orm:
-      #       skip_mapping: false
-      #       skip_sync: false
-      #       triggered_by: ['php', 'xml', 'yml']
-
       #############
       # SCRIPTING #
       #############
-      
-      # shell:
-            # scripts: []
-            # triggered_by: [php]
 
       # make tasks
       # make:
@@ -366,18 +344,13 @@ grumphp:
       #       task: ~
       #       triggered_by: [php]
 
+      # shell:
+          # scripts: []
+          # triggered_by: [php]
+
       ##############
       # OTHER LINT #
       ##############
-
-      # Twig coding standard
-      # friendsoftwig/twigcs
-      # twigcs:
-      #       path: '.'
-      #       severity: 'warning'
-      #       ruleset: 'FriendsOfTwig\Twigcs\Ruleset\Official'
-      #       triggered_by: ['twig']
-      #       exclude: []
 
       # xmllint:
       #       ignore_patterns: []

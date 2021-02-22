@@ -1,30 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#using-a-default-configuration-file -->
+
+<!-- SAMPLE PHPCS FILE -->
 <!-- https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xml.dist -->
 
-<ruleset name="Application" 
+<ruleset
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
 
     <description>Coding standard</description>
 
-    <arg name="basepath" value=".."/>
+    <arg name="basepath" value=".."/><!-- display path for reporting -->
     <arg name="cache" value="../var/.phpcs-cache"/>
     <arg name="colors"/>
     <arg name="extensions" value="php"/>
+    <arg name="parallel" value="75"/>
     <arg value="p"/><!-- progress -->
+    <arg value="w"/><!-- print warnings and errors -->
 
-    <file>../bin/</file>
     <file>../config/</file>
-    <file>../public/</file>
     <file>../src/</file>
+    <file>../tests/</file>
 
     <exclude-pattern>**/Resources/*</exclude-pattern>
     <exclude-pattern>lint/*</exclude-pattern>
 
+    <!-- PSR12 -->
     <rule ref="PSR12">
         <exclude name="Generic.Files.LineLength"/>
+    </rule>
+
+    <!-- Include the whole PEAR standard -->
+    <rule ref="PEAR">
+        <exclude name="PEAR.NamingConventions.ValidFunctionName"/>
+        <exclude name="PEAR.NamingConventions.ValidVariableName"/>
+        <exclude name="PEAR.Commenting"/>
+    </rule>
+
+    <!-- Private methods MUST not be prefixed with an underscore -->
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <type>error</type>
+    </rule>
+
+    <!-- Private properties MUST not be prefixed with an underscore -->
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <type>error</type>
+    </rule>
+
+    <!-- Ban some functions -->
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="sizeof" value="count"/>
+                <element key="delete" value="unset"/>
+                <element key="print" value="echo"/>
+                <element key="is_null" value="null"/>
+                <element key="create_function" value="null"/>
+            </property>
+        </properties>
     </rule>
 
 </ruleset>
