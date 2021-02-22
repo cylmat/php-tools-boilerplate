@@ -37,10 +37,11 @@ jobs:
 
     - name: Install composer dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-suggest --no-plugins
+      # --no-plugins avoid to install grumphp's git hook
+      run: composer install --prefer-dist --no-plugins
 
-    - name: Run GrumPhp lints
-      run: ./vendor/bin/grumphp run --testsuite=lint
+    # - name: Run GrumPhp lints
+    #   run: ./vendor/bin/grumphp run --testsuite=lint
 
-    - name: Run GrumPhp tests
-      run: ./vendor/bin/grumphp run --testsuite=tests
+    # - name: Run GrumPhp tests
+    #   run: ./vendor/bin/grumphp run --testsuite=tests
