@@ -1,11 +1,12 @@
 {
-    "name": "my/name",
-    "type": "project",
-    "license": "free",
-    "minimum-stability": "dev",
+    "name": "cylmat/config",
+    "type": "configuration",
+    "description": "Php configuration with unit tests and pré-configured dependencies",
+    "license": "Apache-2.0",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=7",
+        "php": ">=7.2",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
