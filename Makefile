@@ -72,28 +72,3 @@ testing:
 	bin/pest --configuration config/phpunit.xml
 	  # or (phpunit in parallele)
 	bin/paratest -c config/phpunit.xml
-
-###########
-# SYMFONY #
-###########
-# symfony/maker-bundle + doctrine/annotations + orm
-
-# RSYNC
-rsync:
-	rsync --archive -vz --update /var/www/ /var/SYMFONY >> /var/log/cron.log 2>&1 \
-		--exclude "node_modules" \
-		--exclude "vendor" \
-		--exclude ".data" 
-		--exclude ".git"
-
-set-cron-rsync:
-	echo "*/3 * * * * rsync --archive -vz --update /var/www/src/ /var/SYMFONY/src >> /var/log/cron.log 2>&1" >> /etc/crontab
-	service cron start
-
-clean:
-	rm -rf var/cache/*
-	rm -rf var/logs/*
-	chmod -R 777 var/
-
-d-see-cron:
-	@$(call see-cron)

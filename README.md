@@ -1,3 +1,5 @@
+[![cylmat](https://circleci.com/gh/cylmat/config.svg?style=shield)](https://circleci.com/gh/cylmat/config)
+
 # Configuration
 
 ## Ide
