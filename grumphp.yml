@@ -40,7 +40,7 @@ grumphp:
             - phpmd
             - phpstan
 
-      test:
+      tests:
           tasks:
             - paratest
             - pest
@@ -98,10 +98,8 @@ grumphp:
 
       # only with git add, git commit
       git_blacklist:
-          # keywords:
-          #     - "die\\("
-          #     - "var_dump\\("
-          #     - "exit"
+          keywords:
+              - "var_dump"
           whitelist_patterns: 
             - /^src\/(.*)/
           triggered_by: ['php']
@@ -117,16 +115,15 @@ grumphp:
       # COMPOSER #
       ############
 
-      # execute "composer validate"
-    #   composer:
-    #     # minimum validation
-    #         file: ./composer.json
-    #         no_check_all: true
-    #         no_check_lock: true
-    #         no_check_publish: true
-    #         no_local_repository: true
-    #         with_dependencies: false
-    #         strict: false
+      # execute "composer validate" like
+      composer:
+            file: ./composer.json
+            no_check_all: true
+            no_check_lock: true
+            no_check_publish: true
+            no_local_repository: true
+            with_dependencies: false
+            strict: false
       
       # github: ergebnis/composer-normalize
       # 
