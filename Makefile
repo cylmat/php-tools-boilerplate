@@ -21,7 +21,7 @@ compose-update:
 ###########
 
 fix:
-	# php-cs-fixer: NO autofix before commit on GrumPhp
+	# PHP-cs-fixer: NO autofix before commit on GrumPhp
 	bin/php-cs-fixer fix --config lint/.php_cs
 	# phpparser: Work line by line, use only with GrumPhp
 
@@ -31,7 +31,7 @@ linters:
 	bin/phpcs src --colors --standard=lint/phpcs.xml
 	bin/parallel-lint src tests --exclude vendor
 
-	# PHPMD /path/to/source report_format ruleset --reportfile=reports/phpmd.log
+	# PHPMD: /path/to/source report_format ruleset --reportfile=reports/phpmd.log
 	bin/phpmd src ansi lint/phpmd.xml --reportfile=STDOUT
 	bin/phpstan analyse --level 8 --configuration lint/phpstan.neon
 

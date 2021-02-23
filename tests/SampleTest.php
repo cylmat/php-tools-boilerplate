@@ -5,6 +5,9 @@ namespace App\Tests;
 use App\Sample;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \App\Sample
+ */
 class SampleTest extends TestCase
 {
     public function setUp(): void

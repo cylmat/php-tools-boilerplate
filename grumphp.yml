@@ -33,8 +33,7 @@ grumphp:
 
       # Specify the test-suite for the git:pre-commit command:
       git_pre_commit:
-          tasks: 
-            - phpstan
+          tasks: []
 
       lint:
           tasks:
@@ -93,7 +92,7 @@ grumphp:
         case_insensitive: false
         multiline: false
         metadata:
-            priority: 1000
+            priority: 100
 
       # only with git add and git commit
       git_blacklist:
@@ -147,8 +146,7 @@ grumphp:
 
 
 
-      #######################################################################################
-
+      
       ##########
       # LINTER #
       ##########
@@ -235,7 +233,9 @@ grumphp:
       ### Bad coding standards
       # github: phpmd/phpmd
       phpmd:
-          whitelist_patterns: []
+          whitelist_patterns: 
+            - /^src\/src\/.*/
+            - /^src\/tests\/.*/
           exclude: []
           report_format: text
           ruleset: ['lint/phpmd.xml', 'unusedcode']
@@ -253,7 +253,7 @@ grumphp:
             # memory_limit: "-1"
             # use_grumphp_paths: true
 
-      #######################################################################################
+      
 
       ###########
       # TESTING #
@@ -311,7 +311,7 @@ grumphp:
       #       stop_on_failure: false
       #       verbose: false
 
-      #######################################################################################
+      
 
       ##############
       # AUTOMATION #
@@ -346,8 +346,8 @@ grumphp:
       #       triggered_by: [php]
 
       # shell:
-          # scripts: []
-          # triggered_by: [php]
+      # scripts: []
+      # triggered_by: [php]
 
       ##############
       # OTHER LINT #

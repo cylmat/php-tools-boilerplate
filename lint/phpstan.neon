@@ -1,29 +1,45 @@
 ###########
 # PHPSTAN #
 ###########
-# https://phpstan.org/config-reference
 
+# WEBSITE
+# https://phpstan.org
+
+# CODE
 # https://github.com/phpstan/phpstan
 # https://github.com/phpstan/phpstan-symfony
 
+# DOC
+# https://phpstan.org/config-reference
 
 # includes:
 # 	- extension.neon
-#     - rules.neon
+#   - rules.neon
+#     Generated currents errors with "bin/phpstan analyse --generate-baseline"
+#   - phpstan-baseline.neon
 
 parameters:
+    # Rules level 
     level: 8
+
+    # Cache path
     tmpDir: ../var/phpstan
+
+    # Analysed folders
     paths:
-        - ../config
         - ../src
         - ../tests
 
     excludes_analyse:
         # ignore
         - **/Resources/*
+    
+    # Stub files, readed for PhpDoc inside
+    stubFiles:
+        - phpstan.stub
 
-    checkMissingIterableValueType: true
+    # Level 6 avoid
+    checkMissingIterableValueType: true 
     checkGenericClassInNonGenericObjectType: true
 
     reportUnmatchedIgnoredErrors: false

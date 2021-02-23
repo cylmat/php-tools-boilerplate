@@ -1,12 +1,15 @@
 <?php
+// .phan/config.php
 
 /**
- * This configuration will be read and overlaid on top of the
- * default configuration. Command line arguments will be applied
- * after this file is read.
+ * 
+ * DOC
+ * https://github.com/phan/phan/wiki
+ * 
+ * CONFIG
+ * https://github.com/phan/phan/wiki/Phan-Config-Settings#configuring-files
  */
 return [
-
     /**
      * Supported values: `'5.6'`, `'7.0'`, `'7.1'`, `'7.2'`, `'7.3'`, `'7.4'`,
      * `'8.0'`, `null`.
@@ -26,8 +29,11 @@ return [
      * your application should be included in this list.
      */
     'directory_list' => [
-        'src',
-        'tests'
+        __DIR__ . '/../src',
+        __DIR__ . '/../tests',
+
+        // Avoid UndeclaredExtendedClass error
+        __DIR__ . '/../vendor/phpunit',
     ],
 
     /**
@@ -44,7 +50,7 @@ return [
      *      to `exclude_analysis_directory_list`.
      */
     "exclude_analysis_directory_list" => [
-        'vendor/'
+        __DIR__ . '/../vendor'
     ],
 
     /**
@@ -69,11 +75,12 @@ return [
         'PregRegexCheckerPlugin',
         'PrintfCheckerPlugin',
         'SleepCheckerPlugin',
+
         // Checks for syntactically unreachable statements in
         // the global scope or function bodies.
-        'UnreachableCodePlugin',
-        'UseReturnValuePlugin',
         'EmptyStatementListPlugin',
         'LoopVariableReusePlugin',
+        'UnreachableCodePlugin',
+        'UseReturnValuePlugin',
     ],
 ];

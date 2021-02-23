@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- CONFIG DOC -->
 <!-- https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#using-a-default-configuration-file -->
 
-<!-- SAMPLE PHPCS FILE -->
+<!-- SAMPLE FILE -->
 <!-- https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xml.dist -->
 
 <ruleset
@@ -19,7 +20,6 @@
     <arg value="p"/><!-- progress -->
     <arg value="w"/><!-- print warnings and errors -->
 
-    <file>../config/</file>
     <file>../src/</file>
     <file>../tests/</file>
 

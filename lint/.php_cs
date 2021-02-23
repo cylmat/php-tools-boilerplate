@@ -1,28 +1,45 @@
 <?php
 
-$ROOT = __DIR__ . '/../';
-
 /**
+ * WEBSITE
+ * https://cs.symfony.com/
+ * 
+ * CODE
  * https://github.com/FriendsOfPHP/PHP-CS-Fixer
+ * 
+ * CONFIG DOC
+ * https://cs.symfony.com/doc/rules/index.html
+ * https://cs.symfony.com/doc/ruleSets/index.html
  */
+
+$rules = [
+    '@PhpCsFixer' => true,  // https://cs.symfony.com/doc/ruleSets/PhpCsFixer.html
+    '@PSR12' => true,       // https://cs.symfony.com/doc/ruleSets/PSR12.html
+    '@Symfony' => true,     // https://cs.symfony.com/doc/ruleSets/Symfony.html
+
+    // sample...
+    'array_syntax' => ['syntax' => 'short'],
+    'no_php4_constructor' => true,
+    'no_short_echo_tag' => true,
+    'no_useless_else' => true,
+    'no_useless_return' => true,
+
+    'php_unit_internal_class' => false,
+];
+
 return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
-    ->setRules([
-        '@PSR12' => true,
-        'strict_param' => true,
-        'array_syntax' => ['syntax' => 'short'],
-    ])
-    ->setCacheFile($ROOT . '.php_cs.cache')
+    ->setRules($rules)
+    ->setCacheFile(__DIR__ . '/../var/.phpcs-cache')
     ->setUsingCache(false)
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->in([
-                $ROOT . '/src',
-                $ROOT . '/tests'
+                __DIR__ . '/../src',
+                __DIR__ . '/../tests'
             ])
             ->notPath('/^app\/sample.php/')
             ->exclude([
-                'vendor'
+                __DIR__ . '/../vendor'
             ])
     );
-                                             

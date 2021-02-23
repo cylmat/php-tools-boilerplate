@@ -6,7 +6,8 @@ class Sample
 {
     public function sample(int $sample): int
     {
-        $sample++;
+        ++$sample;
+
         return $sample;
     }
 }
