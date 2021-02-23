@@ -28,10 +28,8 @@ fix:
 linters:
 	PHAN_ALLOW_XDEBUG=1 bin/phan --allow-polyfill-parser --config-file lint/phan.config.php
 	bin/phpcpd src
-	bin/phpcs src --colors --standard=lint/phpcs.xml
+	bin/phpcs --colors --standard=lint/phpcs.xml -s
 	bin/parallel-lint src tests --exclude vendor
-
-	# PHPMD: /path/to/source report_format ruleset --reportfile=reports/phpmd.log
 	bin/phpmd src ansi lint/phpmd.xml --reportfile=STDOUT
 	bin/phpstan analyse --level 8 --configuration lint/phpstan.neon
 
@@ -45,7 +43,7 @@ test-gen:
 cover:
 	phpdbg -qrr bin/phpunit -c config/phpunit.xml --coverage-html var/coverage
 	mv var/coverage public/
-	  # one file
+	  # for one file
 	# XDEBUG_MODE=coverage bin/phpunit -c phpunit.xml test/path/ClassTest.php  --coverage-html=var/coverage
 
 testing:

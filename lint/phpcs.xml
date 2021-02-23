@@ -29,6 +29,7 @@
     <!-- PSR12 -->
     <rule ref="PSR12">
         <exclude name="Generic.Files.LineLength"/>
+        <exclude name="Generic.Commenting.DocComment.MissingShort"/>
     </rule>
 
     <!-- Include the whole PEAR standard -->
@@ -47,6 +48,12 @@
     <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
         <type>error</type>
     </rule>
+
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <type>error</type>
+    </rule>
+
+    neric\Sniffs\Commenting;
 
     <!-- Ban some functions -->
     <rule ref="Generic.PHP.ForbiddenFunctions">
