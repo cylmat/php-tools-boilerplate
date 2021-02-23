@@ -13,7 +13,9 @@ jobs:
     steps:
       - checkout
 
-      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+      - run: sudo apt update 
+
+      # PHP CircleCI 2.0 Configuration File
       - run: sudo docker-php-ext-install zip
 
       # Download and cache dependencies
@@ -30,15 +32,12 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
             - ./vendor
+            
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "composer.json" }}
 
-      - run: yarn install
-      - save_cache:
-          key: node-v1-{{ checksum "composer.json" }}
-          paths:
-            - node_modules
+      # run linters and tests
+      - run: ./vendor/bin/grumphp run --testsuite=lint
 
-      # run tests with phpunit or codecept
-      - run: ./vendor/bin/phpunit
+      - run: ./vendor/bin/grumphp run --testsuite=tests
