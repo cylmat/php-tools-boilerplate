@@ -1,9 +1,16 @@
 ###############
 # Phpunit Gen #
 ###############
+
+# WEBSITE
 # https://phpunitgen.io/
+
+# CODE
 # https://github.com/paul-thebaud/phpunitgen-core
 # https://github.com/paul-thebaud/phpunitgen-console
+
+# DOC
+# https://phpunitgen.io/docs#/fr/configuration
 
 overwriteFiles: false
 backupFiles: false

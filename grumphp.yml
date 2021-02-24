@@ -1,5 +1,6 @@
 # grumphp.yml
 # https://github.com/phpro/grumphp
+
 grumphp:
     hooks_dir: ~
     hooks_preset: local

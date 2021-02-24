@@ -1,40 +1,35 @@
-[![cylmat](https://github.com/cylmat/config/actions/workflows/build.yml/badge.svg)](https://github.com/cylmat/config/actions/workflows/build.yml)
-[![cylmat](https://circleci.com/gh/cylmat/config.svg?style=shield)](https://circleci.com/gh/cylmat/config)
+[![cylmat](https://github.com/cylmat/phpconfig/actions/workflows/build.yml/badge.svg)](https://github.com/cylmat/phpconfig/actions/workflows/build.yml)
+[![cylmat](https://circleci.com/gh/cylmat/phpconfig.svg?style=shield)](https://circleci.com/gh/cylmat/phpconfig)
 
-# Configuration
+# Php 7 configuration bootstrap
+
+## Automation
+* [GrumPhp v1](https://github.com/phpro/grumphp)
 
 ## Ide
-* [code.visualstudio.com] VSCode useful extensions and debug
+* [VSCode](code.visualstudio.com) VSCode useful extensions
 
-## Versionning
-* [git-scm.com] Git commands and alias
+## Linters
+* [Composer-normalize v2](https://github.com/ergebnis/composer-normalize)
+* [Codesniffer v3](https://github.com/squizlabs/PHP_CodeSniffer)
+* [Phan v4](https://github.com/phan/phan/wiki)
+* [Php-cs-fixer v2](https://cs.symfony.com/)
+* [Php-parser v4](https://github.com/nikic/PHP-Parser)
+* [Php-parallel-lint v1](https://github.com/php-parallel-lint/PHP-Parallel-Lint)
+* [PhpCpd v6](https://github.com/sebastianbergmann/phpcpd)
+* [PhpMd v2](https://phpmd.org/)
+* [PhpStan v0.12](https://phpstan.org/)
 
 ## Testing
-* [phpstan.org] phpstan.neon
-* [phpunit.de] phpunit.xml
+* [Paratest v6](https://github.com/paratestphp/paratest)
+* [PestPhp v1](https://pestphp.com/)
+* [PhpunitGen v1](https://phpunitgen.io/)
+* [PhpUnit v9](https://phpunit.de/)
+* [PhpSpec v7](http://www.phpspec.net)
 
-## Useful commands
-[github.com/cylmat/useful]
+## Versionning
+* [Git v2](http://git-scm.com) Git commands and alias
 
-#### --- add samples
-* [https://www.doxygen.nl/index.html] Doxygen
-* [github.com/phpro/grumphp] GrumPhp
-* [jenkins.io] jenkins
-* [https://maven.apache.org/] Maven pom.xml
-* [github.com/squizlabs/PHP_CodeSniffer] phpcs
-* [github.com/krakjoe/phpdbg] phpdbg coverage
-* [phpmd.org] phpmd
-* [github.com/phpmetrics/PhpMetrics] phpmetrics
-
-* behat
-* [phpspec.net] phpspec
-
-* (sonarqube)
-* see krakjoe/pcov.git
-* ApiGen
-* coveralls.yml
-* .gitattributes
-* https://pdepend.org/
-* peridot
-* deployer
-* mockery
+#### Ref
+* [Cylmat - Useful commands](https://github.com/cylmat/useful)  
+* [Phpqa.io - Php Quality Assurance](https://phpqa.io/)
