@@ -14,6 +14,14 @@ class SampleTest extends TestCase
     {
     }
 
+    /**
+     * @todo assertions
+     * https://phpunit.readthedocs.io/en/9.5/assertions.html
+     * @todo annotations
+     * https://phpunit.readthedocs.io/en/9.5/annotations.html
+     *
+     * @group in
+     */
     public function testSample(): void
     {
         $sample = new Sample();
