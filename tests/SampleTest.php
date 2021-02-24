@@ -12,14 +12,14 @@ class SampleTest extends TestCase
 {
     /**
      * @var int
-     * 
+     *
      * Used for assertClassHasAttribute
      */
     private $attr;
 
     /**
      * @var int
-     * 
+     *
      * Used for assertClassHasStaticAttribute
      */
     private static $s_attr;
@@ -29,22 +29,21 @@ class SampleTest extends TestCase
     }
 
     /**
-     * Used for assertObjectEquals
-     * 
-     * @return bool
+     * Used for assertObjectEquals.
      */
-    public function my_equal(self $other): bool
+    public function myEqual(self $other): bool
     {
         if (__CLASS__ === get_class($other)) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
-     * @todo annotations
-     * https://phpunit.readthedocs.io/en/9.5/annotations.html
+     * @see https://phpunit.readthedocs.io/en/9.5/annotations.html
+     *
+     * @after: after test method
      *
      * @group in
      */
@@ -55,8 +54,8 @@ class SampleTest extends TestCase
     }
 
     /**
-     * https://phpunit.readthedocs.io/en/9.5/assertions.html
-     * 
+     * @see https://phpunit.readthedocs.io/en/9.5/assertions.html.
+     *
      * @group in
      */
     public function testAssertions(): void
@@ -68,7 +67,7 @@ class SampleTest extends TestCase
         $this->assertStringContainsString('foo', 'bar is foo');
         $this->assertStringContainsStringIgnoringCase('Foo', 'bar is foo');
         $this->assertContainsOnly('string', ['str1', 'str2']); //only type 'string'
-        $this->assertContainsOnlyInstancesOf(\stdClass::class, [new \stdClass]);
+        $this->assertContainsOnlyInstancesOf(\stdClass::class, [new \stdClass()]);
         $this->assertCount(1, ['foo']);
         $this->assertDirectoryExists(__DIR__);
         $this->assertDirectoryIsReadable(__DIR__);
@@ -79,7 +78,7 @@ class SampleTest extends TestCase
         $this->assertEqualsCanonicalizing([3, 2, 1], [2, 3, 1]); //or sorted
         $this->assertEqualsIgnoringCase('bar', 'BaR');
         $this->assertEqualsWithDelta(10.0, 10.5, 0.5);
-        $this->assertObjectEquals(new static, new static, 'my_equal');
+        $this->assertObjectEquals(new static(), new static(), 'myEqual');
         $this->assertFalse(false);
         $this->assertFileEquals(__FILE__, __FILE__);
         $this->assertFileExists(__FILE__);
@@ -91,12 +90,15 @@ class SampleTest extends TestCase
         $this->assertInstanceOf(static::class, new static());
         $this->assertIsArray([]);
         $this->assertIsBool(true);
-        $this->assertIsCallable(function(){});
+        $this->assertIsCallable(
+            function () {
+            }
+        );
         $this->assertIsFloat(1.0);
         $this->assertIsInt(5);
         $this->assertIsIterable([]);
         $this->assertIsNumeric('1');
-        $this->assertIsObject(new \stdClass);
+        $this->assertIsObject(new \stdClass());
         $this->assertIsNotResource(null); // #resource
         $this->assertIsScalar('string');
         $this->assertIsString('string');
@@ -105,8 +107,8 @@ class SampleTest extends TestCase
         //$this->assertJsonFileEqualsJsonFile(); // file
         //$this->assertJsonStringEqualsJsonFile(); // file
         $this->assertJsonStringEqualsJsonString(json_encode(['Mascot' => 'Tux']), json_encode(['Mascot' => 'Tux']));
-        $this->assertLessThan(5,4);
-        $this->assertLessThanOrEqual(5,4);
+        $this->assertLessThan(5, 4);
+        $this->assertLessThanOrEqual(5, 4);
         $this->assertNan(acos(8)); // wrong float
         $this->assertNull(null);
         $this->assertObjectHasAttribute('attr', new SampleTest());
@@ -131,6 +133,5 @@ class SampleTest extends TestCase
      */
     public function testMock()
     {
-
     }
 }
