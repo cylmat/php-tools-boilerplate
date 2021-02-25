@@ -17,6 +17,7 @@
     <description>Rules set</description>
 
     <exclude-pattern>**/Resources/*</exclude-pattern>
+    <exclude-pattern>tests/*</exclude-pattern>
 
     <rule ref="rulesets/cleancode.xml">
         <exclude name="IfStatementAssignment"/>
