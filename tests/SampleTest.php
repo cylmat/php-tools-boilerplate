@@ -28,7 +28,7 @@ class SampleTest extends TestCase
     private static $sAttr;
 
     /**
-     * @before                   (before EACH tests)
+     * @before (before EACH tests)
      * @coversNothing
      * @doesNotPerformAssertions
      */
@@ -37,8 +37,6 @@ class SampleTest extends TestCase
     }
 
     /**
-     * @return bool
-     *
      * @afterClass (after all tests done)
      * Used for assertObjectEquals.
      */
@@ -53,7 +51,7 @@ class SampleTest extends TestCase
 
     /**
      * @return array
-     * 
+     *
      * @runInSeparateProcess (! failed with -Pest-)
      */
     public function dataProviderSample(): array

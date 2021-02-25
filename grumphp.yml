@@ -236,7 +236,6 @@ grumphp:
       phpmd:
           whitelist_patterns: 
             - /^src\/src\/.*/
-            - /^src\/tests\/.*/
           exclude: []
           report_format: text
           ruleset: ['lint/phpmd.xml', 'unusedcode']

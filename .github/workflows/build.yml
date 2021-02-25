@@ -56,3 +56,9 @@ jobs:
 
     - name: Run GrumPhp tests
       run: ./vendor/bin/grumphp run --testsuite=tests
+
+    - name: Make linters
+      run: ./make linters
+
+    - name: Make testing
+      run: ./make testing
