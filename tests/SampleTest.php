@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\Sample;
+use Exception;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -77,7 +78,7 @@ class SampleTest extends TestCase
      * @test         (alternative for naming function test...)
      * @ticket       id-1234 (alias for @group)
      */
-    public function testSample($arg1, $arg2)
+    public function testSample($arg1, $arg2): void
     {
         $sample = new Sample();
         $this->assertEquals(5, $sample->sample(4));
@@ -104,7 +105,7 @@ class SampleTest extends TestCase
      *
      * @uses \stdClass, SampleTest
      */
-    public function testAssertions()
+    public function testAssertions(): void
     {
         $this->assertArrayHasKey('foo', ['foo' => 'baz']);
         $this->assertClassHasAttribute('attr', SampleTest::class);
@@ -174,31 +175,125 @@ class SampleTest extends TestCase
 
     /**
      * Stubs returns configured values.
+     * @group in
      */
     public function testStub(): void
     {
         // Create a stub for the stdClass class.
-        $stub = $this->createStub(stdClass::class);
+        $stub = $this->createStub(static::class);
+        // $trait = $this->getMockForTrait(AbstractTrait::class);
+        // $abs = $this->getMockForAbstractClass(AbstractClass::class);
 
         // or
-        $stub = $this->getMockBuilder(stdClass::class)
+        $stub = $this->getMockBuilder(static::class)->getMock();
+
+        // Configure stub and assert return values.
+        $stub->expects($this->any())->method('expect')->willReturn('expectReturn');
+        $this->assertSame('expectReturn', $stub->expect());
+
+        $stub->method('doSomething')->willReturn('foo');
+        $stub->method('retArg')->will($this->returnArgument(1));
+        $stub->method('retSelfClass')->will($this->returnSelf());
+        $stub->method('retMap')->will($this->returnValueMap([
+            ['a', 'b', 'c', 'returnedValue']
+        ]));
+        $stub->method('iscallback')->will($this->returnCallback('strrev'));
+
+        // Assert return values.
+        $this->assertSame('foo', $stub->doSomething());
+        $this->assertSame('my_arg2', $stub->retArg('my_arg1', 'my_arg2'));
+        $this->assertSame($stub, $stub->retSelfClass('arg1'));
+        $this->assertSame('returnedValue', $stub->retMap('a', 'b', 'c'));
+        $this->assertSame('cba', $stub->iscallback('abc'));
+    }
+
+    /**
+     * Used for testStub().
+     */
+    public function expect() {}
+    public function doSomething() {}
+    public function retArg() {}
+    public function retSelfClass() {}
+    public function retMap() {}
+    public function iscallback() {}
+
+    /**
+     * Mock is an observation point that is used to verify the indirect outputs.
+     * @group in
+     */
+    public function testMocking(): void
+    {
+        $mock = $this->getMockBuilder(static::class)
+            //->setMethods(['method1', 'method2']) // To be mocked.
+            ->setMethodsExcept(['setUp']) 
+            ->setConstructorArgs(['arg1','arg2'])
+            ->setMockClassName('MyMockedClass')
             ->disableOriginalConstructor()
             ->disableOriginalClone()
+            ->disableAutoload()
             ->disableArgumentCloning()
             ->disallowMockingUnknownTypes()
             ->getMock()
         ;
 
-        // Configure the stub.
-        $stub->method('doSomething')->willReturn('foo');
-        $stub->method('returnArg')->will($this->returnArgument(0));
-        $stub->method('returnSelf')->will($this->returnSelf());
+        // PHPUnit\Framework\MockObject\Matcher
+        $mock->expects($this->exactly(1)) // any(), never(), once(), at()
+            ->method('internalApiCall')
+            ->with( 
+                $this->equalTo('arg-00try11')
+                /*
+                $this->greaterThan(0),
+                $this->stringContains('Something'),
+                $this->anything()
+                $this->identicalTo($expectedObject)
+                $this->callback(function($subject)
+                     {
+                         return is_callable([$subject, 'getName']) &&
+                                $subject->getName() == 'My subject';
+                     }
+                */
+            )
+            /*
+            ->withConsecutive(
+                [$this->equalTo('foo'), $this->greaterThan(0)],
+                [$this->equalTo('bar'), $this->greaterThan(0)]
+            )
+            */
+        ;
 
-        $stub->expects($this->any())->method('doSomething')->willReturn('foo');
+        // Call object.
+        $realObject = new static();
+        $realObject->calledFunction($mock, 'try11');
+    }
 
-        // Assert return values.
-        $this->assertSame('foo', $stub->doSomething());
-        $this->assertSame('arg1', $stub->returnArg('arg1'));
-        $this->assertSame($stub, $stub->returnArg('arg1'));
+    /**
+     * Used for testMocking().
+     */
+    public function calledFunction(object $object, $arg1)
+    {
+        return 'Called: ' . $object->internalApiCall('arg-00' . $arg1);
+    }
+
+    /**
+     * Used for testMocking().
+     */
+    public function internalApiCall($arg2)
+    {
+        return 'Api with ' . $arg2;
+    }
+
+    /**
+     * @expectedException        Exception
+     * @expectedExceptionCode    22
+     * @expectedExceptionMessage Message
+     * @group in
+     */
+    public function testExceptions(): void
+    {
+        $stub = $this->createStub(static::class);
+        $stub->method('setUp')->will($this->throwException(new Exception('Message', 22)));
+
+        $this->expectException(Exception::class);
+        $stub->setUp();
     }
 }
