@@ -81,29 +81,29 @@ grumphp:
       #       additional_modifiers: ''
       #       allow_detached_head: true
 
-      git_commit_message:
-        allow_empty_message: false
-        enforce_capitalized_subject: true
-        enforce_no_subject_trailing_period: true
-        enforce_single_lined_subject: true
-        max_subject_width: 120
-        max_body_width: 500
-        matchers:
-            Must contain a short description: '/.+/'
-        case_insensitive: false
-        multiline: false
-        metadata:
-            priority: 100
+    #   git_commit_message:
+    #     allow_empty_message: false
+    #     enforce_capitalized_subject: true
+    #     enforce_no_subject_trailing_period: true
+    #     enforce_single_lined_subject: true
+    #     max_subject_width: 120
+    #     max_body_width: 500
+    #     matchers:
+    #         Must contain a short description: '/.+/'
+    #     case_insensitive: false
+    #     multiline: false
+    #     metadata:
+    #         priority: 100
 
       # only with git add and git commit
-      git_blacklist:
-          keywords:
-              - "var_dump"
-          whitelist_patterns: 
-            - /^src\/(.*)/
-          triggered_by: ['php']
-          regexp_type: G
-          match_word: false
+    #   git_blacklist:
+    #       keywords:
+    #           - "var_dump"
+    #       whitelist_patterns: 
+    #         - /^src\/(.*)/
+    #       triggered_by: ['php']
+    #       regexp_type: G
+    #       match_word: false
 
       # max git filesize
       # file_size:

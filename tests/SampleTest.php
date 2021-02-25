@@ -70,7 +70,6 @@ class SampleTest extends TestCase
      *
      * @see https://phpunit.readthedocs.io/en/9.5/annotations.html
      *
-     * @covers       ::sample
      * @dataProvider dataProviderSample
      * @group        in
      * @large        (longer time)
@@ -96,14 +95,11 @@ class SampleTest extends TestCase
     /**
      * @see https://phpunit.readthedocs.io/en/9.5/assertions.html
      *
-     * @covers               ::foo
      * @depends              testSample
      * @group                in
      * @requires             PHP >= 7.1
      * @preserveGlobalState  disabled
      * @testWith             ["alternative_to", "dataProvider"]
-     *
-     * @uses \stdClass, SampleTest
      */
     public function testAssertions(): void
     {
