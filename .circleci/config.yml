@@ -16,7 +16,7 @@ jobs:
       - run: sudo apt update 
 
       # PHP CircleCI 2.0 Configuration File
-      - run: sudo docker-php-ext-install zip
+      - run: sudo docker-php-ext-install xdebug zip
 
       # Download and cache dependencies
       - restore_cache:

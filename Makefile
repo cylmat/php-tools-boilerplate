@@ -47,7 +47,7 @@ cover:
 	phpdbg -qrr bin/phpunit -c phpunit.xml --coverage-html var/coverage
 	mv var/coverage public/
 	  # for one file
-	# XDEBUG_MODE=coverage bin/phpunit -c phpunit.xml test/path/ClassTest.php  --coverage-html=var/coverage
+	XDEBUG_MODE=coverage bin/phpunit -c phpunit.xml tests/SampleTest.php  --coverage-html=var/coverage
 	
 testing:
 	vendor/bin/paratest -c phpunit.xml
