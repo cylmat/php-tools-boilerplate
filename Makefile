@@ -22,10 +22,10 @@ compose-update:
 # LINTERS #
 ###########
 
+# NO autofix before commit on GrumPhp
 fix:
-	vendor/bin/phpcbf --colors --standard=lint/phpcs.xml -s
-	# PHP-cs-fixer: NO autofix before commit on GrumPhp
-	vendor/bin/php-cs-fixer fix --config lint/.php_cs
+	vendor/bin/phpcbf --colors --standard=lint/phpcs.xml -v
+	vendor/bin/php-cs-fixer fix --config lint/.php_cs -v
 	# phpparser: Work line by line, use only with GrumPhp
 
 linters:
@@ -33,7 +33,7 @@ linters:
 	vendor/bin/phpcpd src
 	vendor/bin/phpcs --colors --standard=lint/phpcs.xml -s
 	vendor/bin/parallel-lint src tests --exclude vendor
-	vendor/bin/phpmd src ansi lint/phpmd.xml --reportfile=STDOUT
+	vendor/bin/phpmd src,tests ansi lint/phpmd.xml --reportfile=STDOUT
 	vendor/bin/phpstan analyse --level 8 --configuration lint/phpstan.neon
 
 ###########
@@ -41,18 +41,17 @@ linters:
 ###########
 
 test-gen:
-	vendor/bin/phpunitgen --config=config/phpunitgen.yml src tests
+	vendor/bin/phpunitgen --config=phpunitgen.yml src tests
 
 cover:
-	phpdbg -qrr vendor/bin/phpunit -c config/phpunit.xml --coverage-html var/coverage
+	phpdbg -qrr bin/phpunit -c phpunit.xml --coverage-html var/coverage
 	mv var/coverage public/
 	  # for one file
 	# XDEBUG_MODE=coverage bin/phpunit -c phpunit.xml test/path/ClassTest.php  --coverage-html=var/coverage
-
+	
 testing:
-	vendor/bin/infection --configuration=lint/infection.json
-	vendor/bin/paratest -c config/phpunit.xml
+	vendor/bin/paratest -c phpunit.xml
 	  # or
-	vendor/bin/pest --configuration config/phpunit.xml
+	vendor/bin/pest -c phpunit.xml
 	  # or
-	vendor/bin/phpunit --configuration config/phpunit.xml
+	vendor/bin/phpunit -c phpunit.xml

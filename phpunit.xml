@@ -39,7 +39,7 @@
     </testsuite>
   </testsuites>
 
-  <coverage cacheDirectory="var/cache" processUncoveredFiles="true">
+  <!--coverage cacheDirectory="var/cache" processUncoveredFiles="true">
     <include>
       <directory suffix=".php">src</directory>
     </include>
@@ -47,7 +47,7 @@
       <html outputDirectory="var/coverage/html-coverage" lowUpperBound="50" highLowerBound="90"/>
       <text outputFile="var/coverage/text-coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
   </report>
-  </coverage>
+  </coverage-->
 
   <logging>
       <testdoxHtml outputFile="var/log/phpunit-testdox.html"/>

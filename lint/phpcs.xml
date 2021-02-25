@@ -26,17 +26,10 @@
     <exclude-pattern>**/Resources/*</exclude-pattern>
     <exclude-pattern>lint/*</exclude-pattern>
 
-    <!-- PSR12 -->
+    <!-- Include the whole PSR12 standard -->
     <rule ref="PSR12">
         <exclude name="Generic.Files.LineLength"/>
         <exclude name="Generic.Commenting.DocComment.MissingShort"/>
-    </rule>
-
-    <!-- Include the whole PEAR standard -->
-    <rule ref="PEAR">
-        <exclude name="PEAR.NamingConventions.ValidFunctionName"/>
-        <exclude name="PEAR.NamingConventions.ValidVariableName"/>
-        <exclude name="PEAR.Commenting"/>
     </rule>
 
     <!-- Private methods MUST not be prefixed with an underscore -->
@@ -52,8 +45,6 @@
     <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
         <type>error</type>
     </rule>
-
-    neric\Sniffs\Commenting;
 
     <!-- Ban some functions -->
     <rule ref="Generic.PHP.ForbiddenFunctions">

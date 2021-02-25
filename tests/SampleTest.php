@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests;
 
 use App\Sample;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 /**
  * @covers \App\Sample
@@ -22,13 +25,21 @@ class SampleTest extends TestCase
      *
      * Used for assertClassHasStaticAttribute
      */
-    private static $s_attr;
+    private static $sAttr;
 
+    /**
+     * @before                   (before EACH tests)
+     * @coversNothing
+     * @doesNotPerformAssertions
+     */
     public function setUp(): void
     {
+        $this->attr = null;
+        self::$sAttr = null;
     }
 
     /**
+     * @afterClass (after all tests done)
      * Used for assertObjectEquals.
      */
     public function myEqual(self $other): bool
@@ -40,34 +51,67 @@ class SampleTest extends TestCase
         return false;
     }
 
-    /**
-     * @see https://phpunit.readthedocs.io/en/9.5/annotations.html
-     *
-     * @after: after test method
-     *
-     * @group in
-     */
-    public function testSample(): void
+    public function dataProviderSample()
     {
-        $sample = new Sample();
-        $this->assertEquals(5, $sample->sample(4));
+        // yield ['arg1', 'arg2'];
+        return [
+            ['arg3', 'arg4'],
+            ['arg5', 'arg6'],
+        ];
     }
 
     /**
-     * @see https://phpunit.readthedocs.io/en/9.5/assertions.html.
+     * @param mixed $arg1
+     * @param mixed $arg2
      *
-     * @group in
+     * @see https://phpunit.readthedocs.io/en/9.5/annotations.html
+     *
+     * @covers       ::sample
+     * @dataProvider dataProviderSample
+     * @group        in
+     * @large        (longer time)
+     * @requires     extension ctype
+     * @test         (alternative for naming function test...)
+     * @ticket       id-1234 (alias for @group)
+     */
+    public function testSample($arg1, $arg2): void
+    {
+        $sample = new Sample($arg1, $arg2);
+        $this->assertEquals(5, $sample->sample(4));
+
+        // Stop here and mark this test as incomplete.
+        // $this->markTestIncomplete('This test has not been implemented yet.');
+
+        if (!extension_loaded('ctype')) {
+            $this->markTestSkipped(
+                'The MySQLi extension is not available.'
+            );
+        }
+    }
+
+    /**
+     * @see https://phpunit.readthedocs.io/en/9.5/assertions.html
+     *
+     * @covers               ::foo
+     * @depends              testSample
+     * @group                in
+     * @requires             PHP >= 7.1
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     * @testWith             ["alternative_to", "dataProvider"]
+     *
+     * @uses \stdClass, SampleTest
      */
     public function testAssertions(): void
     {
         $this->assertArrayHasKey('foo', ['foo' => 'baz']);
         $this->assertClassHasAttribute('attr', SampleTest::class);
-        $this->assertClassHasStaticAttribute('s_attr', SampleTest::class);
+        $this->assertClassHasStaticAttribute('sAttr', SampleTest::class);
         $this->assertContains(4, [1, 4, 3]);
         $this->assertStringContainsString('foo', 'bar is foo');
         $this->assertStringContainsStringIgnoringCase('Foo', 'bar is foo');
         $this->assertContainsOnly('string', ['str1', 'str2']); //only type 'string'
-        $this->assertContainsOnlyInstancesOf(\stdClass::class, [new \stdClass()]);
+        $this->assertContainsOnlyInstancesOf(stdClass::class, [new stdClass()]);
         $this->assertCount(1, ['foo']);
         $this->assertDirectoryExists(__DIR__);
         $this->assertDirectoryIsReadable(__DIR__);
@@ -90,15 +134,12 @@ class SampleTest extends TestCase
         $this->assertInstanceOf(static::class, new static());
         $this->assertIsArray([]);
         $this->assertIsBool(true);
-        $this->assertIsCallable(
-            function () {
-            }
-        );
+        //$this->assertIsCallable(function () {});
         $this->assertIsFloat(1.0);
         $this->assertIsInt(5);
         $this->assertIsIterable([]);
         $this->assertIsNumeric('1');
-        $this->assertIsObject(new \stdClass());
+        $this->assertIsObject(new stdClass());
         $this->assertIsNotResource(null); // #resource
         $this->assertIsScalar('string');
         $this->assertIsString('string');
@@ -129,9 +170,32 @@ class SampleTest extends TestCase
     }
 
     /**
-     * @todo
+     * Stubs returns configured values.
      */
-    public function testMock()
+    public function testStub()
     {
+        // Create a stub for the stdClass class.
+        $stub = $this->createStub(stdClass::class);
+
+        // or
+        $stub = $this->getMockBuilder(stdClass::class)
+            ->disableOriginalConstructor()
+            ->disableOriginalClone()
+            ->disableArgumentCloning()
+            ->disallowMockingUnknownTypes()
+            ->getMock()
+        ;
+
+        // Configure the stub.
+        $stub->method('doSomething')->willReturn('foo');
+        $stub->method('returnArg')->will($this->returnArgument(0));
+        $stub->method('returnSelf')->will($this->returnSelf());
+
+        $stub->expects($this->any())->method('doSomething')->willReturn('foo');
+
+        // Assert return values.
+        $this->assertSame('foo', $stub->doSomething());
+        $this->assertSame('arg1', $stub->returnArg('arg1'));
+        $this->assertSame($stub, $stub->returnArg('arg1'));
     }
 }
