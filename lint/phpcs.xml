@@ -21,7 +21,6 @@
     <arg value="w"/><!-- print warnings and errors -->
 
     <file>../src/</file>
-    <file>../tests/</file>
 
     <exclude-pattern>**/Resources/*</exclude-pattern>
     <exclude-pattern>lint/*</exclude-pattern>

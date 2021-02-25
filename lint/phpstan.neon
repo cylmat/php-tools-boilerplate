@@ -28,7 +28,6 @@ parameters:
     # Analysed folders
     paths:
         - ../src
-        - ../tests
 
     excludes_analyse:
         # ignore

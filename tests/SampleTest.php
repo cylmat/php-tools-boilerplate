@@ -34,11 +34,11 @@ class SampleTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->attr = null;
-        self::$sAttr = null;
     }
 
     /**
+     * @return bool
+     *
      * @afterClass (after all tests done)
      * Used for assertObjectEquals.
      */
@@ -51,7 +51,12 @@ class SampleTest extends TestCase
         return false;
     }
 
-    public function dataProviderSample()
+    /**
+     * @return array
+     * 
+     * @runInSeparateProcess (! failed with -Pest-)
+     */
+    public function dataProviderSample(): array
     {
         // yield ['arg1', 'arg2'];
         return [
@@ -74,9 +79,9 @@ class SampleTest extends TestCase
      * @test         (alternative for naming function test...)
      * @ticket       id-1234 (alias for @group)
      */
-    public function testSample($arg1, $arg2): void
+    public function testSample($arg1, $arg2)
     {
-        $sample = new Sample($arg1, $arg2);
+        $sample = new Sample();
         $this->assertEquals(5, $sample->sample(4));
 
         // Stop here and mark this test as incomplete.
@@ -96,13 +101,12 @@ class SampleTest extends TestCase
      * @depends              testSample
      * @group                in
      * @requires             PHP >= 7.1
-     * @runInSeparateProcess
      * @preserveGlobalState  disabled
      * @testWith             ["alternative_to", "dataProvider"]
      *
      * @uses \stdClass, SampleTest
      */
-    public function testAssertions(): void
+    public function testAssertions()
     {
         $this->assertArrayHasKey('foo', ['foo' => 'baz']);
         $this->assertClassHasAttribute('attr', SampleTest::class);
@@ -147,7 +151,8 @@ class SampleTest extends TestCase
         $this->assertIsWritable(__FILE__);
         //$this->assertJsonFileEqualsJsonFile(); // file
         //$this->assertJsonStringEqualsJsonFile(); // file
-        $this->assertJsonStringEqualsJsonString(json_encode(['Mascot' => 'Tux']), json_encode(['Mascot' => 'Tux']));
+        $json = json_encode(['Mascot' => 'Tux']);
+        $this->assertJsonStringEqualsJsonString($json, $json);
         $this->assertLessThan(5, 4);
         $this->assertLessThanOrEqual(5, 4);
         $this->assertNan(acos(8)); // wrong float
@@ -172,7 +177,7 @@ class SampleTest extends TestCase
     /**
      * Stubs returns configured values.
      */
-    public function testStub()
+    public function testStub(): void
     {
         // Create a stub for the stdClass class.
         $stub = $this->createStub(stdClass::class);

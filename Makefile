@@ -32,16 +32,16 @@ linters:
 	PHAN_ALLOW_XDEBUG=1 vendor/bin/phan --allow-polyfill-parser --config-file lint/phan.config.php
 	vendor/bin/phpcpd src
 	vendor/bin/phpcs --colors --standard=lint/phpcs.xml -s
-	vendor/bin/parallel-lint src tests --exclude vendor
-	vendor/bin/phpmd src,tests ansi lint/phpmd.xml --reportfile=STDOUT
-	vendor/bin/phpstan analyse --level 8 --configuration lint/phpstan.neon
+	vendor/bin/parallel-lint src --exclude vendor
+	vendor/bin/phpmd src ansi lint/phpmd.xml --reportfile=STDOUT
+	vendor/bin/phpstan analyse --level 8 --configuration lint/phpstan.neon --memory-limit 256M
 
 ###########
 # TESTING #
 ###########
 
 test-gen:
-	vendor/bin/phpunitgen --config=phpunitgen.yml src tests
+	vendor/bin/phpunitgen --config=phpunitgen.yml src
 
 cover:
 	phpdbg -qrr bin/phpunit -c phpunit.xml --coverage-html var/coverage

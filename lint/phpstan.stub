@@ -7,9 +7,5 @@ class Sample
      * 
      * @return int
      */ 
-    public function sample(int $sample): int
-    {
-        $sample++;
-        return $sample;
-    }
+    public function sample(int $sample): int;
 }

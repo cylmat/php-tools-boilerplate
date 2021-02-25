@@ -30,7 +30,6 @@ return [
      */
     'directory_list' => [
         __DIR__ . '/../src',
-        __DIR__ . '/../tests',
 
         // Avoid UndeclaredExtendedClass error
         __DIR__ . '/../vendor/phpunit',

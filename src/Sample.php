@@ -12,13 +12,12 @@ class Sample
         // @codeCoverageIgnoreStart
         echo '';
         // @codeCoverageIgnoreEnd
-
-        echo ''; // @codeCoverageIgnore
     }
 
     public function sample(int $sample): int
     {
         ++$sample;
+        echo ''; // @codeCoverageIgnore
 
         return $sample;
     }
