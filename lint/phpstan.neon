@@ -31,6 +31,8 @@ parameters:
 
     excludes_analyse:
         # ignore
+        - ../spec
+        - ../tests
         - **/Resources/*
     
     # Stub files, readed for PhpDoc inside
