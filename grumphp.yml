@@ -272,8 +272,6 @@ grumphp:
       # BUG, cannot open file:
       # phpunit.xml need to be on the root folder
       paratest:
-          metadata:
-              priority: 1
           # configuration: ~
           # processes: auto
           # functional: true
@@ -282,8 +280,8 @@ grumphp:
           # phpunit: null
           # runner: null
           # coverage-clover: null
-          # coverage-html: null
-          # coverage-php: null
+          coverage-html: true
+          coverage-php: true
           # coverage-xml: null
           # log-junit: null
           # testsuite: null
