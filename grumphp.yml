@@ -280,12 +280,12 @@ grumphp:
           # phpunit: null
           # runner: null
           # coverage-clover: null
-          coverage-html: coverhtml
-          coverage-php: coverphp
+          # coverage-html: coverhtml
+          # coverage-php: coverphp
           # coverage-xml: null
           # log-junit: null
           # testsuite: null
-          verbose: true
+          # verbose: true
 
       ### Beautify PhpUnit report
       # github: pestphp/pest
