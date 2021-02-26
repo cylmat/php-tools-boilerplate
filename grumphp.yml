@@ -272,6 +272,8 @@ grumphp:
       # BUG, cannot open file:
       # phpunit.xml need to be on the root folder
       paratest:
+          metadata:
+              priority: 1
           # configuration: ~
           # processes: auto
           # functional: true
