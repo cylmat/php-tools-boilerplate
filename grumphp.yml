@@ -280,8 +280,8 @@ grumphp:
           # phpunit: null
           # runner: null
           # coverage-clover: null
-          coverage-html: true
-          coverage-php: true
+          coverage-html: coverhtml
+          coverage-php: coverphp
           # coverage-xml: null
           # log-junit: null
           # testsuite: null
