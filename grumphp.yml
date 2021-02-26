@@ -285,7 +285,7 @@ grumphp:
           # coverage-xml: null
           # log-junit: null
           # testsuite: null
-          # verbose: false
+          verbose: true
 
       ### Beautify PhpUnit report
       # github: pestphp/pest
