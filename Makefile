@@ -44,14 +44,16 @@ test-gen:
 	vendor/bin/phpunitgen --config=phpunitgen.yml src
 
 cover:
-	phpdbg -qrr bin/phpunit -c phpunit.xml --coverage-html var/coverage
-	mv var/coverage public/
-	  # for one file
-	XDEBUG_MODE=coverage bin/phpunit -c phpunit.xml tests/SampleTest.php  --coverage-html=var/coverage
+	XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html=var/unit-coverage
+	phpdbg -qrr vendor/bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
+	phpdbg -qrr vendor/bin/phpspec run -c phpspec.yml
 	
 testing:
+	# paratest or pest or phpunit
 	vendor/bin/paratest -c phpunit.xml
-	  # or
 	vendor/bin/pest -c phpunit.xml
-	  # or
 	vendor/bin/phpunit -c phpunit.xml
+
+	# Spec
+	echo 'N' | vendor/bin/phpspec describe App/Sample -q
+	vendor/bin/phpspec run --config=phpspec.yml

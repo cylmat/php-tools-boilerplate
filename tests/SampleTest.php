@@ -81,6 +81,7 @@ class SampleTest extends TestCase
     {
         $sample = new Sample();
         $this->assertEquals(5, $sample->sample(4));
+        $this->assertEquals('it is text', $sample->sampleText('text'));
 
         // Stop here and mark this test as incomplete.
         // $this->markTestIncomplete('This test has not been implemented yet.');

@@ -21,4 +21,19 @@ class Sample
 
         return $sample;
     }
+
+    public function sampleText(string $sample): string
+    {
+        return 'it is ' . $sample;
+    }
+
+    // Used for mocking tests.
+    public function sampleObject(object $object, string $param1=''): string
+    {
+        if (method_exists($object, 'my_method') && $param1 !== '') {
+            return $object->my_method($param1);
+        } else  {
+            return get_class($object);
+        }
+    }
 }
