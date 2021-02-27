@@ -10,14 +10,17 @@
 * [VSCode](code.visualstudio.com) VSCode useful extensions
 
 ## Linters
-* [Composer-normalize v2](https://github.com/ergebnis/composer-normalize)
 * [Codesniffer v3](https://github.com/squizlabs/PHP_CodeSniffer)
+* [Composer-normalize v2](https://github.com/ergebnis/composer-normalize)
 * [Phan v4](https://github.com/phan/phan/wiki)
 * [Php-cs-fixer v2](https://cs.symfony.com/)
 * [Php-parser v4](https://github.com/nikic/PHP-Parser)
 * [Php-parallel-lint v1](https://github.com/php-parallel-lint/PHP-Parallel-Lint)
 * [PhpCpd v6](https://github.com/sebastianbergmann/phpcpd)
 * [PhpMd v2](https://phpmd.org/)
+
+## Behavior
+* [Behat v3](https://behat.org)
 * [PhpStan v0.12](https://phpstan.org/)
 
 ## Testing

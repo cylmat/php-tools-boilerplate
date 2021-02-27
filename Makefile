@@ -36,6 +36,14 @@ linters:
 	vendor/bin/phpmd src ansi lint/phpmd.xml --reportfile=STDOUT
 	vendor/bin/phpstan analyse --level 8 --configuration lint/phpstan.neon --memory-limit 256M
 
+############
+# BEHAVIOR #
+############
+
+	# Spec
+	echo 'N' | vendor/bin/phpspec describe App/Sample -q --config=phpspec.yml
+	vendor/bin/phpspec run --config=phpspec.yml
+
 ###########
 # TESTING #
 ###########
@@ -54,6 +62,3 @@ testing:
 	vendor/bin/pest -c phpunit.xml
 	vendor/bin/phpunit -c phpunit.xml
 
-	# Spec
-	echo 'N' | vendor/bin/phpspec describe App/Sample -q
-	vendor/bin/phpspec run --config=phpspec.yml

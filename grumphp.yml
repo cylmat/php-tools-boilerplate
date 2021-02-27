@@ -257,6 +257,27 @@ grumphp:
 
       
 
+      ############
+      # BEHAVIOR #
+      ############
+
+      ### Behat
+      # github: behat/behat
+      # behat:
+      #       config: ~
+      #      format: ~
+      #      stop_on_failure: false
+
+      ### PhpSpec
+      # github: phpspec/phpspec
+      phpspec:
+            config_file: phpspec.yml
+      #       format: ~
+      #       stop_on_failure: false
+      #       verbose: false
+
+      
+
       ###########
       # TESTING #
       ###########
@@ -305,17 +326,9 @@ grumphp:
           # group: []
           # always_execute: true
 
-      ### PhpSpec
-      # github: phpspec/phpspec
-      # phpspec:
-      #       config_file: ~
-      #       format: ~
-      #       stop_on_failure: false
-      #       verbose: false
-
       
 
-      ##############
+     ##############
       # AUTOMATION #
       ##############
 
