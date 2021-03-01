@@ -61,4 +61,3 @@ testing:
 	vendor/bin/paratest -c phpunit.xml
 	vendor/bin/pest -c phpunit.xml
 	vendor/bin/phpunit -c phpunit.xml
-

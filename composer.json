@@ -11,7 +11,6 @@
         "ext-iconv": "*"
     },
     "require-dev": {
-        "behat/behat": "^3.8",
         "brianium/paratest": "^6.2",
         "ergebnis/composer-normalize": "^2.13",
         "friends-of-phpspec/phpspec-code-coverage": "^6.0",

@@ -261,13 +261,6 @@ grumphp:
       # BEHAVIOR #
       ############
 
-      ### Behat
-      # github: behat/behat
-      # behat:
-      #       config: ~
-      #      format: ~
-      #      stop_on_failure: false
-
       ### PhpSpec
       # github: phpspec/phpspec
       phpspec:
@@ -328,15 +321,10 @@ grumphp:
 
       
 
-     ##############
+      ##############
       # AUTOMATION #
       ##############
 
-      # ant:
-      #       build_file: ~
-      #       task: ~
-      #       triggered_by: [php]
-     
       # automated php tasks
       # phing:
       #       build_file: ~
@@ -356,31 +344,11 @@ grumphp:
 
       # make tasks
       # make:
-      #       make_file: ~
-      #       task: ~
+      #       make_file: Makefile
+      #       task: build
       #       triggered_by: [php]
 
       # shell:
-      # scripts: []
-      # triggered_by: [php]
-
-      ##############
-      # OTHER LINT #
-      ##############
-
-      # xmllint:
-      #       ignore_patterns: []
-      #       load_from_net: false
-      #       x_include: false
-      #       dtd_validation: false
-      #       scheme_validation: false
-      #       triggered_by: ['xml']
-
-      # yamllint:
-      #       whitelist_patterns: []
-      #       ignore_patterns: []
-      #       object_support: false
-      #       exception_on_invalid_type: false
-      #       parse_constant: false
-      #       parse_custom_tags: false
+      #     scripts: []
+      #     triggered_by: [php]
       

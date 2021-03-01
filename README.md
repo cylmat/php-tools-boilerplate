@@ -20,7 +20,6 @@
 * [PhpMd v2](https://phpmd.org/)
 
 ## Behavior
-* [Behat v3](https://behat.org)
 * [PhpStan v0.12](https://phpstan.org/)
 
 ## Testing
