@@ -28,12 +28,12 @@ class Sample
     }
 
     // Used for mocking tests.
-    public function sampleObject(object $object, string $param1=''): string
+    public function sampleObject(object $object, string $param1 = ''): string
     {
-        if (method_exists($object, 'my_method') && $param1 !== '') {
+        if (method_exists($object, 'my_method') && '' !== $param1) {
             return $object->my_method($param1);
-        } else  {
-            return get_class($object);
         }
+
+        return get_class($object);
     }
 }
