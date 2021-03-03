@@ -64,7 +64,7 @@ jobs:
 
   ### finish: Coveralls.io
   finish:
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - name: Coveralls Finished
