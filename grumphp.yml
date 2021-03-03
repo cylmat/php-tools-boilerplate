@@ -325,18 +325,6 @@ grumphp:
       # AUTOMATION #
       ##############
 
-      # automated php tasks
-      # phing:
-      #       build_file: ~
-      #       task: ~
-      #       triggered_by: [php]
-
-      # Automated PHP tasks
-      # github: consolidation/robo
-      # robo:
-      #       load_from: ~
-      #       task: ~
-      #       triggered_by: [php]
       
       #############
       # SCRIPTING #
