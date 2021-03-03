@@ -21,7 +21,6 @@ on:
 ###
 jobs:
   build:
-
     runs-on: ubuntu-latest
     name: Build and test
     strategy:
@@ -63,12 +62,13 @@ jobs:
       run: ./vendor/bin/grumphp run --testsuite=tests
 
   ### finish: Coveralls.io
-  finish:
+  cover:
     needs: build
     runs-on: ubuntu-latest
+    name: Coveralls
     steps:
     - name: Coveralls Finished
-      uses: coverallsapp/github-action@master
+      uses: coverallsapp/github-action@main
       with:
         github-token: ${{ secrets.github_token }}
         parallel-finished: true
