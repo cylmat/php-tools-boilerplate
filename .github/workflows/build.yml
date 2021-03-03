@@ -16,6 +16,9 @@ on:
   pull_request:
     branches: [ main ]
 
+###
+# Jobs
+###
 jobs:
   build:
 
@@ -58,3 +61,14 @@ jobs:
 
     - name: Run GrumPhp tests
       run: ./vendor/bin/grumphp run --testsuite=tests
+
+  ### finish: Coveralls.io
+  finish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        parallel-finished: true

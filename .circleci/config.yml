@@ -4,6 +4,17 @@
 #
 version: 2
 
+###
+# Workflows
+###
+workflows:
+  build_and_test:
+    jobs:
+      - build
+
+###
+# Jobs
+###
 jobs:
   build:
     docker:
