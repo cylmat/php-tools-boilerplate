@@ -42,12 +42,15 @@ grumphp:
             - phpparser
             - phpcsfixer
             # ...then
-            # phan (need 'php-ast' extension)
             - phpcpd
             - phpcs
             - phplint
             - phpmd
             - phpstan
+
+            # "make" run phan from makefile 
+            # (cause need 'php-ast' extension)
+            - make
 
       tests:
           tasks:
@@ -187,7 +190,7 @@ grumphp:
 
       ### Static analyzer 
       # github: phan/phan
-      # Err: Need php-ast extension, have to run from cli
+      # Need php-ast extension, have to run from cli
       # phan:
       #       config_file: lint/phan.config.php
       #       output_mode: text
@@ -275,14 +278,6 @@ grumphp:
       # TESTING #
       ###########
 
-      ### Full-stack tests
-      # github: codeception/codeception
-      # codeception:
-      #       config_file: ~
-      #       fail_fast: false
-      #       suite: ~
-      #       test: ~
-
       ### Php paralleles tests
       # github: brianium/paratest
       # BUG, cannot open file:
@@ -331,10 +326,10 @@ grumphp:
       #############
 
       # make tasks
-      # make:
-      #       make_file: Makefile
-      #       task: build
-      #       triggered_by: [php]
+      make:
+            make_file: Makefile
+            task: phan
+            triggered_by: [php]
 
       # shell:
       #     scripts: []
