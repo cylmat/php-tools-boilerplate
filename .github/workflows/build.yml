@@ -60,14 +60,4 @@ jobs:
 
     - name: Run GrumPhp tests
       run: ./vendor/bin/grumphp run --testsuite=tests
-
-  ### finish: Coveralls.io
-  cover:
-    needs: build
-    runs-on: ubuntu-latest
-    name: Coveralls
-    steps:
-    - name: Coveralls Finished
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.github_token }}
+      
