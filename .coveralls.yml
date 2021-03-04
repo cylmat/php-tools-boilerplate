@@ -1,0 +1,25 @@
+# .coveralls.yml sample configuration
+
+# cli
+# coveralls --coverage_clover=build/logs/my-clover.xml
+
+# same as Ruby lib
+# repo_token: your_token # should be kept secret!
+# service_name: travis-pro # travis-ci or travis-pro
+
+# for php-coveralls
+# coverage_clover: build/logs/clover.xml
+# json_path: build/logs/coveralls-upload.json
+
+# single file
+# coverage_clover: build/logs/clover.xml
+
+# # glob
+# coverage_clover: build/logs/clover-*.xml
+
+# # array
+# # specify files
+# coverage_clover:
+#   - build/logs/clover-Auth.xml
+#   - build/logs/clover-Db.xml
+#   - build/logs/clover-Validator.xml

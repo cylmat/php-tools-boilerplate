@@ -72,10 +72,10 @@ test-gen:
 cover:
 	XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html=var/unit-coverage
 	phpdbg -qrr vendor/bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
-	phpdbg -qrr vendor/bin/phpspec run -c phpspec.yml
 	
 testing:
-	# paratest or pest or phpunit
+	# paratest, pest or phpunit
 	vendor/bin/paratest -c phpunit.xml
 	vendor/bin/pest -c phpunit.xml
 	vendor/bin/phpunit -c phpunit.xml
+	vendor/bin/phpspec run -c phpspec.yml
