@@ -65,7 +65,7 @@ jobs:
   # COVERAGE #
   ############
     - name: Generate cover.xml
-      run: ./vendor/bin/phpunit --coverage-filter src --coverage-clover cover2.xml
+      run: ./vendor/bin/phpunit --coverage-filter src --coverage-clover coverage.xml
 
     - name: Codecov
       env: 
