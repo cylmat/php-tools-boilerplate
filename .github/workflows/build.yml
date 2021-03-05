@@ -64,9 +64,10 @@ jobs:
   ############
   # COVERAGE #
   ############
+    - name: Generate cover.xml
+      run: ./vendor/bin/phpunit --coverage-filter src --coverage-clover cover.xml
+
     - name: Codecov
       env: 
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      run: |
-        vendor/bin/phpunit --coverage-filter src --coverage-clover cover.xml
-        bash <(curl -s https://codecov.io/bash) -v || echo "Codecov did not collect coverage reports"
+      run: bash <(curl -s https://codecov.io/bash) -v || echo "Codecov did not collect coverage reports"
