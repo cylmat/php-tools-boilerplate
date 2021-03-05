@@ -1,5 +1,6 @@
 [![cylmat](https://github.com/cylmat/phpconfig/actions/workflows/build.yml/badge.svg)](https://github.com/cylmat/phpconfig/actions/workflows/build.yml)
 [![cylmat](https://circleci.com/gh/cylmat/phpconfig.svg?style=shield)](https://circleci.com/gh/cylmat/phpconfig)
+[![codecov](https://codecov.io/gh/cylmat/phpconfig/branch/main/graph/badge.svg?token=H8N2JE4E7J)](https://codecov.io/gh/cylmat/phpconfig)
 
 # Php 7 configuration bootstrap
 

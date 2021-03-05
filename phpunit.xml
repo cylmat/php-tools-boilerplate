@@ -51,6 +51,7 @@
       <directory suffix=".php">src</directory>
     </include>
     <report>
+      <clover outputFile="clover.xml"/>
       <html outputDirectory="var/coverage/html-coverage" lowUpperBound="50" highLowerBound="90"/>
       <text outputFile="var/coverage/text-coverage.txt" showUncoveredFiles="false" showOnlySummary="false"/>
     </report>

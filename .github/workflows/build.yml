@@ -60,4 +60,20 @@ jobs:
 
     - name: Run GrumPhp tests
       run: ./vendor/bin/grumphp run --testsuite=tests
-      
+
+  ############
+  # COVERAGE #
+  ############
+  cover:
+    runs-on: ubuntu-latest
+    name: Codecov
+    strategy:
+      fail-fast: false
+    
+    steps:
+    - name: Codecov
+      env: 
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: 
+        vendor/bin/phpunit --coverage-clover cover.xml
+        bash <(curl -s https://codecov.io/bash) -v || echo "Codecov did not collect coverage reports"
