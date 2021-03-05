@@ -64,13 +64,6 @@ jobs:
   ############
   # COVERAGE #
   ############
-  cover:
-    runs-on: ubuntu-latest
-    name: Codecov
-    strategy:
-      fail-fast: false
-    
-    steps:
     - name: Codecov
       env: 
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
