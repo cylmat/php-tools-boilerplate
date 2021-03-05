@@ -71,4 +71,4 @@ jobs:
     - name: Codecov
       env: 
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      run: bash <(curl -s https://codecov.io/bash) -v || echo "Codecov did not collect coverage reports"
+      run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
