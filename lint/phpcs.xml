@@ -23,8 +23,9 @@
     <file>../src/</file>
 
     <exclude-pattern>**/Resources/*</exclude-pattern>
-    <exclude-pattern>tests/*</exclude-pattern>
     <exclude-pattern>lint/*</exclude-pattern>
+    <exclude-pattern>spec/*</exclude-pattern>
+    <exclude-pattern>tests/*</exclude-pattern>
 
     <!-- Include the whole PSR12 standard -->
     <rule ref="PSR12">

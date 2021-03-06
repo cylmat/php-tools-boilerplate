@@ -16,9 +16,11 @@ on:
   pull_request:
     branches: [ main ]
 
+###
+# Jobs
+###
 jobs:
   build:
-
     runs-on: ubuntu-latest
     name: Build and test
     strategy:
@@ -29,6 +31,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    # Php, composer, ext, xdebug
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
@@ -53,8 +56,22 @@ jobs:
       # --no-plugins avoid to install grumphp's git hook
       run: composer install --prefer-dist --no-progress --no-plugins
 
+    ###########
+    # TESTING #
+    ###########
     - name: Run GrumPhp lints
       run: ./vendor/bin/grumphp run --testsuite=lint
 
     - name: Run GrumPhp tests
       run: ./vendor/bin/grumphp run --testsuite=tests
+
+    ############
+    # COVERAGE #
+    ############
+    - name: Generate coverage.xml
+      run: ./vendor/bin/phpunit --coverage-filter src --coverage-clover coverage.xml
+
+    - name: Codecov
+      env: 
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"

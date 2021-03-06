@@ -18,7 +18,6 @@
         "nikic/php-parser": "^4.10",
         "pestphp/pest": "^1.0",
         "phan/phan": "^4.0",
-        "phing/phing": "^2.16",
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "phpmd/phpmd": "^2.9",
         "phpro/grumphp": "^1.3",

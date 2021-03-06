@@ -13,9 +13,9 @@
  */
 
 $rules = [
-    '@PhpCsFixer' => true,  // https://cs.symfony.com/doc/ruleSets/PhpCsFixer.html
     '@PSR12' => true,       // https://cs.symfony.com/doc/ruleSets/PSR12.html
-    '@Symfony' => true,     // https://cs.symfony.com/doc/ruleSets/Symfony.html
+    //'@PhpCsFixer' => true,  // https://cs.symfony.com/doc/ruleSets/PhpCsFixer.html
+    //'@Symfony' => true,     // https://cs.symfony.com/doc/ruleSets/Symfony.html
 
     // sample...
     'array_syntax' => ['syntax' => 'short'],
@@ -23,7 +23,6 @@ $rules = [
     'no_short_echo_tag' => true,
     'no_useless_else' => true,
     'no_useless_return' => true,
-
     'php_unit_internal_class' => false,
 ];
 

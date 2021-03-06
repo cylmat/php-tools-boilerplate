@@ -4,6 +4,18 @@
 #
 version: 2
 
+###
+# Workflows
+###
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+
+###
+# Jobs
+###
 jobs:
   build:
     docker:
@@ -16,9 +28,8 @@ jobs:
       - run: sudo apt update 
 
       # PHP CircleCI 2.0 Configuration File
+      - run: sudo apt install -y zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
-
-      - run: pecl install xdebug
 
       # Download and cache dependencies
       - restore_cache:

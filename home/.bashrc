@@ -17,6 +17,7 @@
 # alias cp='cp -i'
 # alias mv='mv -i'
 
-if [ -e ./git_prompt.sh ]; then
-  ./git_prompt.sh
+if [[ -f ~/prompt/user_prompt.sh ]] 
+then
+  source ~/prompt/user_prompt.sh
 fi;
