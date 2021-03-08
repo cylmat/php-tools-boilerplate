@@ -12,16 +12,17 @@ suites:
         namespace: App
         psr4_prefix: App
         spec_prefix: spec
-        spec_path: spec
+        #> will be ./spec
+        spec_path: .
         src_path: '%paths.config%/src'
 
-        # pretty, html/h, dot, default: progress
+        #> Can be pretty, html/h, dot, default: progress
         formatter.name: pretty
         code_generation: false
         stop_on_failure: false
         verbose: true
 
-        composer_suite_detection: true 
+        # composer_suite_detection: true 
           # translates to:
           # - root_directory: '.'
           # - spec_prefix: spec

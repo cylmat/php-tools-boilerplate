@@ -84,73 +84,77 @@ class SampleSpec extends ObjectBehavior
     public function it_have_matchers()
     {
         // identity ===
-        $this->sampleText()->shouldBe('5');
-        $this->sampleText()->shouldBeEqualTo("exemple");
-        $this->sampleText()->shouldReturn('value');
-        $this->sampleText()->shouldEqual("exclusive");
+        $this->sampleText('t')->shouldBe('it is t');
+        $this->sampleText('t')->shouldBeEqualTo('it is t');
+        $this->sampleText('t')->shouldReturn('it is t');
+        $this->sampleText('t')->shouldEqual('it is t');
 
         // comparison ==
-        $this->sampleText()->shouldBeLike("my val");
+        $this->sampleText('test')->shouldBeLike('it is test');
 
         // approximate
-        $this->sample()->shouldBeApproximately(1.444447777, 1.0e-9);
+        // $this->sample(1)->shouldBeApproximately(1.00001, 1.0e-9);
 
         // throw
-        $this->shouldThrow('\InvalidArgumentException')->duringSampleText('arg');
-        $this->shouldThrow('\InvalidArgumentException')->during('sampleText', ['arg']);
-        $this->shouldTrigger(\E_USER_DEPRECATED, 'The method is deprecated')->duringSampleText('4');
+        // $this->shouldThrow('\InvalidArgumentException')->duringSampleText('arg');
+        // $this->shouldThrow('\InvalidArgumentException')->during('sampleText', ['arg']);
+        // $this->shouldTrigger(\E_USER_DEPRECATED, 'The method is deprecated')->duringSampleText('4');
 
         // type
-        $this->shouldHaveType('SampleClass');
-        $this->shouldReturnAnInstanceOf('SampleClass');
-        $this->shouldBeAnInstanceOf('SampleClass');
-        $this->shouldImplement('SampleClass');
+        $this->shouldHaveType('App\\Sample');
+        $this->shouldReturnAnInstanceOf('App\\Sample');
+        $this->shouldBeAnInstanceOf('App\\Sample');
+        $this->shouldImplement('App\\Sample');
 
         // Object state matcher is* ou has*
-        // calls isSample()
-        $this->shouldBeSample();
-        // calls hasSample()
-        $this->shouldHaveSample();
+        //      will calls isSample()
+        //$this->shouldBeSample();
+        //      will calls hasSample()
+        //$this->shouldHaveSample();
 
         // Count matcher (should return \Traversable)
-        $this->sample()->shouldHaveCount(1);
+        //$this->sample()->shouldHaveCount(1);
 
         //scalar
-        $this->sample()->shouldBeString();
-        $this->sample()->shouldBeArray();
+        //$this->sample()->shouldBeString();
+        //$this->sample()->shouldBeArray();
 
         // iterable (\Traversable) that contains with (===)
-        $this->sample()->shouldContain('Jane');
-        $this->sample()->shouldHaveKeyWithValue('leadRole', 'John');
-        $this->sample()->shouldHaveKey('France');
+        // $this->sample()->shouldContain('Jane');
+        // $this->sample()->shouldHaveKeyWithValue('leadRole', 'John');
+        // $this->sample()->shouldHaveKey('France');
 
         // same
-        $this->sample()->shouldIterateAs(new \ArrayIterator(['Jane', 'John'])); 
-        $this->sample()->shouldYield(new \ArrayIterator(['Jane', 'John']));
+        // $this->sample()->shouldIterateAs(new \ArrayIterator(['Jane', 'John'])); 
+        // $this->sample()->shouldYield(new \ArrayIterator(['Jane', 'John']));
 
         // with ==
-        $this->sample()->shouldIterateLike(new \ArrayIterator(['Jane Smith', 'John Smith']));
-        $this->sample()->shouldYieldLike(new \ArrayIterator(['Jane Smith', 'John Smith']));
+        // $this->sample()->shouldIterateLike(new \ArrayIterator(['Jane Smith', 'John Smith']));
+        // $this->sample()->shouldYieldLike(new \ArrayIterator(['Jane Smith', 'John Smith']));
 
         // with ===
-        $this->sample()->shouldStartIteratingAs(new \ArrayIterator(['Jane Smith']));
-        $this->sample()->shouldStartYielding(new \ArrayIterator(['Jane Smith']));
+        // $this->sample()->shouldStartIteratingAs(new \ArrayIterator(['Jane Smith']));
+        // $this->sample()->shouldStartYielding(new \ArrayIterator(['Jane Smith']));
 
         // String contains
-        $this->getTitle()->shouldContain('Wizard');
-        $this->getTitle()->shouldStartWith('The Wizard');
-        $this->getTitle()->shouldEndWith('of Oz');
-        $this->getTitle()->shouldMatch('/wizard/i');
+        // $this->getTitle()->shouldContain('Wizard');
+        // $this->getTitle()->shouldStartWith('The Wizard');
+        // $this->getTitle()->shouldEndWith('of Oz');
+        // $this->getTitle()->shouldMatch('/wizard/i');
 
         // With custom matchers
-        $this->getOptions()->shouldHaveKey('username');
-        $this->getOptions()->shouldHaveValue('diegoholiveira');
+        $this->sampleText('y')->shouldSampleCustom('it is y customs');
+        // $this->sample()->shouldHaveKey('username');
+        // $this->sample()->shouldHaveValue('diegoholiveira');
     }
 
     // Custom matchers //
     public function getMatchers(): array
     {
         return [
+            'sampleCustom' => function($returned, $testedValue) {
+                return $testedValue === "$returned customs" ? true : false;
+            },
             'haveKey' => function ($subject, $key) {
                 if (!array_key_exists($key, $subject)) {
                     throw new FailureException(sprintf(
