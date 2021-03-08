@@ -1,5 +1,12 @@
 SHELL := /bin/bash
 
+# define aaa
+# 	 my_shell_script -arg "${1}"
+# endef
+#
+# daemon-aaa:
+#    @$(call aaa, and aaa, and aaa)
+
 # Call when no arguments
 all:
 	@echo '';
@@ -58,9 +65,9 @@ linters:
 # BEHAVIOR #
 ############
 
-	# Spec
-	echo 'N' | vendor/bin/phpspec describe App/Sample -q --config=phpspec.yml
-	vendor/bin/phpspec run --config=phpspec.yml
+phpspec:
+	vendor/bin/phpspec describe App/Sample -q --config=phpspec.yml --no-code-generation
+	vendor/bin/phpspec run --config=phpspec.yml --fake	
 
 ###########
 # TESTING #

@@ -1,4 +1,6 @@
-# PHPSPEC
+###########
+# PHPSPEC #
+###########
 
 # WEBSITE
 # www.phpspec.net
@@ -10,7 +12,27 @@ suites:
         namespace: App
         psr4_prefix: App
         spec_prefix: spec
+        spec_path: spec
         src_path: '%paths.config%/src'
+
+        # pretty, html/h, dot, default: progress
+        formatter.name: pretty
+        code_generation: false
+        stop_on_failure: false
+        verbose: true
+
+        composer_suite_detection: true 
+          # translates to:
+          # - root_directory: '.'
+          # - spec_prefix: spec
+
+# Must implements PhpSpec\Matcher\Matcher interface
+# matchers:
+#     - Acme\Matchers\ValidJsonMatcher
+#     - Acme\Matchers\PositiveIntegerMatcher
+
+# Bootstrap php file
+# bootstrap: path/to/different-bootstrap.php
 
 extensions:
   # https://github.com/friends-of-phpspec/phpspec-code-coverage
