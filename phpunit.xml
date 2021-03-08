@@ -63,7 +63,7 @@
       <text outputFile="var/log/phpunit-logfile.txt"/>
   </logging>
 
-  <!-- @group annotation -->
+  <!-- "@group" annotation -->
   <groups>
     <!--include>
       <group>in</group>

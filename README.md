@@ -20,6 +20,9 @@
 * [PhpCpd v6](https://github.com/sebastianbergmann/phpcpd)
 * [PhpMd v2](https://phpmd.org/)
 
+## Coverage
+* [Codecov.io](https://codecov.io/)
+
 ## Behavior
 * [PhpStan v0.12](https://phpstan.org/)
 
