@@ -37,7 +37,7 @@ class SampleSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-          $this->shouldHaveType(Sample::class);
+        $this->shouldHaveType(Sample::class);
     }
 
     /**
@@ -146,6 +146,11 @@ class SampleSpec extends ObjectBehavior
         $this->sampleText('y')->shouldSampleCustom('it is y customs');
         // $this->sample()->shouldHaveKey('username');
         // $this->sample()->shouldHaveValue('diegoholiveira');
+
+        /* 
+         * If should...method is implemented in object
+         */
+        //$this->callOnWrappedObject('shouldHandle', array($somethingToHandle));
     }
 
     // Custom matchers //
@@ -168,5 +173,22 @@ class SampleSpec extends ObjectBehavior
                 return in_array($value, $subject);
             },
         ];
+    }
+
+    // https://github.com/phpspec/prophecy
+    public function prophecy_usage()
+    {
+        $this->prophet = new \Prophecy\Prophet;
+        // Mock object
+        $mock = $this->prophet->prophesize('App\Sample'); //class ObjectProphecy
+        $mock->willExtend('App\Sample');
+        $mock->willImplement('SessionHandlerInterface');
+        // Mock methods
+        $mock->sampleText('qwerty')->willReturn('customized return');
+
+        // Reveal
+        $dummy = $mock->reveal(); // Become a "real" object
+        // Check
+        $this->prophet->checkPredictions();
     }
 }

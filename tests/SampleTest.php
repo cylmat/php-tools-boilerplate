@@ -280,6 +280,26 @@ class SampleTest extends TestCase
         return 'Api with ' . $arg2;
     }
 
+    // https://github.com/phpspec/prophecy-phpunit
+    public function _tryTestWithPhpspecProphecy()
+    {
+        //$this->prophesize deprecated and removed in phpunit 10
+        // use phpspec/prophecy-phpunit instead
+        return; 
+
+        // create mock
+        $sample = $this->prophesize(Sample::class);
+
+        // define behavior
+        $sample->sampleText(\Prophecy\Argument::Exact('something'))->shouldBeCalled();
+
+        // Reveal the "real" object
+        $mocked = $sample->reveal();
+
+        // Call methode sampleText('something') 
+        $mocked->sampleText('something');
+    }
+
     /**
      * @expectedException        Exception
      * @expectedExceptionCode    22

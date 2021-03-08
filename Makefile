@@ -66,8 +66,8 @@ linters:
 ############
 
 phpspec:
-	vendor/bin/phpspec describe App/Sample -q --config=phpspec.yml --no-code-generation
-	vendor/bin/phpspec run --config=phpspec.yml --fake	
+	echo 'N' | vendor/bin/phpspec describe App/Sample -q --config=phpspec.yml
+	vendor/bin/phpspec run --config=phpspec.yml 
 
 ###########
 # TESTING #
@@ -76,13 +76,16 @@ phpspec:
 test-gen:
 	vendor/bin/phpunitgen --config=phpunitgen.yml src
 
+phpunit:
+	vendor/bin/phpunit -c phpunit.xml
+
 cover:
 	XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html=var/unit-coverage
 	phpdbg -qrr vendor/bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
-	
+
 testing:
 	# paratest, pest or phpunit
 	vendor/bin/paratest -c phpunit.xml
 	vendor/bin/pest -c phpunit.xml
-	vendor/bin/phpunit -c phpunit.xml
-	vendor/bin/phpspec run -c phpspec.yml
+	make phpunit
+	make phpspec
