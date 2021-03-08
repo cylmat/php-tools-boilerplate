@@ -188,12 +188,12 @@ class SampleSpec extends ObjectBehavior
     {
         $prophet = new \Prophecy\Prophet;
 
-        // Mock object
-        $dummies = $prophet->prophesize('App\Sample'); //class ObjectProphecy
+        // Stub object
+        $dummies = $prophet->prophesize(); //class ObjectProphecy
         $dummies->willExtend('App\Sample');
         $dummies->willImplement('SessionHandlerInterface');
 
-        // Mock methods
+        // Stub methods
         $dummies->sampleText('qwerty')
             ->willReturn('customized return');
             // ->willReturnArgument($index)
@@ -207,10 +207,11 @@ class SampleSpec extends ObjectBehavior
         );
 
         // define multiple returns...
-        $dummies->sample('everzet')->will(function ($args) use ($mock) {
+        $dummies->sampleText('everzet')->will(function ($args) use ($dummies) {
             // $mock->setName()->willReturn('everzet was the arguments');
             // $mock->setName(new \Prophecy\Argument\Token\ExactValueToken('everzet'));
             // $mock->setName(\Prophecy\Argument::exact('everzet'));
+            return 'testing ok';
         });
 
         /*
@@ -228,8 +229,33 @@ class SampleSpec extends ObjectBehavior
          */
 
         // Reveal
-        $stub = $mock->reveal(); // Become a "real" object
-        $stub->sampleText('123');
+        $stub = $dummies->reveal(); // Become a "real" object
+        $stub->sampleText('everzet') == 'testing ok';
+
+        /**
+         * Mock object
+         */
+        $dummies = $prophet->prophesize('App\Sample'); //class ObjectProphecy
+        
+        $dummies->sampleText('123')->shouldBeCalled();
+        $dummies->sampleText('two')->shouldBeCalledTimes(2);
+
+         /*
+        CallPrediction or shouldBeCalled()
+        NoCallsPrediction or shouldNotBeCalled() 
+        CallTimesPrediction or shouldBeCalledTimes($count) 
+        CallbackPrediction or should($callback)
+        */
+
+        // Reveal
+        $mock = $dummies->reveal(); // Become a "real" object
+        $mock->sampleText('123');
+        $mock->sampleText('two');
+        $mock->sampleText('two');
+
+        // Spy
+        $dummies->sampleText('two')->shouldHaveBeenCalled();
+
         // Check
         $prophet->checkPredictions();
     }
