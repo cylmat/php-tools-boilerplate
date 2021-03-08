@@ -35,6 +35,9 @@ class SampleSpec extends ObjectBehavior
         // cleanup
     }
 
+    /**
+     * All tests should begin with "it" or "its"...
+     */
     public function it_is_initializable()
     {
         $this->shouldHaveType(Sample::class);
@@ -175,20 +178,59 @@ class SampleSpec extends ObjectBehavior
         ];
     }
 
-    // https://github.com/phpspec/prophecy
-    public function prophecy_usage()
+    /**
+     * @see https://github.com/phpspec/prophecy
+     * 
+     *  doubles without behavior (dummies)
+     *  doubles with behavior, but no expectations (stubs)
+     */
+    public function it_prophecy_usage()
     {
-        $this->prophet = new \Prophecy\Prophet;
+        $prophet = new \Prophecy\Prophet;
+
         // Mock object
-        $mock = $this->prophet->prophesize('App\Sample'); //class ObjectProphecy
-        $mock->willExtend('App\Sample');
-        $mock->willImplement('SessionHandlerInterface');
+        $dummies = $prophet->prophesize('App\Sample'); //class ObjectProphecy
+        $dummies->willExtend('App\Sample');
+        $dummies->willImplement('SessionHandlerInterface');
+
         // Mock methods
-        $mock->sampleText('qwerty')->willReturn('customized return');
+        $dummies->sampleText('qwerty')
+            ->willReturn('customized return');
+            // ->willReturnArgument($index)
+            // ->willThrow($exception)
+            // ->will($callback)
+        $dummies->sampleText('123')->will(
+            new \Prophecy\Promise\ReturnPromise(['value'])
+            // new \Prophecy\Promise\ReturnPromise(['value'])
+            // new \Prophecy\Promise\ThrowPromise(['value']) 
+            // new \Prophecy\Promise\CallbackPromise(['value'])
+        );
+
+        // define multiple returns...
+        $dummies->sample('everzet')->will(function ($args) use ($mock) {
+            // $mock->setName()->willReturn('everzet was the arguments');
+            // $mock->setName(new \Prophecy\Argument\Token\ExactValueToken('everzet'));
+            // $mock->setName(\Prophecy\Argument::exact('everzet'));
+        });
+
+        /*
+         * Arguments
+        IdenticalValueToken or Argument::is($value)
+        ExactValueToken or Argument::exact($value) 
+        TypeToken or Argument::type($typeOrClass)
+        ObjectStateToken or Argument::which($method, $value) 
+        CallbackToken or Argument::that(callback) 
+        AnyValueToken or Argument::any() 
+        AnyValuesToken or Argument::cetera()
+        StringContainsToken or Argument::containingString($value) 
+        InArrayToken or Argument::in($array)
+        NotInArrayToken or Argument::notIn($array)
+         */
 
         // Reveal
-        $dummy = $mock->reveal(); // Become a "real" object
+        $stub = $mock->reveal(); // Become a "real" object
+        $stub->sampleText('123');
         // Check
-        $this->prophet->checkPredictions();
+        $prophet->checkPredictions();
     }
 }
