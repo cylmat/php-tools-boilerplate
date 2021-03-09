@@ -19,6 +19,7 @@ all:
 # BIN #
 #######
 
+# For deployer, environment DEPLOYER_REPOSITORY must be set
 deployer-bin:
 	curl -LO https://deployer.org/deployer.phar	
 	mv deployer.phar /usr/local/bin/dep
