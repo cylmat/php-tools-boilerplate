@@ -26,13 +26,17 @@ set('shared_dirs', []);
 set('writable_dirs', []);
 set('allow_anonymous_stats', false);
 
-// Hosts
+/** 
+ * Hosts
+ */
 
-#host('127.0.0.1')
+# host('http://sample.host')
 #    ->set('deploy_path', '/var/www/var/deployer/{{application}}');    
 set('deploy_path', '{{application_directory}}{{application}}');  
 
-// Tasks
+/**
+ * Tasks
+ */
 
 desc('Deploy your project');
 task('deploy', [
