@@ -27,9 +27,8 @@
 	editor = vim
 
 [credential]
-	username = <your_user>
 	helper = store --file ~/.git-credentials
-	helper = cache --timeout 0
+	helper = cache --timeout 30000
 
 #[credential "https://example.com"]#
 	#username = your_user
