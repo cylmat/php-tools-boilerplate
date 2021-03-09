@@ -4,10 +4,16 @@ namespace Deployer;
 require 'recipe/common.php';
 
 // Project name
-set('application', 'my_project');
+set('application', 'my_sample_project');
+set('application_directory', '/tmp/deployer/');
 
 // Project repository
-set('repository', 'https://github.com/cylmat/phpconfig.git');
+// export DEPLOYER_REPOSITORY=<http://my_repository>
+if (!isset($_ENV['DEPLOYER_REPOSITORY'])) {
+    exit(1);
+}
+
+set('repository', $_ENV['DEPLOYER_REPOSITORY']);
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true); 
@@ -22,9 +28,9 @@ set('allow_anonymous_stats', false);
 
 // Hosts
 
-host('project.com')
-    ->set('deploy_path', '~/{{application}}');    
-    
+#host('127.0.0.1')
+#    ->set('deploy_path', '/var/www/var/deployer/{{application}}');    
+set('deploy_path', '{{application_directory}}{{application}}');  
 
 // Tasks
 

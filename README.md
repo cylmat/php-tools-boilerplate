@@ -21,14 +21,17 @@
 * [PhpMd v2](https://phpmd.org/)
 
 ## Behavior
-* [PhpStan v0.12](https://phpstan.org/)
+* [PhpSpec v7](http://www.phpspec.net)
 
 ## Testing
 * [Paratest v6](https://github.com/paratestphp/paratest)
 * [PestPhp v1](https://pestphp.com/)
 * [PhpunitGen v1](https://phpunitgen.io/)
 * [PhpUnit v9](https://phpunit.de/)
-* [PhpSpec v7](http://www.phpspec.net)
+* [PhpStan v0.12](https://phpstan.org/)
+
+## Deployment
+* [Deployer v6](https://deployer.org)
 
 ## Versionning
 * [Git v2](http://git-scm.com) Git commands and alias
