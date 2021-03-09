@@ -15,6 +15,15 @@ all:
 # Avoid a conflict with a file of the same name, and improve performance
 .PHONY: all grump-pre linters testing
 
+#######
+# BIN #
+#######
+
+deployer-bin:
+	curl -LO https://deployer.org/deployer.phar	
+	mv deployer.phar /usr/local/bin/dep
+	chmod +x /usr/local/bin/dep
+
 ###########
 # GRUMPHP #
 ###########
