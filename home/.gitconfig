@@ -31,7 +31,6 @@
 	helper = store --file ~/.git-credentials
 	helper = cache --timeout 0
 
-	# or you can specify your own shell snippet
 #[credential "https://example.com"]#
 	#username = your_user
 	#helper = "!f() { test \"$1\" = get && echo \"password=$(cat $HOME/.secret)\"; }; f"
