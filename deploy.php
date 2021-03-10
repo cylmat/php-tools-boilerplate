@@ -136,6 +136,23 @@ localhost('local')
 desc('My task');
 task('my_custom_task', function () {
     $param = get('user');
+    if (test('[ -d {{release_path}} ]')) {
+        $path = run('readlink {{deploy_path}}/current');
+        run("echo $path"); // run shell command
+
+        writeln('<comment>My comment</comment><info>...</info><error></error>');
+
+        // Upload files from $source to $destination on the remote host.
+        // upload('build/', '{{release_path}}/public');
+        // download('source', 'destination', ['config']);
+    }
+    on(roles('app'), function ($host) {
+        echo 'On task';
+    });
+    on(Deployer::get()->hosts, function ($host) {
+        echo 'On task';
+    });
+    invoke('deploy:info'); 
 })
 // filter by stage, roles, hosts
 ->onStage('test')->onRoles('db')->onHosts('local')
@@ -172,4 +189,5 @@ task('deploy', [
  */
 
 // [Optional] If deploy fails automatically unlock.
-after('deploy:failed', 'deploy:unlock'); //run after task
+after('deploy:failed', 'deploy:unlock'); // run after task, can be "before"
+fail('deploy:release', 'deploy:unlock');
