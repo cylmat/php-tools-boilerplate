@@ -50,7 +50,16 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "composer.json" }}
 
+      # ###
       # run linters and tests
+      # ###
       - run: ./vendor/bin/grumphp run --testsuite=lint
 
       - run: ./vendor/bin/grumphp run --testsuite=tests
+
+      # ###
+      # deployer
+      # ###
+      - run: |
+          make deployer-bin
+          dep deploy
