@@ -29,11 +29,13 @@ parameters:
     paths:
         - ../src
 
+    # ignore
     excludes_analyse:
-        # ignore
+        - ../cest/*
         - ../spec/*
         - ../tests/*
         - **/Resources/*
+        - ./deploy.php
     
     # Stub files, readed for PhpDoc inside
     stubFiles:

@@ -17,8 +17,10 @@
     <description>Rules set</description>
 
     <exclude-pattern>**/Resources/*</exclude-pattern>
+    <exclude-pattern>cest/*</exclude-pattern>
     <exclude-pattern>spec/*</exclude-pattern>
     <exclude-pattern>tests/*</exclude-pattern>
+    <exclude-pattern>deploy.php</exclude-pattern>
 
     <rule ref="rulesets/cleancode.xml">
         <exclude name="IfStatementAssignment"/>

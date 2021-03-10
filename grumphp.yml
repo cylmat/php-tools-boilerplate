@@ -182,7 +182,7 @@ grumphp:
           - /^cest\/.*/
           - /^spec\/.*/
           - /^tests\/.*/
-          - /^.*\.php/
+          - /deploy.php/
         visitors:
           # declare_strict_types: ~
           # custom_NodeVisitor: ~ 
@@ -260,8 +260,10 @@ grumphp:
             # level: null
             # force_patterns: []
             ignore_patterns: 
+              - /^cest\/.*/
               - /^spec\/.*/
               - /^tests\/.*/
+              - /deploy.php/
             # triggered_by: ['php']
             # memory_limit: "-1"
             # use_grumphp_paths: true
