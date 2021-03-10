@@ -35,12 +35,12 @@ set('target_directory', '/tmp/deployer/');
 
 // Project repository
 // export DEPLOYER_REPOSITORY=<http://my_repository>
-if (!isset($_ENV['DEPLOYER_REPOSITORY'])) {
-    echo 'export DEPLOYER_REPOSITORY="http://<vsc>/<vendor>/<repo>.git" must be set.'."\n";
+if (!isset($_ENV['VCS_REPOSITORY'])) {
+    echo 'export VCS_REPOSITORY="http://<vcs>/<vendor>/<repo>.git" must be set.'."\n";
     exit(1);
 }
 
-set('repository', $_ENV['DEPLOYER_REPOSITORY']);
+set('repository', $_ENV['VCS_REPOSITORY']);
 
 // keeps the last 5 releases by default
 set('keep_releases', 5);
