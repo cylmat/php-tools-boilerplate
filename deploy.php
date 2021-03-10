@@ -24,6 +24,8 @@ require 'recipe/common.php';
  * dep config:dump
  * dep config:hosts
  * dep deploy (--tag="v0.1") (--revision="5daefb59edbaa75")
+ * dep deploy prod --hosts prod:pre:local --roles build,test_role
+ * dep my_custom_task
  * dep rollback
  * dep run '<shell_command>'
  * dep ssh (connect to host)
@@ -40,12 +42,16 @@ require 'recipe/common.php';
 // Project name
 set('application', 'my_sample_project');
 
+set('branch', 'main');
+
 // Callback allowed
 set('current_path', function () {
     return run('pwd');
 });
 
-set('default_stage', 'prod');
+// Stage
+set('default_stage', 'test');
+
 set('deploy_path', '{{target_directory}}{{application}}'); 
 
 // Project repository
@@ -99,26 +105,52 @@ set('writable_mode', 'acl');
 set('writable_use_sudo', false); //default false
 
 /********
- * Hosts
+ * Hosts sample
+ * https://deployer.org/docs/hosts.html
  */
 
-# host('http://sample.host')
-#    ->set('deploy_path', '/var/www/var/deployer/{{application}}');    
+localhost('local')
+    ->stage('test')
+    ->roles('test_role', 'build_role', 'db');
+
+// host('prod')
+//     ->hostname('sample.host')
+//     ->set('deploy_path', '/var/www/var/deployer/{{application}}');
+//     ->set('branch', 'production');    
+//     ->user('name')
+//     ->port(22)
+//     ->configFile('~/.ssh/config') //connecting information for hosts
+//     ->identityFile('~/.ssh/id_rsa')
+//     ->forwardAgent(true)
+//     ->multiplexing(true)
+//     ->addSshOption('UserKnownHostsFile', '/dev/null')
+//     ->addSshOption('StrictHostKeyChecking', 'no');
 
 /********
  * Tasks
+ * https://deployer.org/docs/tasks.html
  */
 
 // Config task //
 
-task('my_task', function () {
-    $param = get('my_param');
-});
+desc('My task');
+task('my_custom_task', function () {
+    $param = get('user');
+})
+// filter by stage, roles, hosts
+->onStage('test')->onRoles('db')->onHosts('local')
+// run on the first host only
+->once()->local();
+
+desc("Simple task");
+// We can override deployer task (ex: deploy:update_code)
+task("phpunit", '
+    echo "Exec PhpUnit";
+');
 
 // Run tasks //
 
 desc('Deploy your project');
-
 task('deploy', [
     'deploy:info',
     'deploy:prepare',
@@ -140,5 +172,4 @@ task('deploy', [
  */
 
 // [Optional] If deploy fails automatically unlock.
-after('deploy:failed', 'deploy:unlock');
-after('cleanup', 'success');
+after('deploy:failed', 'deploy:unlock'); //run after task
