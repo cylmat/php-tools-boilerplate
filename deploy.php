@@ -113,18 +113,18 @@ localhost('local')
     ->stage('test')
     ->roles('test_role', 'build_role', 'db');
 
-// host('prod')
-//     ->hostname('sample.host')
-//     ->set('deploy_path', '/var/www/var/deployer/{{application}}');
-//     ->set('branch', 'production');    
-//     ->user('name')
-//     ->port(22)
-//     ->configFile('~/.ssh/config') //connecting information for hosts
-//     ->identityFile('~/.ssh/id_rsa')
-//     ->forwardAgent(true)
-//     ->multiplexing(true)
-//     ->addSshOption('UserKnownHostsFile', '/dev/null')
-//     ->addSshOption('StrictHostKeyChecking', 'no');
+/*host('prod')
+    ->hostname('sample.host')
+    ->set('deploy_path', '/var/www/var/deployer/{{application}}');
+    ->set('branch', 'production');    
+    ->user('name')
+    ->port(22)
+    ->configFile('~/.ssh/config') //connecting information for hosts
+    ->identityFile('~/.ssh/id_rsa')
+    ->forwardAgent(true)
+    ->multiplexing(true)
+    ->addSshOption('UserKnownHostsFile', '/dev/null')
+    ->addSshOption('StrictHostKeyChecking', 'no');*/
 
 /********
  * Tasks
