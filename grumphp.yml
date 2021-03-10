@@ -178,8 +178,16 @@ grumphp:
       ### Analyse black-listed functions
       # github: nikic/PHP-Parser
       phpparser:
+        ignore_patterns: 
+          - /^cest\/.*/
+          - /^spec\/.*/
+          - /^tests\/.*/
+          - /^.*\.php/
         visitors:
+          # declare_strict_types: ~
+          # custom_NodeVisitor: ~ 
           no_exit_statements: ~
+          never_use_else: ~ 
           forbidden_function_calls:
               blacklist:
               - 'var_dump'
