@@ -80,7 +80,7 @@ jobs:
     ############
     - name: Deploy code
       env: 
-        VCS_REPOSITORY: ${{ secrets.VCS_REPOSITORY }}
+        VCS_REPOSITORY: ${{ env.Codecov.VCS_REPOSITORY }}
       run: |
         make deployer-bin
         dep deploy
