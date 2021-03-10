@@ -140,8 +140,8 @@ task('my_custom_task', function () {
         $path = run('readlink {{deploy_path}}/current');
         run("echo $path"); // run shell command
 
-        writeln('<comment>My comment</comment><info>...</info><error></error>');
-
+        writeln('<comment>Composer validation</comment><info>...</info><error></error>');
+        run('composer validate');
         // Upload files from $source to $destination on the remote host.
         // upload('build/', '{{release_path}}/public');
         // download('source', 'destination', ['config']);
