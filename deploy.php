@@ -6,6 +6,9 @@ require 'recipe/common.php';
 /**
  * Deployer
  * https://deployer.org
+ * 
+ * Config
+ * https://deployer.org/docs/configuration.html
  */
 /* 
  * Will create on host:
@@ -17,7 +20,10 @@ require 'recipe/common.php';
 /**
  * CLI usage
  *
- * dep deploy
+ * dep config:current
+ * dep config:dump
+ * dep config:hosts
+ * dep deploy (--tag="v0.1") (--revision="5daefb59edbaa75")
  * dep rollback
  * dep run '<shell_command>'
  * dep ssh (connect to host)
@@ -29,32 +35,68 @@ require 'recipe/common.php';
  * Params
  */
 
+// MAIN PARAMS //
+
 // Project name
 set('application', 'my_sample_project');
-set('target_directory', '/tmp/deployer/');
+
+// Callback allowed
+set('current_path', function () {
+    return run('pwd');
+});
+
+set('default_stage', 'prod');
+set('deploy_path', '{{target_directory}}{{application}}'); 
 
 // Project repository
-// export DEPLOYER_REPOSITORY=<http://my_repository>
-if (!isset($_ENV['VCS_REPOSITORY'])) {
-    echo 'export VCS_REPOSITORY="http://<vcs>/<vendor>/<repo>.git" must be set.'."\n";
+if (!getenv('VCS_REPOSITORY')) {
+    echo 'export VCS_REPOSITORY="http://<vcs>/<vendor>/<repo>.git", must be set.'."\n";
     exit(1);
 }
-
 set('repository', $_ENV['VCS_REPOSITORY']);
 
-// keeps the last 5 releases by default
-set('keep_releases', 5);
+set('target_directory', '/tmp/deployer/');
+
+// User
+set('user', function () {
+    return runLocally('git config --get user.name');
+});
+
+// OTHERS //
+
+set('allow_anonymous_stats', false);
+
+// Deleted paths after release
+set('clear_paths', []);
+
+set('clear_use_sudo', false);
+
+set('cleanup_use_sudo', false);
+
+set('composer_action', 'install'); //default install
+
+set('copy_dirs', []);
+
+set('env', [
+    'VARIABLE' => 'value',
+]);
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true); 
+set('git_tty', false); 
+
+// Keeps the last 5 releases by default
+set('keep_releases', 5);
 
 // Shared files/dirs between deploys 
 set('shared_files', []);
-set('shared_dirs', []);
+set('shared_dirs', ['logs','var']);
 
 // Writable dirs by web server 
 set('writable_dirs', []);
-set('allow_anonymous_stats', false);
+
+// chmod, chown, chgrp, default to acl
+set('writable_mode', 'acl');
+set('writable_use_sudo', false); //default false
 
 /********
  * Hosts
@@ -62,7 +104,6 @@ set('allow_anonymous_stats', false);
 
 # host('http://sample.host')
 #    ->set('deploy_path', '/var/www/var/deployer/{{application}}');    
-set('deploy_path', '{{target_directory}}{{application}}');  
 
 /********
  * Tasks
@@ -70,9 +111,9 @@ set('deploy_path', '{{target_directory}}{{application}}');
 
 // Config task //
 
-/*task('my_task', function () {
+task('my_task', function () {
     $param = get('my_param');
-});*/
+});
 
 // Run tasks //
 
