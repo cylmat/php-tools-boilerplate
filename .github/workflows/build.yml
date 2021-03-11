@@ -77,7 +77,7 @@ jobs:
         CODE4: ${{ env.secrets.CODECOV_TOKEN }}
         CODE5: ${{ secrets.Codecov.CODECOV_TOKEN }}
       run: |
-        export CHECKING: ${{ secrets.CODECOV_TOKEN }}
+        export CHECKING=${{ secrets.CODECOV_TOKEN }}
         php -r "var_dump(getenv());"
         env
         echo "$CODE1"
