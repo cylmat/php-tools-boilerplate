@@ -72,11 +72,11 @@ jobs:
     - name: Codecov coverage
       env: 
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-          SECRET_CONTEXT: ${{ toJson(secret) }}
-          SECRETS_CONTEXT: ${{ toJson(secrets) }}
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+        SECRET_CONTEXT: ${{ toJson(secret) }}
+        SECRETS_CONTEXT: ${{ toJson(secrets) }}
+        RUNNER_CONTEXT: ${{ toJson(runner) }}
       run: |
         echo "$RUNNER_CONTEXT"
         echo "$SECRET_CONTEXT"
