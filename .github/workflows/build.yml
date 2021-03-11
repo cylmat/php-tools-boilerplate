@@ -16,8 +16,6 @@ on:
   pull_request:
     branches: [ main ]
 
-environment: Codecov
-
 ###
 # Jobs
 ###
@@ -25,6 +23,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build and test
+    environment: Codecov
     strategy:
       fail-fast: false
       matrix:
