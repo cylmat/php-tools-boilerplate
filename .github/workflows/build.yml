@@ -29,6 +29,13 @@ jobs:
           php: [7.3, 7.4]
 
     steps:
+    env: 
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        CODE1: ${{ env.Codecov.CODECOV_TOKEN }}
+        CODE2: ${{ env.CODECOV_TOKEN }}
+        CODE3: ${{ secrets.CODECOV_TOKEN }}
+        CODE4: ${{ env.secrets.CODECOV_TOKEN }}
+        CODE5: ${{ secrets.Codecov.CODECOV_TOKEN }}
     - uses: actions/checkout@v2
 
     # Php, composer, ext, xdebug
