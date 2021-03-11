@@ -78,12 +78,12 @@ jobs:
         CODE5: ${{ secrets.Codecov.CODECOV_TOKEN }}
         CODE6: ${{ CODECOV_TOKEN }}
       run: |
-        echo $CODE1
-        echo $CODE2
-        echo $CODE3
-        echo $CODE4
-        echo $CODE5
-        echo $CODE6
+        echo "$CODE1"
+        echo "$CODE2"
+        echo "$CODE3"
+        echo "$CODE4"
+        echo "$CODE5"
+        echo "$CODE6"
         ./vendor/bin/phpunit --coverage-filter src --coverage-clover coverage.xml
         bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 
