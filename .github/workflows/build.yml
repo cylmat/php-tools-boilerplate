@@ -74,12 +74,10 @@ jobs:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         
         GITHUB_CONTEXT: ${{ toJson(github) }}
-        SECRET_CONTEXT: ${{ toJson(secret) }}
         SECRETS_CONTEXT: ${{ toJson(secrets) }}
         RUNNER_CONTEXT: ${{ toJson(runner) }}
       run: |
         echo "$RUNNER_CONTEXT"
-        echo "$SECRET_CONTEXT"
         echo "$SECRETS_CONTEXT"
         php -r "var_dump(getenv());"
         ./vendor/bin/phpunit --coverage-filter src --coverage-clover coverage.xml
