@@ -28,14 +28,6 @@ jobs:
       matrix:
           php: [7.3, 7.4]
 
-    env: 
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        CODE1: ${{ env.Codecov.CODECOV_TOKEN }}
-        CODE2: ${{ env.CODECOV_TOKEN }}
-        CODE3: ${{ secrets.CODECOV_TOKEN }}
-        CODE4: ${{ env.secrets.CODECOV_TOKEN }}
-        CODE5: ${{ secrets.Codecov.CODECOV_TOKEN }}
-
     steps:
     - uses: actions/checkout@v2
 
