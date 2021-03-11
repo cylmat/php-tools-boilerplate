@@ -16,6 +16,8 @@ on:
   pull_request:
     branches: [ main ]
 
+environment: Codecov
+
 ###
 # Jobs
 ###
@@ -71,20 +73,16 @@ jobs:
     - name: Codecov coverage
       env: 
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        CODE1: ${{ env.Codecov.CODECOV_TOKEN }}
-        CODE2: ${{ env.CODECOV_TOKEN }}
-        CODE3: ${{ secrets.CODECOV_TOKEN }}
-        CODE4: ${{ env.secrets.CODECOV_TOKEN }}
-        CODE5: ${{ secrets[env.CODECOV_TOKEN] }}
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+          SECRET_CONTEXT: ${{ toJson(secret) }}
+          SECRETS_CONTEXT: ${{ toJson(secrets) }}
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
       run: |
-        export CHECKING=${{ secrets[env.CODECOV_TOKEN] }}
+        echo "$RUNNER_CONTEXT"
+        echo "$SECRET_CONTEXT"
+        echo "$SECRETS_CONTEXT"
         php -r "var_dump(getenv());"
-        env
-        echo "$CODE1"
-        echo "$CODE2"
-        echo "$CODE3"
-        echo "$CODE4"
-        echo "$CODE5"
         ./vendor/bin/phpunit --coverage-filter src --coverage-clover coverage.xml
         bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 
