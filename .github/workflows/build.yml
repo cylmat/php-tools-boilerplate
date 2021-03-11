@@ -21,9 +21,11 @@ on:
 ###
 jobs:
   build:
+    # Set in repo's "Settings/Environments"
+    environment: Codecov
+    
     runs-on: ubuntu-latest
     name: Build and test
-    environment: Codecov
     strategy:
       fail-fast: false
       matrix:
@@ -72,14 +74,7 @@ jobs:
     - name: Codecov coverage
       env: 
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-        SECRETS_CONTEXT: ${{ toJson(secrets) }}
-        RUNNER_CONTEXT: ${{ toJson(runner) }}
       run: |
-        echo "$RUNNER_CONTEXT"
-        echo "$SECRETS_CONTEXT"
-        php -r "var_dump(getenv());"
         ./vendor/bin/phpunit --coverage-filter src --coverage-clover coverage.xml
         bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 
@@ -88,7 +83,7 @@ jobs:
     ############
     - name: Deploy code
       env: 
-        VCS_REPOSITORY: ${{ env.Codecov.VCS_REPOSITORY }}
+        VCS_REPOSITORY: ${{ secrets.VCS_REPOSITORY }}
       run: |
         make deployer-bin
         dep deploy
