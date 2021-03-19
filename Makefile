@@ -21,9 +21,19 @@ all:
 
 # For deployer, environment DEPLOYER_REPOSITORY must be set
 deployer-bin:
-	curl -LO https://deployer.org/deployer.phar	
+	curl -LO https://deployer.org/releases/v6.8.0/deployer.phar
 	mv deployer.phar /usr/local/bin/dep
 	chmod +x /usr/local/bin/dep
+	dep -v
+
+phing-bin:
+	curl -LO https://www.phing.info/get/phing-2.16.4.phar
+	curl -LO https://www.phing.info/get/phing-2.16.4.phar.sha512
+	sha512sum --check phing-2.16.4.phar.sha512
+	rm phing-2.16.4.phar.sha512
+	mv phing-2.16.4.phar ./bin/phing
+	chmod +x ./bin/phing
+	./bin/phing -v
 
 ###########
 # GRUMPHP #
