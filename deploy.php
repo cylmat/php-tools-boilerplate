@@ -59,7 +59,7 @@ if (!getenv('VCS_REPOSITORY')) {
     echo 'export VCS_REPOSITORY="http://<vcs>/<vendor>/<repo>.git", must be set.'."\n";
     exit(1);
 }
-set('repository', $_ENV['VCS_REPOSITORY']);
+set('repository', getenv('VCS_REPOSITORY'));
 
 set('target_directory', '/tmp/deployer/');
 
