@@ -4,11 +4,8 @@
 
 # Php 7 configuration bootstrap
 
-## Automation
-* [GrumPhp v1](https://github.com/phpro/grumphp)
-
-## Ide
-* [VSCode](code.visualstudio.com) VSCode useful extensions
+## Versionning
+* [Git v2](http://git-scm.com) Git prompt and alias
 
 ## Linters
 * [Codesniffer v3](https://github.com/squizlabs/PHP_CodeSniffer)
@@ -20,9 +17,6 @@
 * [PhpCpd v6](https://github.com/sebastianbergmann/phpcpd)
 * [PhpMd v2](https://phpmd.org/)
 
-## Coverage
-* [Codecov.io](https://codecov.io/)
-
 ## Behavior
 * [PhpSpec v7](http://www.phpspec.net)
 
@@ -33,12 +27,16 @@
 * [PhpUnit v9](https://phpunit.de/)
 * [PhpStan v0.12](https://phpstan.org/)
 
+## Coverage
+* [Codecov.io](https://codecov.io/)
+
+## Automation
+* [GrumPhp v1](https://github.com/phpro/grumphp)
+* [Phing v6](https://phing.info)
+
 ## Deployment
 * [Deployer v6](https://deployer.org)
 
-## Versionning
-* [Git v2](http://git-scm.com) Git commands and alias
-
-#### Ref
+#### See
 * [Cylmat - Useful commands](https://github.com/cylmat/useful)  
 * [Phpqa.io - Php Quality Assurance](https://phpqa.io/)

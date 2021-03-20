@@ -12,7 +12,7 @@ name: PHP Config
 
 on:
   push:
-    branches: [ main, dev, phing ]
+    branches: [ main, dev ]
 
 ###
 # Jobs
