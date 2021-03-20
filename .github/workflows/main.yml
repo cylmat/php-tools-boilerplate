@@ -83,7 +83,7 @@ jobs:
     - name: Phing builder
       run: |
         make phing-bin
-        ./bin/phing -f build.xml 
+        make phing
 
     ############
     # DEPLOYER #
@@ -93,4 +93,4 @@ jobs:
         VCS_REPOSITORY: ${{ secrets.VCS_REPOSITORY }}
       run: |
         make deployer-bin
-        dep deploy
+        make deploy

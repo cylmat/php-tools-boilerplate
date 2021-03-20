@@ -24,16 +24,16 @@ deployer-bin:
 	curl -LO https://deployer.org/releases/v6.8.0/deployer.phar
 	mv deployer.phar /usr/local/bin/dep
 	chmod +x /usr/local/bin/dep
-	dep -v
+	dep -V -f -
 
 phing-bin:
 	curl -LO https://www.phing.info/get/phing-2.16.4.phar
 	curl -LO https://www.phing.info/get/phing-2.16.4.phar.sha512
 	sha512sum --check phing-2.16.4.phar.sha512
 	rm phing-2.16.4.phar.sha512
-	mv phing-2.16.4.phar ./bin/phing
-	chmod +x ./bin/phing
-	./bin/phing -v
+	mv phing-2.16.4.phar /usr/local/bin/phing
+	chmod +x /usr/local/bin/phing
+	phing -v
 
 ###########
 # GRUMPHP #
@@ -59,6 +59,14 @@ compose-update:
 	composer update --lock
 	composer normalize --no-update-lock
 
+############
+# BEHAVIOR #
+############
+
+phpspec:
+	echo 'N' | vendor/bin/phpspec describe App/Sample -q --config=phpspec.yml
+	vendor/bin/phpspec run --config=phpspec.yml
+
 ###########
 # LINTERS #
 ###########
@@ -80,14 +88,6 @@ linters:
 	vendor/bin/parallel-lint src --exclude vendor
 	vendor/bin/phpmd src ansi lint/phpmd.xml --reportfile=STDOUT
 	vendor/bin/phpstan analyse --level 8 --configuration lint/phpstan.neon --memory-limit 256M
-
-############
-# BEHAVIOR #
-############
-
-phpspec:
-	echo 'N' | vendor/bin/phpspec describe App/Sample -q --config=phpspec.yml
-	vendor/bin/phpspec run --config=phpspec.yml 
 
 ###########
 # TESTING #
@@ -115,4 +115,11 @@ testing:
 ############
 
 phing:
-	bin/phing -f ./build.xml
+	phing -f ./build.xml
+
+##########
+# DEPLOY #
+##########
+
+deployer:
+	dep deploy
