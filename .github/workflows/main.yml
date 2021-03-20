@@ -18,12 +18,12 @@ on:
 # Jobs
 ###
 jobs:
-  build:
+  run:
     # Set in repo's "Settings/Environments"
     environment: Codecov
     
     runs-on: ubuntu-latest
-    name: Build and test
+    name: Run lint, tests, cover, build, deploy
     strategy:
       fail-fast: false
       matrix:

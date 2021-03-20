@@ -9,7 +9,7 @@ version: 2
 ###
 workflows:
   version: 2
-  build_and_test:
+  run:
     jobs:
       - build
 
@@ -17,7 +17,7 @@ workflows:
 # Jobs
 ###
 jobs:
-  build:
+  run:
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.3
@@ -50,20 +50,11 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "composer.json" }}
 
-      ###########
       # TESTING #
-      ###########
-      - name: Run GrumPhp lint
-        run: make grump-lint
+      - run: make grump-lint
+      - run: make grump-tests
 
-      - name: Run GrumPhp tests
-        run: make grump-tests
-
-      ###########
       # BUILDER #
-      ###########
-
-      - name: Phing builder
-        run: |
+      - run: |
           sudo make phing-bin
           make phing
