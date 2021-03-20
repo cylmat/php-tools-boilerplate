@@ -50,16 +50,20 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "composer.json" }}
 
-      # ###
-      # run linters and tests
-      # ###
-      - run: ./vendor/bin/grumphp run --testsuite=lint
+      ###########
+      # TESTING #
+      ###########
+      - name: Run GrumPhp lint
+        run: make grump-lint
 
-      - run: ./vendor/bin/grumphp run --testsuite=tests
+      - name: Run GrumPhp tests
+        run: make grump-tests
 
-      # ###
-      # deployer
-      # ###
-      - run: |
-          make deployer-bin
-          dep deploy
+      ###########
+      # BUILDER #
+      ###########
+
+      - name: Phing builder
+        run: |
+          sudo make phing-bin
+          make phing

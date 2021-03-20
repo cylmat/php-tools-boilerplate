@@ -60,11 +60,11 @@ jobs:
     ###########
     # TESTING #
     ###########
-    - name: Run GrumPhp lints
-      run: ./vendor/bin/grumphp run --testsuite=lint
+    - name: Run GrumPhp lint
+      run: make grump-lint
 
     - name: Run GrumPhp tests
-      run: ./vendor/bin/grumphp run --testsuite=tests
+      run: make grump-tests
 
     ############
     # COVERAGE #
