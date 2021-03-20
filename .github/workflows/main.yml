@@ -23,7 +23,7 @@ jobs:
     environment: Codecov
     
     runs-on: ubuntu-latest
-    name: Run lint, tests, cover, build, deploy
+    name: Lint, tests, cover, build, deploy
     strategy:
       fail-fast: false
       matrix:
@@ -63,6 +63,9 @@ jobs:
     - name: Run GrumPhp lint
       run: make grump-lint
 
+    ###########
+    # LINTING #
+    ###########
     - name: Run GrumPhp tests
       run: make grump-tests
 
