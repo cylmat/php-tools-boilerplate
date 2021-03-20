@@ -8,24 +8,22 @@
 # DOC
 # https://github.com/actions/starter-workflows/
 
-name: PHP Composer
+name: PHP Config
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ main, dev, phing ]
 
 ###
 # Jobs
 ###
 jobs:
-  build:
+  run:
     # Set in repo's "Settings/Environments"
     environment: Codecov
     
     runs-on: ubuntu-latest
-    name: Build and test
+    name: Lint, tests, cover, build, deploy
     strategy:
       fail-fast: false
       matrix:
@@ -62,11 +60,14 @@ jobs:
     ###########
     # TESTING #
     ###########
-    - name: Run GrumPhp lints
-      run: ./vendor/bin/grumphp run --testsuite=lint
+    - name: Run GrumPhp lint
+      run: make grump-lint
 
+    ###########
+    # LINTING #
+    ###########
     - name: Run GrumPhp tests
-      run: ./vendor/bin/grumphp run --testsuite=tests
+      run: make grump-tests
 
     ############
     # COVERAGE #
@@ -78,6 +79,15 @@ jobs:
         ./vendor/bin/phpunit --coverage-filter src --coverage-clover coverage.xml
         bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 
+    ###########
+    # BUILDER #
+    ###########
+
+    - name: Phing builder
+      run: |
+        make phing-bin
+        make phing
+
     ############
     # DEPLOYER #
     ############
@@ -86,4 +96,4 @@ jobs:
         VCS_REPOSITORY: ${{ secrets.VCS_REPOSITORY }}
       run: |
         make deployer-bin
-        dep deploy
+        make deployer
