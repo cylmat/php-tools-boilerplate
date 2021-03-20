@@ -109,3 +109,10 @@ testing:
 	vendor/bin/pest -c phpunit.xml
 	make phpunit
 	make phpspec
+
+############
+# BUILDING #
+############
+
+phing:
+	bin/phing -f ./build.xml

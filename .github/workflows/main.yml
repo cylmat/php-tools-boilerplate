@@ -8,13 +8,11 @@
 # DOC
 # https://github.com/actions/starter-workflows/
 
-name: PHP Composer
+name: PHP Config
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ main, dev, phing ]
 
 ###
 # Jobs
@@ -77,6 +75,15 @@ jobs:
       run: |
         ./vendor/bin/phpunit --coverage-filter src --coverage-clover coverage.xml
         bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+
+    ###########
+    # BUILDER #
+    ###########
+
+    - name: Phing builder
+      run: |
+        make phing-bin
+        ./bin/phing -f build.xml 
 
     ############
     # DEPLOYER #
