@@ -63,6 +63,9 @@ compose-update:
 # BEHAVIOR #
 ############
 
+codecept:
+	vendor/bin/codecept run
+
 phpspec:
 	echo 'N' | vendor/bin/phpspec describe App/Sample -q --config=phpspec.yml
 	vendor/bin/phpspec run --config=phpspec.yml
@@ -108,7 +111,10 @@ testing:
 	vendor/bin/paratest -c phpunit.xml
 	vendor/bin/pest -c phpunit.xml
 	make phpunit
+
+	# Behavior and acceptance
 	make phpspec
+	make codecept
 
 ############
 # BUILDING #
