@@ -17,7 +17,8 @@
 # alias cp='cp -i'
 # alias mv='mv -i'
 
-if [[ -f ~/user_prompt.sh ]] 
-then
-  source ~/user_prompt.sh
+if [[ -f ~/user-prompt.sh ]]; then
+  source ~/user-prompt.sh
+else
+  echo "~/user-prompt.sh not found"
 fi;
