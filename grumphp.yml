@@ -58,9 +58,10 @@ grumphp:
             - pest
             - phpunit
 
-            # behavior
-            - phpspec
+      behav:
+          tasks:
             - codeception
+            - phpspec
 
     extensions: []
 

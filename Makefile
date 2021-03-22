@@ -39,6 +39,9 @@ phing-bin:
 # GRUMPHP #
 ###########
 
+grump-behav:
+	vendor/bin/grumphp run --testsuite=behav
+
 grump-lint:
 	vendor/bin/grumphp run --testsuite=lint
 
@@ -63,8 +66,13 @@ compose-update:
 # BEHAVIOR #
 ############
 
+behav:
+	# Behavior and acceptance
+	make codecept
+	make phpspec
+
 codecept:
-	vendor/bin/codecept run
+	vendor/bin/codecept run -c codeception.yml
 
 phpspec:
 	echo 'N' | vendor/bin/phpspec describe App/Sample -q --config=phpspec.yml
@@ -111,10 +119,6 @@ testing:
 	vendor/bin/paratest -c phpunit.xml
 	vendor/bin/pest -c phpunit.xml
 	make phpunit
-
-	# Behavior and acceptance
-	make phpspec
-	make codecept
 
 ############
 # BUILDING #

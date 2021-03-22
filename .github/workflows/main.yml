@@ -58,16 +58,25 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-plugins
 
     ###########
-    # TESTING #
+    # LINTING #
     ###########
     - name: Run GrumPhp lint
       run: make grump-lint
 
     ###########
-    # LINTING #
+    # TESTING #
     ###########
     - name: Run GrumPhp tests
       run: make grump-tests
+
+    ############
+    # BEHAVIOR #
+    ############
+    - name: Run GrumPhp behavior
+      run: |
+        php -S localhost:88 -t html &
+        make grump-behav
+        kill -9 $(ps aux | grep "localhost:88" -m 1 | awk '{print $2;}')
 
     ############
     # COVERAGE #
