@@ -13,10 +13,9 @@ if [[ ! -f ~/prompt/git-prompt.sh ]] || [[ ! -f ~/prompt/git-completion.bash ]]
 then
   echo "git-prompt or git-completion not found"
   return 1
+else
+  echo "git prompt & completion found..."
 fi
-
-source ~/prompt/git-completion.bash
-source ~/prompt/git-prompt.sh
 
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
