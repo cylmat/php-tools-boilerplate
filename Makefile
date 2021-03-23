@@ -72,7 +72,15 @@ behav:
 	make phpspec
 
 codecept:
+	# Browser acceptance
+	vendor/bin/codecept generate:cest acceptance sample -q || exit 0
 	vendor/bin/codecept run -c codeception.yml
+
+	# BDD features acceptance
+	vendor/bin/codecept g:feature acceptance sample -q || exit 0
+	vendor/bin/codecept gherkin:snippets acceptance
+	vendor/bin/codecept gherkin:steps acceptance
+	vendor/bin/codecept run acceptance sample.feature
 
 phpspec:
 	echo 'N' | vendor/bin/phpspec describe App/Sample -q --config=phpspec.yml
