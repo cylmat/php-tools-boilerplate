@@ -10,7 +10,7 @@ if [ $# -eq 0 ]; then
 	usage
 fi
 
-OPTS=$(getopt -o r,s -l run,stop: -- "$@")
+OPTS=$(getopt -o r,s -l run,stop,default: -- "$@")
 
 if [ $? != 0 ]; then
     exit 1
@@ -27,8 +27,8 @@ function stop_server() {
     echo "Server localhost:88 stopped..."
 }
 
-while true; do
-    case "$1" in
+for i in "$@"; do
+    case $i in
         -r) run_server;
             exit 0;;
         --run) run_server;

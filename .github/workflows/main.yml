@@ -74,9 +74,9 @@ jobs:
     ############
     - name: Run GrumPhp behavior
       run: |
-        sudo cest/server.sh --run
+        sudo bash cest/server.sh -r
         make grump-behav
-        sudo cest/server.sh --stop
+        sudo bash cest/server.sh -s
 
     ############
     # COVERAGE #
