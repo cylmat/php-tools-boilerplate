@@ -74,9 +74,9 @@ jobs:
     ############
     - name: Run GrumPhp behavior
       run: |
-        php -S localhost:80 -t html &
+        sudo php -S localhost:80 -t html &
         make grump-behav
-        kill -9 $(ps aux | grep "localhost:80" -m 1 | awk '{print $2;}')
+        sudo kill -9 $(ps aux | grep "localhost:80" -m 1 | awk '{print $2;}')
 
     ############
     # COVERAGE #
