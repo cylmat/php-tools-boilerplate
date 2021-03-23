@@ -1,0 +1,10 @@
+paths:
+    tests: cest
+    output: cest/_output
+    data: cest/_data
+    support: cest/_support
+    envs: cest/_envs
+actor_suffix: Tester
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed

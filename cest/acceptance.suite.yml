@@ -1,0 +1,30 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+
+actor: AcceptanceTester
+modules:
+    enabled:
+        - \Helper\Acceptance
+        - Asserts
+        # https://codeception.com/docs/modules/PhpBrowser
+        - PhpBrowser:
+            url: http://localhost:88
+            auth: ['user', 'pass']
+            curl:
+                CURLOPT_RETURNTRANSFER: true
+            cookies:
+                cookie-1:
+                    Name: userName
+                    Value: john.doe
+step_decorators: ~
+# https://codeception.com/docs/07-BDD
+gherkin:
+    contexts:
+        default:
+            - AcceptanceTester
+        role:
+            admin:
+                - "Step\\Admin"

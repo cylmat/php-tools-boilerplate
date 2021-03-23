@@ -58,6 +58,11 @@ grumphp:
             - pest
             - phpunit
 
+      behav:
+          tasks:
+            - codeception
+            - phpspec
+
     extensions: []
 
     # https://github.com/phpro/grumphp/blob/master/doc/tasks.md
@@ -273,6 +278,14 @@ grumphp:
       ############
       # BEHAVIOR #
       ############
+
+      ### Codeception
+      # github: codeception/codeception
+      codeception:
+          config_file: codeception.yml
+          fail_fast: false
+          # suite: ~
+          # test: ~
 
       ### PhpSpec
       # github: phpspec/phpspec

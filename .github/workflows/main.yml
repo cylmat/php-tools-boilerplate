@@ -12,7 +12,7 @@ name: PHP Config
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ main, dev, codeception ]
 
 ###
 # Jobs
@@ -58,16 +58,25 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-plugins
 
     ###########
-    # TESTING #
+    # LINTING #
     ###########
     - name: Run GrumPhp lint
       run: make grump-lint
 
     ###########
-    # LINTING #
+    # TESTING #
     ###########
     - name: Run GrumPhp tests
       run: make grump-tests
+
+    ############
+    # BEHAVIOR #
+    ############
+    - name: Run GrumPhp behavior
+      run: |
+        sudo bash cest/server.sh -r
+        make grump-behav
+        sudo bash cest/server.sh -s
 
     ############
     # COVERAGE #

@@ -39,6 +39,9 @@ phing-bin:
 # GRUMPHP #
 ###########
 
+grump-behav:
+	vendor/bin/grumphp run --testsuite=behav
+
 grump-lint:
 	vendor/bin/grumphp run --testsuite=lint
 
@@ -62,6 +65,22 @@ compose-update:
 ############
 # BEHAVIOR #
 ############
+
+behav:
+	# Behavior and acceptance
+	make codecept
+	make phpspec
+
+codecept:
+	# Browser acceptance
+	vendor/bin/codecept generate:cest acceptance sample -q || exit 0
+	vendor/bin/codecept run -c codeception.yml
+
+	# BDD features acceptance
+	vendor/bin/codecept g:feature acceptance sample -q || exit 0
+	vendor/bin/codecept gherkin:snippets acceptance
+	vendor/bin/codecept gherkin:steps acceptance
+	vendor/bin/codecept run acceptance sample.feature
 
 phpspec:
 	echo 'N' | vendor/bin/phpspec describe App/Sample -q --config=phpspec.yml
@@ -108,7 +127,6 @@ testing:
 	vendor/bin/paratest -c phpunit.xml
 	vendor/bin/pest -c phpunit.xml
 	make phpunit
-	make phpspec
 
 ############
 # BUILDING #

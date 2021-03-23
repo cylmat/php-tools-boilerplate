@@ -12,6 +12,9 @@
     },
     "require-dev": {
         "brianium/paratest": "^6.2",
+        "codeception/codeception": "^4.1",
+        "codeception/module-asserts": "^1.0.0",
+        "codeception/module-phpbrowser": "^1.0.0",
         "ergebnis/composer-normalize": "^2.13",
         "friends-of-phpspec/phpspec-code-coverage": "^6.0",
         "friendsofphp/php-cs-fixer": "^2.18",
