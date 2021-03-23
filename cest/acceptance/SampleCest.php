@@ -1,15 +1,20 @@
 <?php
 
+/**
+ * @see https://codeception.com/docs/modules/PhpBrowser
+ */
 class SampleCest
 {
     public function _before(AcceptanceTester $I)
     {
     }
 
-    // tests
+    // home
+    // -PHP 7.3.27-9+ubuntu ... +1 Development Server- 
     public function homePage(AcceptanceTester $I)
     {
         $I->amOnPage('/');
-        $I->see('Apache');
+        $I->seeCurrentUrlMatches('~^/$~');
+        $I->see('Server');
     }
 }
