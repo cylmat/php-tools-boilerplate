@@ -38,6 +38,14 @@
 ## Versionning
 * [Git v2](http://git-scm.com) Git prompt and alias
 
+Usage
+=====
+**Download the repository and get the config files you need**  
+```
+wget -O phpconfig.zip https://github.com/cylmat/phpconfig/archive/refs/heads/main.zip
+unzip phpconfig.zip -d vendor/cylmat && rm phpconfig.zip
+```
+
 #### Ref
 * [Clymate - Dev servers](https://github.com/clymate/phpserver)  
 * [Cylmat - Useful commands](https://github.com/cylmat/useful)  
