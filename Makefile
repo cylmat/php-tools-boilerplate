@@ -26,6 +26,11 @@ deployer-bin:
 	chmod +x /usr/local/bin/dep
 	dep -V -f -
 
+kint-bin:
+	# or by "composer require --dev kint-php/kint"
+	curl -LO https://raw.githubusercontent.com/kint-php/kint/master/build/kint.phar
+	mkdir bin -p && mv kint.phar bin
+
 phing-bin:
 	curl -LO https://www.phing.info/get/phing-2.16.4.phar
 	curl -LO https://www.phing.info/get/phing-2.16.4.phar.sha512

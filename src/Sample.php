@@ -2,6 +2,8 @@
 
 namespace App;
 
+file_exists('bin/kint.phar') && require 'bin/kint.phar';
+
 class Sample
 {
     /**
