@@ -197,6 +197,9 @@ grumphp:
               blacklist:
               - 'var_dump'
               - 'dump'
+              - '_GET'
+              - '_POST'
+              - '_REQUEST'
         triggered_by: [php]
         metadata:
             priority: 2
