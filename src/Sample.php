@@ -2,8 +2,6 @@
 
 namespace App;
 
-file_exists('bin/kint.phar') && require 'bin/kint.phar';
-
 class Sample
 {
     /**
@@ -14,6 +12,12 @@ class Sample
         // @codeCoverageIgnoreStart
         echo '';
         // @codeCoverageIgnoreEnd
+
+        /*if (file_exists('bin/kint.phar')) {
+            require 'bin/kint.phar';
+            d('$my_var'); //debug
+            +d('$my_var'); //debug all
+        }*/
     }
 
     public function sample(int $sample): int
