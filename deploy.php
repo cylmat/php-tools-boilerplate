@@ -178,7 +178,6 @@ task('deploy', [
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
-    // 'upload', // uncomment if needed
     'deploy:update_code',
     'deploy:shared',
     'deploy:writable',
