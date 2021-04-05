@@ -20,6 +20,7 @@ all:
 #######
 
 # For deployer, environment DEPLOYER_REPOSITORY must be set
+# Or use composer require --dev deployer/deployer
 deployer-bin:
 	curl -LO https://deployer.org/releases/v6.8.0/deployer.phar
 	mv deployer.phar /usr/local/bin/dep
