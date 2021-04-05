@@ -165,6 +165,11 @@ task("phpunit", '
     echo "Exec PhpUnit";
 ');
 
+// manually upload task //
+task('upload', function () {
+    upload(__DIR__ . "/", '{{release_path}}');
+});
+
 // Run tasks //
 
 desc('Deploy your project');
@@ -173,6 +178,7 @@ task('deploy', [
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
+    // 'upload', // uncomment if needed
     'deploy:update_code',
     'deploy:shared',
     'deploy:writable',
