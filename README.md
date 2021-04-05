@@ -46,6 +46,16 @@ wget -O phpconfig.zip https://github.com/cylmat/phpconfig/archive/refs/heads/mai
 unzip phpconfig.zip -d vendor/cylmat && rm phpconfig.zip
 ```
 
+**Or include it in your composer.json and get the files needed**  
+```
+"repositories": [{ "type": "vcs", 
+    "url": "https://github.com/cylmat/phpconfig"
+}],
+"require": {
+    "cylmat/phpconfig":"*"
+}
+```
+
 #### Ref
 * [Clymate - Dev servers](https://github.com/clymate/phpserver)  
 * [Cylmat - Useful commands](https://github.com/cylmat/useful)  
