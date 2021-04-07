@@ -23,7 +23,7 @@ jobs:
     environment: Codecov
     
     runs-on: ubuntu-latest
-    name: Lint, tests, cover, build, deploy
+    name: Lint, tests, cover, build
     strategy:
       fail-fast: false
       matrix:
@@ -97,6 +97,17 @@ jobs:
         make phing-bin
         make phing
 
+# jobs deploy
+  deploy:
+    environment: Codecov
+    
+    runs-on: ubuntu-latest
+    name: Deploy
+    strategy:
+      fail-fast: false
+      
+    needs: run
+    steps:
     ############
     # DEPLOYER #
     ############
@@ -106,6 +117,4 @@ jobs:
       run: |
         make deployer-bin
         make deployer
-#build:
-    #needs: previous job
-    #next job...
+        
