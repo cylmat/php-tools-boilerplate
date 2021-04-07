@@ -4,6 +4,7 @@
 	ba = branch --all
 	br = branch --remote
 	c  = checkout
+	cam = commit -a -m
 	cb = checkout -b
 	cm = commit -m
 	f = fetch
