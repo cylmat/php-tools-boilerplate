@@ -117,6 +117,6 @@ jobs:
       env: 
         VCS_REPOSITORY: ${{ secrets.VCS_REPOSITORY }}
       run: |
-        make deployer-bin
+        sudo make deployer-bin
         make deployer
         
