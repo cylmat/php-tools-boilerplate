@@ -37,12 +37,20 @@ require 'recipe/common.php';
  * Params
  */
 
+if (!getenv('VCS_REPOSITORY')) {
+    echo 'export VCS_REPOSITORY="http://<vcs>/<vendor>/<repo>.git", must be set.'."\n";
+    exit(1);
+}
+
+// $REPOSITORY https://user:pass@git-repo.com
+$REPOSITORY = getenv('REPOSITORY');
+// $REMOTE_HOST user@ssh.host.com
+$REMOTE_HOST = getenv('REMOTE_HOST');
+
 // MAIN PARAMS //
 
 // Project name
 set('application', 'my_sample_project');
-
-set('branch', 'main');
 
 // Callback allowed
 set('current_path', function () {
@@ -51,17 +59,12 @@ set('current_path', function () {
 
 // Stage
 set('default_stage', 'test');
-
+set('target_directory', '~/');
 set('deploy_path', '{{target_directory}}{{application}}'); 
 
-// Project repository
-if (!getenv('VCS_REPOSITORY')) {
-    echo 'export VCS_REPOSITORY="http://<vcs>/<vendor>/<repo>.git", must be set.'."\n";
-    exit(1);
-}
-set('repository', getenv('VCS_REPOSITORY'));
-
-set('target_directory', '/tmp/deployer/');
+// Project repository //
+set('branch', 'main');
+set('repository', $REPOSITORY);
 
 // User
 set('user', function () {
@@ -74,13 +77,9 @@ set('allow_anonymous_stats', false);
 
 // Deleted paths after release
 set('clear_paths', []);
-
 set('clear_use_sudo', false);
-
 set('cleanup_use_sudo', false);
-
 set('composer_action', 'install'); //default install
-
 set('copy_dirs', []);
 
 set('env', [
@@ -95,7 +94,7 @@ set('keep_releases', 5);
 
 // Shared files/dirs between deploys 
 set('shared_files', []);
-set('shared_dirs', ['logs','var']);
+set('shared_dirs', ['logs', 'var']);
 
 // Writable dirs by web server 
 set('writable_dirs', []);
@@ -114,8 +113,8 @@ localhost('local')
     ->roles('test_role', 'build_role', 'db');
 
 /*host('prod')
-    ->hostname('sample.host')
-    ->set('deploy_path', '/var/www/var/deployer/{{application}}');
+    ->hostname($REMOTE_HOST)
+    ->set('deploy_path', '{{target_directory}}{{application}}');
     ->set('branch', 'production');    
     ->user('name')
     ->port(22)
@@ -165,12 +164,13 @@ task("phpunit", '
     echo "Exec PhpUnit";
 ');
 
-// manually upload task //
-task('upload', function () {
+// Manually upload task //
+task('local:upload', function () {
     upload(__DIR__ . "/", '{{release_path}}');
 });
 
 // Run tasks //
+$deploy_update = ['deploy:update_code', 'local:upload'][1];
 
 desc('Deploy your project');
 task('deploy', [
@@ -178,7 +178,9 @@ task('deploy', [
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
-    'deploy:update_code',
+    
+    $deploy_update,
+    
     'deploy:shared',
     'deploy:writable',
     'deploy:vendors',
@@ -195,4 +197,4 @@ task('deploy', [
 
 // [Optional] If deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock'); // run after task, can be "before"
-fail('deploy:release', 'deploy:unlock');
+fail('*', 'deploy:unlock');
