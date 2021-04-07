@@ -158,15 +158,17 @@ task('my_custom_task', function () {
 // run on the first host only
 ->once()->local();
 
-desc("Simple task");
-// We can override deployer task (ex: deploy:update_code)
-task("phpunit", '
-    echo "Exec PhpUnit";
-');
 
-// Manually upload task //
+desc("Manually upload task");
 task('local:upload', function () {
     upload(__DIR__ . "/", '{{release_path}}');
+});
+
+desc("Simlink host .env");
+task('link:env', function () {
+    $src_env = '{{deploy_path}}/.env';
+    $target_env = "{{release_path}}/.env";
+    run("[[ -f $src_env ]] && ln -s $src_env $target_env");
 });
 
 // Run tasks //
@@ -186,6 +188,8 @@ task('deploy', [
     'deploy:vendors',
     'deploy:clear_paths',
     'deploy:symlink',
+    'link:env',
+    
     'deploy:unlock',
     'cleanup',
     'success'
