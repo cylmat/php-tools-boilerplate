@@ -106,3 +106,6 @@ jobs:
       run: |
         make deployer-bin
         make deployer
+#build:
+    #needs: previous job
+    #next job...
