@@ -188,6 +188,8 @@ task('deploy', [
     'deploy:vendors',
     'deploy:clear_paths',
     'deploy:symlink',
+    
+    // uncomment if needed
     'link:env',
     
     'deploy:unlock',
