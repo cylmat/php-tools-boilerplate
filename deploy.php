@@ -190,7 +190,7 @@ task('deploy', [
     'deploy:symlink',
     
     // uncomment if needed
-    'link:env',
+    // 'link:env',
     
     'deploy:unlock',
     'cleanup',
