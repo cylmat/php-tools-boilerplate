@@ -168,7 +168,7 @@ desc("Simlink host .env");
 task('link:env', function () {
     $src_env = '{{deploy_path}}/.env';
     $target_env = "{{release_path}}/.env";
-    run("[[ -f $src_env ]] && ln -s $src_env $target_env");
+    run("test -f $src_env && ln -s $src_env $target_env");
 });
 
 // Run tasks //
