@@ -59,4 +59,5 @@ unzip phpconfig.zip -d vendor/cylmat && rm phpconfig.zip
 #### Ref
 * [Clymate - Dev servers](https://github.com/clymate/phpserver)  
 * [Cylmat - Useful commands](https://github.com/cylmat/useful)  
+* [Phanan - Htaccess snippets](https://github.com/phanan/htaccess)
 * [Phpqa.io - Php Quality Assurance](https://phpqa.io)
