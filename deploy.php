@@ -168,11 +168,14 @@ desc("Simlink host .env");
 task('link:env', function () {
     $src_env = '{{deploy_path}}/.env';
     $target_env = "{{release_path}}/.env";
-    run("test -f $src_env && ln -s $src_env $target_env");
+    
+    if (test("test -f $src_env")) {
+        run("ln -s $src_env $target_env");
+    }
 });
 
 // Run tasks //
-$deploy_update = ['deploy:update_code', 'local:upload'][1];
+$deploy_upload = ['deploy:update_code', 'local:upload'][1];
 
 desc('Deploy your project');
 task('deploy', [
@@ -181,7 +184,7 @@ task('deploy', [
     'deploy:lock',
     'deploy:release',
     
-    $deploy_update,
+    $deploy_upload,
     
     'deploy:shared',
     'deploy:writable',
@@ -204,3 +207,40 @@ task('deploy', [
 // [Optional] If deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock'); // run after task, can be "before"
 fail('*', 'deploy:unlock');
+
+
+/**********************
+ *  PREFIX PREVIOUS   *
+ * Avoid host caching *
+ *********************/
+before('cleanup', 'prefix_previous');
+before('rollback', 'unprefix_previous_rollback');
+
+task('prefix_previous', function () {
+    if (!isset(get('releases_list')[1])) return;
+    $previous = get('releases_list')[1];
+    $path = "{{deploy_path}}/releases";
+
+    if (test("test -d $path/$previous")) {
+        if (test("test -d $path/_$previous")) {
+            run("rm -rf $path/_$previous");
+        }
+        run("mv $path/$previous $path/_$previous");
+    }
+});
+
+task('unprefix_previous_rollback', function () {
+    $path = "{{deploy_path}}/releases";
+
+    // unprefix all
+    run('cd '.$path.' && for x in $(ls -1 | grep "_"); do mv $x $(echo $x | sed -e "s/_//"); done;');
+    if (!isset(get('releases_list')[1])) return;
+    $previous = get('releases_list')[1];
+
+    if (test("test -d $path/_$previous")) {
+        if (test("test -d $path/$previous")) {
+            run("rm -rf $path/$previous");
+        }
+        run("mv $path/_$previous $path/$previous");
+    }
+});
