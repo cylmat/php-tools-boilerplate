@@ -4,15 +4,16 @@
 # Matthew's Git Bash Prompt
 # https://raw.githubusercontent.com/matthewmccullough/dotfiles/master/bash_gitprompt
 ########################################################################
-        RED="\[\033[0;31m\]"
-     YELLOW="\[\033[0;33m\]"
- 	  GREEN="\[\033[0;32m\]"
-       BLUE="\[\033[0;34m\]"
-  LIGHT_RED="\[\033[1;31m\]"
+
+RED="\[\033[0;31m\]"
+YELLOW="\[\033[0;33m\]"
+GREEN="\[\033[0;32m\]"
+BLUE="\[\033[0;34m\]"
+LIGHT_RED="\[\033[1;31m\]"
 LIGHT_GREEN="\[\033[1;32m\]"
-      WHITE="\[\033[1;37m\]"
- LIGHT_GRAY="\[\033[0;37m\]"
- COLOR_NONE="\[\e[0m\]"
+WHITE="\[\033[1;37m\]"
+LIGHT_GRAY="\[\033[0;37m\]"
+COLOR_NONE="\[\e[0m\]"
 
 function parse_git_branch {
   git rev-parse --git-dir &> /dev/null
@@ -20,7 +21,7 @@ function parse_git_branch {
   branch_pattern="^# On branch ([^${IFS}]*)"
   remote_pattern="# Your branch is (.*) '"
   diverge_pattern="# Your branch and (.*) have diverged"
-  
+
   if [[ ! ${git_status}} =~ "working directory clean" ]]; then
     state="${RED}⚡"
   fi
@@ -39,26 +40,26 @@ function parse_git_branch {
     branch=${BASH_REMATCH[1]}
     echo " (${branch})${remote}${state}"
   fi
-}
+  }
 
 function git_dirty_flag {
   git status 2> /dev/null | grep -c : | awk '{if ($1 > 0) print "⚡"}'
 }
 
 function prompt_func() {
-    previous_return_value=$?;
-    #The lowercase w is the full current working directory
-    #prompt="${TITLEBAR}${BLUE}[${RED}\w${GREEN}$(parse_git_branch)${BLUE}]${COLOR_NONE}"
-    
-    #Capital W is just the trailing part of the current working directory
-    prompt="${TITLEBAR}${BLUE}[${RED}\W${GREEN}$(parse_git_branch)${BLUE}]${COLOR_NONE}"
-    
-    if test $previous_return_value -eq 0
-    then
-        PS1="${prompt}> "
-    else
-        PS1="${prompt}${RED}>${COLOR_NONE} "
-    fi
+  previous_return_value=$?;
+  #The lowercase w is the full current working directory
+  #prompt="${TITLEBAR}${BLUE}[${RED}\w${GREEN}$(parse_git_branch)${BLUE}]${COLOR_NONE}"
+
+  #Capital W is just the trailing part of the current working directory
+  prompt="${TITLEBAR}${BLUE}[${RED}\w${GREEN}$(parse_git_branch)${BLUE}]${COLOR_NONE}"
+
+  if test $previous_return_value -eq 0
+  then
+    PS1="${prompt}> "
+  else
+    PS1="${prompt}${RED}>${COLOR_NONE} "
+  fi
 }
 
 PROMPT_COMMAND=prompt_func
