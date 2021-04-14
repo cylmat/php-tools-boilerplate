@@ -33,4 +33,9 @@ GIT_PROMPT_SHOW_UNTRACKED_FILES=normal # can be no, normal or all; determines co
 # GIT_PROMPT_THEME_FILE=~/.git-prompt-colors.sh
 # GIT_PROMPT_THEME=Solarized # use theme optimized for solarized color scheme
 
+# SET PROMPT WHEN NOT IN GIT REPO
+export PROMPT_COMMAND=''
+export PS1='${debian_chroot:+($debian_chroot)}\[\033[0;33m\]\u\[\e[0m\]@\h:\w\$\[\e[0m\] '
+
 source $HOME/.bash-git-prompt/gitprompt.sh
+echo "Informative git prompt loaded..."
