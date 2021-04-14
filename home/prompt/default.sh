@@ -1,9 +1,9 @@
 #!/bin/bash
 
-############
-# GIT PROMPT
-# https://git-scm.com
-############
+#######################
+# GIT PROMPT          #
+# https://git-scm.com #
+#######################
 
 # unstaged(*) and staged(+)
 export GIT_PS1_SHOWDIRTYSTATE=1
