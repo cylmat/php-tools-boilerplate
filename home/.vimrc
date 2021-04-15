@@ -10,10 +10,21 @@
 " Plugins at https://vimawesome.com
 """""""""""""""""""""
 
+"""""""""""""""""""
+" EXECUTE VIMPLUG "
+" Run :PlugInstall in Vim
+"""""""""""""""""""
+call plug#begin('~/.vim/bundle')
 """"""""""""""""""""
-" EXECUTE PATHOGEN "
-""""""""""""""""""""
-execute pathogen#infect()
+
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+call plug#end()
+"""""""""""""""
+" END VIMPLUG "
+"""""""""""""""
+
+
 
 """""""""""""""""
 " CONFIGURATION "
