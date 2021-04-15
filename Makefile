@@ -15,6 +15,32 @@ all:
 # Avoid a conflict with a file of the same name, and improve performance
 .PHONY: all grump-pre linters testing
 
+###############
+# HOME CONFIG #
+###############
+
+# BASH
+bash-it:
+	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it && ~/.bash_it/install.sh
+	
+oh-my-bash:
+	curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)
+	
+# GIT
+fancy-git:
+	apt-get install -y fontconfig
+	curl -sS https://raw.githubusercontent.com/diogocavilha/fancy-git/master/install.sh | bash
+
+info-git:
+	git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
+
+# VIM
+ultimate-vim:
+	git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
+	# sh ~/.vim_runtime/install_basic_vimrc.sh
+	# sh ~/.vim_runtime/install_awesome_vimrc.sh
+	# sh ~/.vim_runtime/install_amesome_parameterized.sh
+
 #######
 # BIN #
 #######
