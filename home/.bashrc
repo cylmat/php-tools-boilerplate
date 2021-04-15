@@ -28,11 +28,12 @@
 
 ##############
 # BASH-IT    #
-# or
 # GIT PROMPT #
-#############
-# [[ -f ~/user-prompt.sh ]] && touch /tmp/t || echo "~/user-prompt.sh not found!"
+# OH MY BASH #
+##############
 [[ -f ~/user-bash_it.sh ]] && source ~/user-bash_it.sh || echo "~/user-bash_it.sh not found!"
+#[[ -f ~/user-prompt.sh ]] && source ~/user-prompt.sh || echo "~/user-prompt.sh not found!"
+#[[ -f ~/user-ohmybash.sh ]] && source ~/user-ohmybash.sh || echo "~/user-ohmybash.sh not found!"
 
 ##########
 # OTHERS #
