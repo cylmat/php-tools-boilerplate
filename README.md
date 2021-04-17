@@ -57,7 +57,7 @@ unzip phpconfig.zip -d vendor/cylmat && rm phpconfig.zip
 ```
 
 #### Ref
-* [Cylmat - Dev servers](https://github.com/cylmat/phpserver)  
-* [Cylmat - Home config](https://github.com/cylmat/homeconfig)  
+* [cylmat/homeconfig](https://github.com/cylmat/homeconfig) - Home configuration with custom prompts and editors
+* [cylmat/phpconfig](https://github.com/cylmat/phpconfig/) - PHP dev environment, specs and testing frameworks
 * [Phanan - Htaccess snippets](https://github.com/phanan/htaccess)
 * [Phpqa.io - Php Quality Assurance](https://phpqa.io)
