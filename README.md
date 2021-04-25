@@ -64,7 +64,7 @@ git clone https://github.com/cylmat/phpconfig phpconfig --depth=1
 
 License
 ---
-HomeConfig is licensed under Unlicense.
+PhpConfig is licensed under Unlicense.
 
 This is free and unencumbered software released into the public domain.
 
