@@ -8,7 +8,7 @@
 # DOC
 # https://github.com/actions/starter-workflows/
 
-name: PHP Config
+name: PHPConfig
 
 on:
   push:
