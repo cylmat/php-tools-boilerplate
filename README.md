@@ -56,7 +56,7 @@ git clone https://github.com/cylmat/phpconfig phpconfig --depth=1
 ### Versionning
 * [Git v2](http://git-scm.com) Git prompt and alias
 
-## Ref
+## See also
 * [cylmat/homeconfig](https://github.com/cylmat/homeconfig) - Home configuration with custom prompts and editors.
 * [cylmat/phpserver](https://github.com/cylmat/phpserver/) - Functional installation of Php environment using Docker containers.
 * [Phanan - Htaccess snippets](https://github.com/phanan/htaccess)
