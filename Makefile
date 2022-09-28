@@ -16,7 +16,7 @@ all:
 .PHONY: all grump-pre linters testing
 
 ### Test config from host
-# docker run --rm -it -v tmpvar:/var/www php:7.4-fpm sh -c "apt update && apt install -y zip git && bash"
+# docker run --rm -it -v tmpvar:/var/www php:7.4-fpm sh -c "apt update && apt install -y git zip && bash"
 ###
 
 ###############
@@ -43,25 +43,32 @@ ultimate-vim:
 
 # For deployer, environment DEPLOYER_REPOSITORY must be set
 # Or use composer require --dev deployer/deployer
+codeception-bin:
+	wget https://codeception.com/codecept.phar
+	chmod +x codecept.phar
+	mv codecept.phar bin/codecept
+
 composer-bin:
 	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 	php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 	php composer-setup.php
 	php -r "unlink('composer-setup.php');"
-	mv composer.phar /usr/local/bin/composer
+	mv composer.phar bin/composer
 
 deployer-bin:
 	curl -LO https://github.com/deployphp/deployer/releases/download/v7.0.2/deployer.phar
-	mv deployer.phar /usr/local/bin/dep
-	chmod +x /usr/local/bin/dep
-
-deployer-install:
-	alias dep='vendor/bin/dep'
-	dep completion bash > /etc/bash_completion.d/deployer
+	chmod a+x deployer.phar
+	mv deployer.phar bin/dep
 
 kint-bin:
 	curl -LO https://raw.githubusercontent.com/kint-php/kint/master/build/kint.phar
-	mkdir bin -p && mv kint.phar bin
+	mkdir bin -p
+	mv kint.phar bin/kint
+
+phpcs-bin:
+	curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o php-cs-fixer
+	chmod a+x php-cs-fixer
+	mv php-cs-fixer bin/php-cs-fixer
 
 phing-bin:
 	curl -LO https://www.phing.info/get/phing-2.16.4.phar
@@ -100,28 +107,17 @@ grump-tasks:
 	vendor/bin/grumphp run --tasks=$(ts)
 
 ############
-# COMPOSER #
-############
-
-compose-update:
-	composer update --lock
-	composer normalize --no-update-lock
-
-############
 # BEHAVIOR #
 ############
 
 behav:
-	# Behavior and acceptance
 	make codecept
 	make phpspec
 
 codecept:
-	# Browser acceptance
 	vendor/bin/codecept generate:cest acceptance sample -q || exit 0
 	vendor/bin/codecept run -c codeception.yml
 
-	# BDD features acceptance
 	vendor/bin/codecept g:feature acceptance sample -q || exit 0
 	vendor/bin/codecept gherkin:snippets acceptance
 	vendor/bin/codecept gherkin:steps acceptance
@@ -139,9 +135,9 @@ phpspec:
 fix:
 	vendor/bin/php-cs-fixer fix --config lint/.php_cs -v
 	vendor/bin/phpcbf --colors --standard=lint/phpcs.xml -v
-	# phpparser: Work line by line, use only with GrumPhp
+#	phpparser: Work line by line, use only with GrumPhp
 
-# Only used with make cause require 'php-ast' extension
+# Only used with "make" cause require 'php-ast' extension
 phan:
 	PHAN_ALLOW_XDEBUG=1 vendor/bin/phan --allow-polyfill-parser --config-file lint/phan.config.php
 
@@ -168,7 +164,7 @@ cover:
 	phpdbg -qrr vendor/bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
 
 testing:
-	# paratest, pest or phpunit
+#	paratest, pest or phpunit
 	vendor/bin/paratest -c phpunit.xml
 	vendor/bin/pest -c phpunit.xml
 	make phpunit

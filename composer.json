@@ -5,18 +5,27 @@
     "license": "",
     "minimum-stability": "stable",
     "prefer-stable": true,
+    "config": {
+        "bin-dir": "bin",
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "ergebnis/composer-normalize": false,
+            "phpro/grumphp": true
+        }
+    },
     "require": {
-        "php": ">=7.3",
+        "php": ">7.3",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
     "require-dev": {
         "brianium/paratest": "^6.2",
-        "codeception/codeception": "^4.1",
-        "deployer/deployer": "^7.0",
         "friends-of-phpspec/phpspec-code-coverage": "^6.0",
-        "friendsofphp/php-cs-fixer": "^2.18",
-        "kint-php/kint": "^4.2",
         "nikic/php-parser": "^4.10",
         "pestphp/pest": "^1.0",
         "phan/phan": "^4.0",
@@ -29,18 +38,6 @@
         "phpunitgen/core": "^1.1",
         "sebastian/phpcpd": "^6.0",
         "squizlabs/php_codesniffer": "^3.5"
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": {
-            "*": "dist"
-        },
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "ergebnis/composer-normalize": false,
-            "phpro/grumphp": true
-        }
     },
     "autoload": {
         "psr-4": {
