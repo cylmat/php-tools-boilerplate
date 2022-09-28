@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 
-<!-- WEBSITE -->
-<!-- https://phpmd.org/ -->
+<!-- 
+  Website
+  @see https://phpmd.org
 
-<!-- CODE -->
-<!-- https://github.com/phpmd/phpmd -->
+  Code
+  @see https://github.com/phpmd/phpmd
 
-<!-- CONFIG DOC -->
-<!-- https://pmd.github.io/pmd-6.31.0/pmd_userdocs_making_rulesets.html -->
+  Config
+  @see https://pmd.sourceforge.io/pmd-6.31.0/pmd_userdocs_making_rulesets.html
+-->
 
 <ruleset
         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
@@ -16,20 +18,12 @@
 
     <description>Rules set</description>
 
-    <exclude-pattern>**/Resources/*</exclude-pattern>
     <exclude-pattern>cest/*</exclude-pattern>
     <exclude-pattern>spec/*</exclude-pattern>
     <exclude-pattern>tests/*</exclude-pattern>
-    <exclude-pattern>deploy.php</exclude-pattern>
 
-    <rule ref="rulesets/cleancode.xml">
-        <exclude name="IfStatementAssignment"/>
-    </rule>
-
-    <rule ref="rulesets/naming.xml">
-        <exclude name="ShortVariable"/>
-    </rule>
-
+    <rule ref="rulesets/cleancode.xml"/>
+    <rule ref="rulesets/naming.xml"/>
     <rule ref="rulesets/design.xml"/>
     <rule ref="rulesets/controversial.xml"/>
     <rule ref="rulesets/unusedcode.xml"/>

@@ -6,12 +6,8 @@ namespace App;
 
 class Sample
 {
-    public function __construct()
+    public function sample(int $num): int
     {
-    }
-
-    public function sample(int $sample): int
-    {
-        return $sample + 1;
+        return $num + 1;
     }
 }

@@ -10,40 +10,32 @@ all:
 
 # Declare no names like command
 # Avoid a conflict with a file of the same name, and improve performance
-.PHONY: all grump-pre linter test
+.PHONY: all all-bin grump-pre linter test
 
 ### Test config from host
 # docker run --rm -it -v tmpvar:/var/www php:7.4-fpm sh -c "apt update && apt install -y git zip && bash"
 ###
 
-###############
-# HOME CONFIG #
-###############
-
-# BASH
-bash-it:
-	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it && ~/.bash_it/install.sh
-
-info-git:
-	git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
-
-# VIM
-ultimate-vim:
-	git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
-	# sh ~/.vim_runtime/install_basic_vimrc.sh
-	# sh ~/.vim_runtime/install_awesome_vimrc.sh
-	# sh ~/.vim_runtime/install_amesome_parameterized.sh
-
 #######
 # BIN #
 #######
+all-bin:
+	make codeception-bin
+	make composer-bin
+	make deployer-bin
+	make kint-bin
+	make parallel-bin
+	make phan-bin
+	make phing-bin
+	make phpcsfix-bin
+	make phpmd-bin
+	make phpstan-bin
 
 # For deployer, environment DEPLOYER_REPOSITORY must be set
 # Or use composer require --dev deployer/deployer
 codeception-bin:
-	wget https://codeception.com/codecept.phar
-	chmod +x codecept.phar
-	mv codecept.phar bin/codecept
+	curl -L https://codeception.com/codecept.phar -o bin/codecept
+	chmod a+x bin/codecept
 
 composer-bin:
 	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -53,19 +45,21 @@ composer-bin:
 	mv composer.phar bin/composer
 
 deployer-bin:
-	curl -LO https://github.com/deployphp/deployer/releases/download/v7.0.2/deployer.phar
-	chmod a+x deployer.phar
-	mv deployer.phar bin/dep
+	curl -L https://github.com/deployphp/deployer/releases/download/v7.0.2/deployer.phar -o bin/deployer
+	chmod a+x bin/deployer
 
 kint-bin:
-	curl -LO https://raw.githubusercontent.com/kint-php/kint/master/build/kint.phar
-	mkdir bin -p
-	mv kint.phar bin/kint
+	curl -L https://raw.githubusercontent.com/kint-php/kint/master/build/kint.phar -o bin/kint
+	chmod a+x bin/kint
 
-phpcs-bin:
-	curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o php-cs-fixer
-	chmod a+x php-cs-fixer
-	mv php-cs-fixer bin/php-cs-fixer
+parallel-bin:
+	curl -LO https://github.com/php-parallel-lint/PHP-Parallel-Lint/releases/download/v1.3.2/parallel-lint.phar
+	chmod +x parallel-lint.phar
+	mv parallel-lint.phar bin/parallel-lint
+
+phan-bin:
+	curl -L https://github.com/phan/phan/releases/download/5.4.1/phan.phar -o bin/phan
+	chmod +x bin/phan
 
 phing-bin:
 	curl -LO https://www.phing.info/get/phing-2.16.4.phar
@@ -75,27 +69,26 @@ phing-bin:
 	mv phing-2.16.4.phar /usr/local/bin/phing
 	chmod +x /usr/local/bin/phing
 
-phpstan-bin:
-	curl -LO https://github.com/phpstan/phpstan/releases/download/1.8.6/phpstan.phar
+phpcsfix-bin:
+	curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o bin/php-cs-fixer
+	chmod a+x bin/php-cs-fixer
 
-### 
+phpmd-bin:
+	curl -LO https://github.com/phpmd/phpmd/releases/download/2.13.0/phpmd.phar
+	chmod a+x phpmd.phar
+	mv phpmd.phar bin/phpmd.phar
+
+phpstan-bin:
+	curl -L https://github.com/phpstan/phpstan/releases/download/1.8.6/phpstan.phar -o bin/phpstan
+	chmod a+x bin/phpstan
+
 # PHIVE
-###
 infection-phive:
 	phive install infection
 
 ###########
 # GRUMPHP #
 ###########
-
-grump-behav:
-	vendor/bin/grumphp run --testsuite=behav
-
-grump-lint:
-	vendor/bin/grumphp run --testsuite=lint
-
-grump-tests:
-	vendor/bin/grumphp run --testsuite=tests
 
 grump-pre: 
 	vendor/bin/grumphp git:pre-commit
@@ -112,17 +105,16 @@ behav:
 	make phpspec
 
 codecept:
-	vendor/bin/codecept generate:cest acceptance sample -q || exit 0
-	vendor/bin/codecept run -c codeception.yml
-
-	vendor/bin/codecept g:feature acceptance sample -q || exit 0
-	vendor/bin/codecept gherkin:snippets acceptance
-	vendor/bin/codecept gherkin:steps acceptance
-	vendor/bin/codecept run acceptance sample.feature
+	bin/codecept generate:cest acceptance sample -q || exit 0
+	bin/codecept run -c codeception.yml
+	bin/codecept g:feature acceptance sample -q || exit 0
+	bin/codecept gherkin:snippets acceptance
+	bin/codecept gherkin:steps acceptance
+	bin/codecept run acceptance sample.feature
 
 phpspec:
-	echo 'N' | vendor/bin/phpspec describe App/Sample -q --config=phpspec.yml
-	vendor/bin/phpspec run --config=phpspec.yml
+	echo 'N' | bin/phpspec describe App/Sample -q --config=phpspec.yml
+	bin/phpspec run --config=phpspec.yml
 
 ###########
 # LINTERS #
@@ -131,46 +123,45 @@ phpspec:
 # NO autofix before commit on Grumphp
 fix:
 #	phpparser: Work line by line, use only with GrumPhp
-	bin/php-cs-fixer fix --config config/linter/.php-cs-fixer.php -v
-	bin/phpcbf --colors --standard=config/linter/phpcs.xml -v
-
-# Only used with "make" cause require 'php-ast' extension
-phan:
-	PHAN_ALLOW_XDEBUG=1 bin/phan --allow-polyfill-parser --config-file lint/phan.config.php
+	bin/php-cs-fixer fix --config tools/linter/.php-cs-fixer.php -v
+	bin/phpcbf --colors --standard=tools/linter/phpcs.xml -v
+	@echo -e "\033[1;32mAll good \033[0m"
 
 linter:
+	bin/parallel-lint tests --exclude vendor
+	bin/phan --config-file tools/linter/phan.config.php --allow-polyfill-parser
 	bin/phpcpd src
-	bin/phpcs --colors --standard=lint/phpcs.xml -s
-	bin/parallel-lint src --exclude vendor
-	bin/phpmd src ansi lint/phpmd.xml --reportfile=STDOUT
-	bin/phpstan analyse --level 8 --configuration lint/phpstan.neon --memory-limit 2G
+	bin/phpcs --colors --standard=tools/linter/phpcs.xml -s
+	bin/phpmd src ansi tools/linter/phpmd.xml --reportfile=STDOUT
+	bin/phpstan analyse --level 8 --configuration tools/linter/phpstan.neon --memory-limit 2G
+	@echo -e "\033[1;32mAll good \033[0m"
 
 ###########
 # TESTING #
 ###########
 
+cover:
+	XDEBUG_MODE=coverage bin/phpunit -c tools/test/phpunit.xml --coverage-html=var/unit-coverage
+	phpdbg -qrr bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
+
 test-gen:
-	vendor/bin/phpunitgen --config=phpunitgen.yml src
+	bin/phpunitgen --config=tools/test/phpunitgen.yml src
 
 phpunit:
-	vendor/bin/phpunit -c phpunit.xml
-
-cover:
-	XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html=var/unit-coverage
-	phpdbg -qrr vendor/bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
+	bin/phpunit -c tools/test/phpunit.xml
 
 #	paratest, pest or phpunit
 test:
-#	vendor/bin/paratest -c config/tools/phpunit.xml
-#	vendor/bin/pest -c config/tools/phpunit.xml
-	vendor/bin/phpunit -c config/tools/phpunit.xml
+#	bin/paratest -c tools/test/phpunit.xml
+#	bin/pest -c tools/test/phpunit.xml
+	bin/phpunit -c tools/test/phpunit.xml
 
 ############
 # BUILDING #
 ############
 
 phing:
-	phing -f ./build.xml
+	phing -f tools/build.xml
 
 ##########
 # DEPLOY #

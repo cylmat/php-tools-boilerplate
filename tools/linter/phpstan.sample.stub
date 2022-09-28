@@ -4,7 +4,6 @@ class Sample
 {
     /**
      * @param int $sample
-     * 
      * @return int
      */ 
     public function sample(int $sample): int;

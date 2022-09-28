@@ -1,13 +1,11 @@
 <?php
-// .phan/config.php
 
 /**
+ * Doc
+ * @see https://github.com/phan/phan/wiki
  * 
- * DOC
- * https://github.com/phan/phan/wiki
- * 
- * CONFIG
- * https://github.com/phan/phan/wiki/Phan-Config-Settings#configuring-files
+ * Config
+ * @see https://github.com/phan/phan/wiki/Phan-Config-Settings
  */
 return [
     /**
@@ -29,10 +27,7 @@ return [
      * your application should be included in this list.
      */
     'directory_list' => [
-        __DIR__ . '/../src',
-
-        // Avoid UndeclaredExtendedClass error
-        __DIR__ . '/../vendor/phpunit',
+        __DIR__ . '/../../src',
     ],
 
     /**
@@ -49,7 +44,7 @@ return [
      *      to `exclude_analysis_directory_list`.
      */
     "exclude_analysis_directory_list" => [
-        __DIR__ . '/../vendor'
+        // 'exclude_dir'
     ],
 
     /**
