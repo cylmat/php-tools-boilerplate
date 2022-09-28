@@ -7,24 +7,7 @@
 actor: AcceptanceTester
 modules:
     enabled:
-        - \Helper\Acceptance
-        - Asserts
-        # https://codeception.com/docs/modules/PhpBrowser
         - PhpBrowser:
-            url: http://localhost:88
-            auth: ['user', 'pass']
-            curl:
-                CURLOPT_RETURNTRANSFER: true
-            cookies:
-                cookie-1:
-                    Name: userName
-                    Value: john.doe
-step_decorators: ~
-# https://codeception.com/docs/07-BDD
-gherkin:
-    contexts:
-        default:
-            - AcceptanceTester
-        role:
-            admin:
-                - "Step\\Admin"
+            url: http://localhost/myapp
+        - \Helper\Acceptance
+step_decorators: ~        

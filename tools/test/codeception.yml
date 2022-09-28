@@ -1,9 +1,23 @@
+##############
+# Sample cli #
+##############
+
+# - Create acceptance/functional/test class <classname>
+# bin/codecept generate:cest functional sample
+
+# - Use gherkin
+# bin/codecept gherkin:steps acceptance
+# bin/codecept gherkin:snippets acceptance
+# bin/codecept gherkin:steps acceptance
+# bin/codecept g:feature acceptance sample
+# bin/codecept run acceptance sample.feature
+
 paths:
-    tests: cest
-    output: cest/_output
-    data: cest/_data
-    support: cest/_support
-    envs: cest/_envs
+    tests: ../../cest
+    data: ../../cest/_data
+    envs: ../../cest/_envs
+    output: ../../cest/_output
+    support: ../../cest/_support
 actor_suffix: Tester
 extensions:
     enabled:

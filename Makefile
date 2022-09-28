@@ -105,12 +105,7 @@ behav:
 	make phpspec
 
 codecept:
-	bin/codecept generate:cest acceptance sample -q || exit 0
-	bin/codecept run -c codeception.yml
-	bin/codecept g:feature acceptance sample -q || exit 0
-	bin/codecept gherkin:snippets acceptance
-	bin/codecept gherkin:steps acceptance
-	bin/codecept run acceptance sample.feature
+	bin/codecept run -c tools/test/codeception.yml
 
 phpspec:
 	echo 'N' | bin/phpspec describe App/Sample -q --config=phpspec.yml
@@ -150,11 +145,15 @@ test-gen:
 phpunit:
 	bin/phpunit -c tools/test/phpunit.xml
 
-#	paratest, pest or phpunit
+# @see https://pestphp.com
+pest:
+	bin/pest -c tools/test/phpunit.xml
+	@echo -e "\033[1;32mAll good \033[0m"
+
 test:
-#	bin/paratest -c tools/test/phpunit.xml
-#	bin/pest -c tools/test/phpunit.xml
-	bin/phpunit -c tools/test/phpunit.xml
+	bin/paratest -c tools/test/phpunit.xml
+#	bin/phpunit -c tools/test/phpunit.xml
+	@echo -e "\033[1;32mAll good \033[0m"
 
 ############
 # BUILDING #
@@ -167,5 +166,5 @@ phing:
 # DEPLOY #
 ##########
 
-deployer:
-	dep deploy
+deploy:
+	bin/dep deploy -f tools/deployer.yaml
