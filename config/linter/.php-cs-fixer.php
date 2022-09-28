@@ -5,7 +5,9 @@
  * @see https://github.com/FriendsOfPHP/PHP-CS-Fixer
  * 
  * Doc
- * @see https://cs.symfony.com/doc/ruleSets/index.html
+ * @see https://cs.symfony.com/doc/ruleSets
+ * 
+ * Oliva (v3.11) edition
  */
 
 $rules = [
@@ -14,19 +16,20 @@ $rules = [
     //'@Symfony' => true,     # https://cs.symfony.com/doc/ruleSets/Symfony.html
 
     'array_syntax' => ['syntax' => 'short'],
-    'no_php4_constructor' => true,
-    'no_short_echo_tag' => true,
+    'full_opening_tag' => true,
+    'echo_tag_syntax' => true,
     'no_useless_else' => true,
     'no_useless_return' => true,
     'php_unit_internal_class' => false,
 ];
 
-return PhpCsFixer\Config::create()
+$root = __DIR__.'/../../';
+return (new PhpCsFixer\Config())
     ->setRules($rules)
-    ->setCacheFile(__DIR__ . '/../var/.phpcs-cache')
+    ->setCacheFile($root.'var/php-cs-fixer.cache')
     ->setFinder(
         PhpCsFixer\Finder::create()
-            ->in([__DIR__ . '/../src'])
-            ->exclude([__DIR__ . '/../vendor'])
+            ->in([$root.'src'])
+            ->exclude([$root.'vendor'])
     )
 ;

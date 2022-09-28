@@ -1,15 +1,12 @@
 SHELL := /bin/bash
 
-# define aaa
-# 	 my_shell_script -arg "${1}"
-# endef
-#
-# daemon-aaa:
-#    @$(call aaa, and aaa, and aaa)
+define all-scripts
+	make linter
+	make test
+endef
 
-# Call when no arguments
 all:
-	@echo '';
+	@$(call all-scripts)
 
 # Declare no names like command
 # Avoid a conflict with a file of the same name, and improve performance
@@ -131,22 +128,22 @@ phpspec:
 # LINTERS #
 ###########
 
-# NO autofix before commit on GrumPhp
+# NO autofix before commit on Grumphp
 fix:
-	vendor/bin/php-cs-fixer fix --config lint/.php_cs -v
-	vendor/bin/phpcbf --colors --standard=lint/phpcs.xml -v
 #	phpparser: Work line by line, use only with GrumPhp
+	bin/php-cs-fixer fix --config config/linter/.php-cs-fixer.php -v
+	bin/phpcbf --colors --standard=config/linter/phpcs.xml -v
 
 # Only used with "make" cause require 'php-ast' extension
 phan:
-	PHAN_ALLOW_XDEBUG=1 vendor/bin/phan --allow-polyfill-parser --config-file lint/phan.config.php
+	PHAN_ALLOW_XDEBUG=1 bin/phan --allow-polyfill-parser --config-file lint/phan.config.php
 
 linter:
-	vendor/bin/phpcpd src
-	vendor/bin/phpcs --colors --standard=lint/phpcs.xml -s
-	vendor/bin/parallel-lint src --exclude vendor
-	vendor/bin/phpmd src ansi lint/phpmd.xml --reportfile=STDOUT
-	vendor/bin/phpstan analyse --level 8 --configuration lint/phpstan.neon --memory-limit 2G
+	bin/phpcpd src
+	bin/phpcs --colors --standard=lint/phpcs.xml -s
+	bin/parallel-lint src --exclude vendor
+	bin/phpmd src ansi lint/phpmd.xml --reportfile=STDOUT
+	bin/phpstan analyse --level 8 --configuration lint/phpstan.neon --memory-limit 2G
 
 ###########
 # TESTING #
