@@ -1,25 +1,12 @@
-[![cylmat](https://github.com/cylmat/phpconfig/actions/workflows/main.yml/badge.svg)](https://github.com/cylmat/phpconfig/actions/workflows/main.yml)
-[![cylmat](https://circleci.com/gh/cylmat/phpconfig.svg?style=shield)](https://circleci.com/gh/cylmat/phpconfig)
-[![codecov](https://codecov.io/gh/cylmat/phpconfig/branch/main/graph/badge.svg?token=H8N2JE4E7J)](https://codecov.io/gh/cylmat/phpconfig)
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
 
-# Php 7 configuration and tests bootstrap
+# Php configuration and tests bootstrap
 
 Usage
 ---
 Simply clone the repository and use it as a boilerplate for your PHP project.
 ```
 git clone https://github.com/cylmat/php-tools-boilerplate my_app --depth=1
-```
-
-**Or include it in your composer.json and get the config files you need**  
-```
-"repositories": [{ "type": "vcs", 
-    "url": "https://github.com/cylmat/phpconfig"
-}],
-"require": {
-    "cylmat/phpconfig":"*"
-}
 ```
 
 ### Linters

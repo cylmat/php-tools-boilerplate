@@ -1,8 +1,8 @@
 {
-    "name": "cylmat/phpconfig",
-    "type": "configuration",
-    "description": "Php configuration with unit-tests and pre-configured dependencies",
-    "license": "Apache-2.0",
+    "name": "vendor/project",
+    "type": "project",
+    "description": "My project",
+    "license": "",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
