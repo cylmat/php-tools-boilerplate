@@ -13,7 +13,7 @@ all:
 
 # Declare no names like command
 # Avoid a conflict with a file of the same name, and improve performance
-.PHONY: all grump-pre linters testing
+.PHONY: all grump-pre linter test
 
 ### Test config from host
 # docker run --rm -it -v tmpvar:/var/www php:7.4-fpm sh -c "apt update && apt install -y git zip && bash"
@@ -141,13 +141,12 @@ fix:
 phan:
 	PHAN_ALLOW_XDEBUG=1 vendor/bin/phan --allow-polyfill-parser --config-file lint/phan.config.php
 
-linters:
-	make phan
+linter:
 	vendor/bin/phpcpd src
 	vendor/bin/phpcs --colors --standard=lint/phpcs.xml -s
 	vendor/bin/parallel-lint src --exclude vendor
 	vendor/bin/phpmd src ansi lint/phpmd.xml --reportfile=STDOUT
-	vendor/bin/phpstan analyse --level 8 --configuration lint/phpstan.neon --memory-limit 256M
+	vendor/bin/phpstan analyse --level 8 --configuration lint/phpstan.neon --memory-limit 2G
 
 ###########
 # TESTING #
@@ -163,11 +162,11 @@ cover:
 	XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html=var/unit-coverage
 	phpdbg -qrr vendor/bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
 
-testing:
 #	paratest, pest or phpunit
-	vendor/bin/paratest -c phpunit.xml
-	vendor/bin/pest -c phpunit.xml
-	make phpunit
+test:
+#	vendor/bin/paratest -c config/tools/phpunit.xml
+#	vendor/bin/pest -c config/tools/phpunit.xml
+	vendor/bin/phpunit -c config/tools/phpunit.xml
 
 ############
 # BUILDING #

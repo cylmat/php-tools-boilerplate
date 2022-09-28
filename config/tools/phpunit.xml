@@ -11,8 +11,8 @@
     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" 
         backupGlobals="false"
         backupStaticAttributes="false"
-        cacheResult="true"
-        cacheResultFile="var/.phpunit.result.cache"
+        cacheResult="false"
+        cacheResultFile="../../var/.phpunit.result.cache"
         colors="true"
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"
@@ -35,7 +35,7 @@
 
   <testsuites>
     <testsuite name="Project">
-      <directory phpVersion="7.2" phpVersionOperator=">=">tests</directory>
+      <directory phpVersionOperator=">=" phpVersion="7.2">../../tests</directory>
     </testsuite>
   </testsuites>
 
@@ -58,9 +58,9 @@
   </coverage-->
 
   <logging>
-      <testdoxHtml outputFile="var/log/phpunit-testdox.html"/>
-      <testdoxText outputFile="var/log/phpunit-testdox.txt"/>
-      <text outputFile="var/log/phpunit-logfile.txt"/>
+      <testdoxHtml outputFile="../../var/log/phpunit-testdox.html"/>
+      <testdoxText outputFile="../../var/log/phpunit-testdox.txt"/>
+      <text outputFile="../../var/log/phpunit-logfile.txt"/>
   </logging>
 
   <!-- "@group" annotation -->
