@@ -13,11 +13,10 @@
     "require-dev": {
         "brianium/paratest": "^6.2",
         "codeception/codeception": "^4.1",
-        "codeception/module-asserts": "^1.0.0",
-        "codeception/module-phpbrowser": "^1.0.0",
-        "ergebnis/composer-normalize": "^2.13",
+        "deployer/deployer": "^7.0",
         "friends-of-phpspec/phpspec-code-coverage": "^6.0",
         "friendsofphp/php-cs-fixer": "^2.18",
+        "kint-php/kint": "^4.2",
         "nikic/php-parser": "^4.10",
         "pestphp/pest": "^1.0",
         "phan/phan": "^4.0",
@@ -25,7 +24,6 @@
         "phpmd/phpmd": "^2.9",
         "phpro/grumphp": "^1.3",
         "phpspec/phpspec": "^7.0",
-        "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^9.5",
         "phpunitgen/console": "^1.3",
         "phpunitgen/core": "^1.1",
@@ -37,7 +35,12 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "ergebnis/composer-normalize": false,
+            "phpro/grumphp": true
+        }
     },
     "autoload": {
         "psr-4": {

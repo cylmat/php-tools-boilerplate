@@ -15,6 +15,10 @@ all:
 # Avoid a conflict with a file of the same name, and improve performance
 .PHONY: all grump-pre linters testing
 
+### Test config from host
+# docker run --rm -it -v tmpvar:/var/www php:7.4-fpm sh -c "apt update && apt install -y zip git && bash"
+###
+
 ###############
 # HOME CONFIG #
 ###############
@@ -22,14 +26,6 @@ all:
 # BASH
 bash-it:
 	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it && ~/.bash_it/install.sh
-	
-oh-my-bash:
-	curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)
-	
-# GIT
-fancy-git:
-	apt-get install -y fontconfig
-	curl -sS https://raw.githubusercontent.com/diogocavilha/fancy-git/master/install.sh | bash
 
 info-git:
 	git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
@@ -47,14 +43,23 @@ ultimate-vim:
 
 # For deployer, environment DEPLOYER_REPOSITORY must be set
 # Or use composer require --dev deployer/deployer
+composer-bin:
+	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+	php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+	php composer-setup.php
+	php -r "unlink('composer-setup.php');"
+	mv composer.phar /usr/local/bin/composer
+
 deployer-bin:
-	curl -LO https://deployer.org/releases/v6.8.0/deployer.phar
+	curl -LO https://github.com/deployphp/deployer/releases/download/v7.0.2/deployer.phar
 	mv deployer.phar /usr/local/bin/dep
 	chmod +x /usr/local/bin/dep
-	dep -V -f -
+
+deployer-install:
+	alias dep='vendor/bin/dep'
+	dep completion bash > /etc/bash_completion.d/deployer
 
 kint-bin:
-	# or by "composer require --dev kint-php/kint"
 	curl -LO https://raw.githubusercontent.com/kint-php/kint/master/build/kint.phar
 	mkdir bin -p && mv kint.phar bin
 
@@ -65,7 +70,15 @@ phing-bin:
 	rm phing-2.16.4.phar.sha512
 	mv phing-2.16.4.phar /usr/local/bin/phing
 	chmod +x /usr/local/bin/phing
-	phing -v
+
+phpstan-bin:
+	curl -LO https://github.com/phpstan/phpstan/releases/download/1.8.6/phpstan.phar
+
+### 
+# PHIVE
+###
+infection-phive:
+	phive install infection
 
 ###########
 # GRUMPHP #

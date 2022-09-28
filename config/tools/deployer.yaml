@@ -1,0 +1,24 @@
+#######
+# Docs
+# @see https://deployer.org
+#######
+
+import:
+  - recipe/common.php
+  - hosts.yaml
+
+config:
+  repository: "git@github.com:example/example.com.git"
+  remote_user: deployer
+
+hosts:
+  example.com:
+    deploy_path: "~/example"
+
+tasks:
+  build:
+    - cd: "{{release_path}}"
+    - run: "<build command>"
+
+after:
+  deploy:failed: deploy:unlock
