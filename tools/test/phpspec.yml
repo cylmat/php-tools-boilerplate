@@ -2,21 +2,24 @@
 # PHPSPEC #
 ###########
 
-# WEBSITE
-# www.phpspec.net
+# Website
+# @see http://phpspec.net
+#
+# Doc
+# @see http://phpspec.net/en/stable/manual/introduction.html
+#
+# Usage 
+# - bin/phpspec describe App/Sample --config=tools/test/phpspec.yml
 
-# DOC
-# http://www.phpspec.net/en/stable/cookbook/configuration.html
 suites:
     app_suite:
         namespace: App
         psr4_prefix: App
         spec_prefix: spec
-        #> will be ./spec
         spec_path: .
-        src_path: '%paths.config%/src'
+        src_path: '%paths.config%/../../src'
 
-        #> Can be pretty, html/h, dot, default: progress
+        # Can be pretty, html/h, dot, default: progress
         formatter.name: pretty
         code_generation: false
         stop_on_failure: false

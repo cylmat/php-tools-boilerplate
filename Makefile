@@ -30,6 +30,7 @@ all-bin:
 	make phpcsfix-bin
 	make phpmd-bin
 	make phpstan-bin
+	@echo -e "\033[1;32mAll good \033[0m"
 
 # For deployer, environment DEPLOYER_REPOSITORY must be set
 # Or use composer require --dev deployer/deployer
@@ -103,13 +104,15 @@ grump-tasks:
 behav:
 	make codecept
 	make phpspec
+	@echo -e "\033[1;32mAll good \033[0m"
 
 codecept:
 	bin/codecept run -c tools/test/codeception.yml
+	@echo -e "\033[1;32mAll good \033[0m"
 
 phpspec:
-	echo 'N' | bin/phpspec describe App/Sample -q --config=phpspec.yml
-	bin/phpspec run --config=phpspec.yml
+	bin/phpspec run --config=tools/test/phpspec.yml
+	@echo -e "\033[1;32mAll good \033[0m"
 
 ###########
 # LINTERS #
@@ -141,9 +144,6 @@ cover:
 
 test-gen:
 	bin/phpunitgen --config=tools/test/phpunitgen.yml src
-
-phpunit:
-	bin/phpunit -c tools/test/phpunit.xml
 
 # @see https://pestphp.com
 pest:
