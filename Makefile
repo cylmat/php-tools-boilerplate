@@ -24,6 +24,7 @@ all-bin:
 	make composer-bin
 	make deployer-bin
 	make kint-bin
+	make infection-bin
 	make parallel-bin
 	make phan-bin
 	make phing-bin
@@ -53,6 +54,15 @@ deployer-bin:
 kint-bin:
 	curl -L https://raw.githubusercontent.com/kint-php/kint/master/build/kint.phar -o bin/kint
 	chmod a+x bin/kint
+
+# @see https://infection.github.io
+infection-bin:
+	curl -L https://github.com/infection/infection/releases/download/0.26.6/infection.phar -o bin/infection
+	curl -L https://github.com/infection/infection/releases/download/0.26.6/infection.phar.asc -o /tmp/infection.phar.asc
+	gpg --recv-keys C6D76C329EBADE2FB9C458CFC5095986493B4AA0
+	gpg --with-fingerprint --verify /tmp/infection.phar.asc bin/infection
+	rm /tmp/infection.phar.asc
+	chmod +x bin/infection
 
 parallel-bin:
 	curl -LO https://github.com/php-parallel-lint/PHP-Parallel-Lint/releases/download/v1.3.2/parallel-lint.phar
@@ -84,9 +94,21 @@ phpstan-bin:
 	curl -L https://github.com/phpstan/phpstan/releases/download/1.8.6/phpstan.phar -o bin/phpstan
 	chmod a+x bin/phpstan
 
-# PHIVE
-infection-phive:
-	phive install infection
+### Utils ###
+pcov-bin:
+	pecl install pcov && docker-php-ext-enable pcov
+
+# PHAR Installation and Verification Environment
+# https://phar.io
+phive-bin:
+	apt update && apt install -y gpg
+	curl -L "https://phar.io/releases/phive.phar" -o phive.phar
+	curl -L "https://phar.io/releases/phive.phar.asc" -o /tmp/phive.phar.asc 
+	gpg --keyserver hkps://keys.openpgp.org --recv-keys 0x6AF725270AB81E04D79442549D8A98B29B2D5D79
+	gpg --verify /tmp/phive.phar.asc phive.phar
+	rm /tmp/phive.phar.asc
+	chmod +x phive.phar
+	mv phive.phar /usr/local/bin/phive
 
 ### STUBS ###
 stubs:
@@ -150,6 +172,11 @@ phan:
 cover:
 	XDEBUG_MODE=coverage bin/phpunit -c tools/test/phpunit.xml --coverage-html=var/unit-coverage
 	phpdbg -qrr bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
+#   php -dpcov.enabled=1 -dpcov.directory=. -dpcov.exclude="~vendor~" ./vendor/bin/phpunit --coverage-text
+
+infection:
+	test -f /tmp/infection/index.xml || touch /tmp/infection/index.xml
+	bin/infection run -c tools/test/infection.json --debug --show-mutations
 
 test-gen:
 	bin/phpunitgen --config=tools/test/phpunitgen.yml src

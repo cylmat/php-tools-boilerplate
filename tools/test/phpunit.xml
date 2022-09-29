@@ -35,12 +35,12 @@
 
   <testsuites>
     <testsuite name="Project">
-      <directory phpVersionOperator=">=" phpVersion="7.2">../../tests</directory>
+      <directory phpVersionOperator=">" phpVersion="7.3">../../tests</directory>
     </testsuite>
   </testsuites>
 
-  <!--coverage 
-          cacheDirectory="var/cache" 
+  <coverage 
+          cacheDirectory="../../var/cache" 
           includeUncoveredFiles="true"
           processUncoveredFiles="true"
           pathCoverage="false"
@@ -48,14 +48,14 @@
           disableCodeCoverageIgnore="true"
   >
     <include>
-      <directory suffix=".php">src</directory>
+      <directory suffix=".php">../../src</directory>
     </include>
     <report>
-      <clover outputFile="clover.xml"/>
+      <clover outputFile="../../var/clover.xml"/>
       <html outputDirectory="var/coverage/html-coverage" lowUpperBound="50" highLowerBound="90"/>
-      <text outputFile="var/coverage/text-coverage.txt" showUncoveredFiles="false" showOnlySummary="false"/>
+      <text outputFile="../../var/coverage/text-coverage.txt" showUncoveredFiles="false" showOnlySummary="false"/>
     </report>
-  </coverage-->
+  </coverage>
 
   <logging>
       <testdoxHtml outputFile="../../var/log/phpunit-testdox.html"/>
