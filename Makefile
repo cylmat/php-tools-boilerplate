@@ -48,6 +48,7 @@ composer-bin:
 deployer-bin:
 	curl -L https://github.com/deployphp/deployer/releases/download/v7.0.2/deployer.phar -o bin/deployer
 	chmod a+x bin/deployer
+	cd bin && ln -s deployer dep
 
 kint-bin:
 	curl -L https://raw.githubusercontent.com/kint-php/kint/master/build/kint.phar -o bin/kint
@@ -86,6 +87,10 @@ phpstan-bin:
 # PHIVE
 infection-phive:
 	phive install infection
+
+### STUBS ###
+stubs:
+	git clone https://github.com/JetBrains/phpstorm-stubs.git vendor/jetbrains/phpstorm-stubs
 
 ###########
 # GRUMPHP #
