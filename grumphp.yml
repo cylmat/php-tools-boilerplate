@@ -1,84 +1,77 @@
-# grumphp.yml
-# https://github.com/phpro/grumphp
+#########
+# Config
+# @see https://github.com/phpro/grumphp
+#
+# Usage: 
+# - bin/grumphp run
+# - bin/grumphp run --tasks=<task>,<task>
+#########
 
 grumphp:
-    hooks_dir: ~
-    hooks_preset: local
-    git_hook_variables:
-        EXEC_GRUMPHP_COMMAND: exec
-        ENV: {}
     stop_on_failure: true
-    ignore_unstaged_changes: false
-    hide_circumvention_tip: false
-    process_timeout: 60
-    ascii:
-        failed: grumphp-grumpy.txt
-        succeeded: grumphp-happy.txt
+    ignore_unstaged_changes: true
     parallel:
         enabled: true
         max_workers: 32
-    # FIXER (false: don't ask)
+
     fixer:
         enabled: true
-        fix_by_default: false
+
     environment:
-        files: []
         variables: {}
-        paths: []
 
-    # bin/grumphp run --testsuite=TESTSUITE
+    ##########################
+    # TEST SUITES            #
+    ##########################
     testsuites: 
-      # Specify the test-suite for the git:commit-msg command:
-      # git_commit_msg:
-      #     tasks: []
+      git_commit_msg:
+          tasks: []
 
-      # Specify the test-suite for the git:pre-commit command:
       git_pre_commit:
           tasks: []
 
       lint:
-          tasks:
-            # first...
-            - phpparser
-            - phpcsfixer
-            # ...then
-            - phpcpd
-            - phpcs
-            - phplint
-            - phpmd
-            - phpstan
-
-            # "make" run phan from makefile 
-            # (cause need 'php-ast' extension)
-            - make
+        tasks:
+          # fix
+          - phpparser
+          - phpcsfixer
+          # check
+          - phpcpd
+          - phpcs
+          - phplint
+          - phpmd
+          - phpstan
+          # run "phan"
+          - make
+        
+      behav:
+        tasks:
+          - codeception
+          - phpspec
 
       tests:
-          tasks:
-            - paratest
-            - pest
-            - phpunit
+        tasks:
+          - paratest
+          - pest
+          - phpunit
 
-      behav:
-          tasks:
-            - codeception
-            - phpspec
-
-    extensions: []
-
-    # https://github.com/phpro/grumphp/blob/master/doc/tasks.md
+    #######################
+    # TASKS               #
+    #######################
     tasks: 
-
-      ### SAMPLE metadata
-      # mytask:
-      #   metadata:
-      #     blocking: true # non blocking
-      #     label: null
-      #     priority: 0
-      #     task: null
-
-      ##############
-      # GIT CONFIG #
-      ##############
+      git_commit_message:
+        allow_empty_message: false
+        enforce_capitalized_subject: true
+        enforce_no_subject_trailing_period: true
+        enforce_single_lined_subject: true
+        max_subject_width: 120
+        max_body_width: 500
+        matchers:
+          Must contain a short description: '/.+/'
+        case_insensitive: false
+        multiline: false
+        metadata:
+          priority: 100
 
       # git_branch_name:
       #       whitelist:
@@ -86,22 +79,6 @@ grumphp:
       #       blacklist:
       #           - "develop"
       #           - "master"
-      #       additional_modifiers: ''
-      #       allow_detached_head: true
-
-    #   git_commit_message:
-    #     allow_empty_message: false
-    #     enforce_capitalized_subject: true
-    #     enforce_no_subject_trailing_period: true
-    #     enforce_single_lined_subject: true
-    #     max_subject_width: 120
-    #     max_body_width: 500
-    #     matchers:
-    #         Must contain a short description: '/.+/'
-    #     case_insensitive: false
-    #     multiline: false
-    #     metadata:
-    #         priority: 100
 
       # only with git add and git commit
     #   git_blacklist:
@@ -118,70 +95,21 @@ grumphp:
       #       max_size: 100M
       #       ignore_patterns: []
 
-      ############
-      # COMPOSER #
-      ############
-
-      # execute "composer validate" like
+      ### Task COMPOSER #####################
       composer:
-            file: ./composer.json
-            no_check_all: true
-            no_check_lock: true
-            no_check_publish: true
-            no_local_repository: true
-            with_dependencies: false
-            strict: false
-      
-      # github: ergebnis/composer-normalize
-      # 
-      # composer update --lock
-      # composer 'normalize' '--no-update-lock'
-      # composer_normalize:
-      #       indent_size: ~
-      #       indent_style: ~
-      #       no_update_lock: true
-      #       # Composer-normalize command
-      #       use_standalone: true
-      #       verbose: false
+        file: composer.json
+        no_check_all: true
+        no_check_lock: true
+        no_check_publish: true
+        no_local_repository: true
+        with_dependencies: false
+        strict: false
 
-      ### Composer require-checker
-      # Can be installed from phar
-      # github: maglnet/composer-require-checker
-      #   composer_require_checker:
-      #         composer_file: 'composer.json'
-      #         config_file: ~
-      #         ignore_parse_errors: false
-      #         triggered_by: ['composer.json', 'composer.lock', '*.php']
-
-
-
-      
-      ##########
-      # LINTER #
-      ##########
-
-      ### Codestyle checks 
-      # github: friendsofphp/php-cs-fixer
-      # NB: (no auto-fix) https://github.com/wearejust/grumphp-extra-tasks
+      ### Task LINTERS ######################
       phpcsfixer:
-            # allow_risky: true
-            config: lint/.php_cs
-            # cache_file: ~
-            # rules:
-            #   '@PSR2': true
-            #   line_ending: false
-            #   array_syntax:
-            #     syntax: short
-            # using_cache: ~
-            # config_contains_finder: true
-            # verbose: true
-            # diff: false
-            # triggered_by: ['php']
-            metadata:
-              priority: 1
+        config: tools/linter/.php-cs-fixer.php
 
-      ### Analyse black-listed functions
-      # github: nikic/PHP-Parser
+      # Analyse black-listed pattern
       phpparser:
         ignore_patterns: 
           - /^cest\/.*/
@@ -204,160 +132,49 @@ grumphp:
         metadata:
             priority: 2
 
-      ### Static analyzer 
-      # github: phan/phan
-      # Need php-ast extension, have to run from cli
-      # phan:
-      #       config_file: lint/phan.config.php
-      #       output_mode: text
-      #       output: null
-      #       triggered_by: [php]
-
-      ### Copy detector duplicated lines
-      # github: sebastian/phpcpd
       phpcpd:
-            directory: ['./src']
-            exclude: ['vendor']
-            fuzzy: false
-            min_lines: 5
-            min_tokens: 70
-            triggered_by: ['php']
+        directory: ['./src']
 
-      ### Bad coding standards
-      # github: squizlabs/PHP_CodeSniffer
       phpcs:
-            standard: lint/phpcs.xml # []
-            # severity: ~
-            # error_severity: ~
-            # warning_severity: ~
-            # tab_width: ~
-            # report: full
-            # report_width: ~
-            # whitelist_patterns: [ - /^src\/(.*)/ ]
-            # encoding: ~
-            # ignore_patterns: []
-            # sniffs: []
-            # triggered_by: [php]
-            # exclude: []
+        standard: tools/linter/phpcs.xml
 
-      ### Syntax errors
-      # github: php-parallel-lint/php-parallel-lint
-      # - No config file needed -
       phplint:
-            exclude: []
-            jobs: ~
-            short_open_tag: false
-            ignore_patterns: []
-            triggered_by: ['php', 'phtml']
+        exclude: []
+        jobs: ~
+        short_open_tag: false
+        ignore_patterns: []
+        triggered_by: ['php', 'phtml']
 
-      ### Bad coding standards
-      # github: phpmd/phpmd
       phpmd:
-          whitelist_patterns: 
-            - /^src\/.*/
-          exclude: []
-          report_format: text
-          ruleset: ['lint/phpmd.xml', 'unusedcode']
-          triggered_by: ['php']
+        ruleset: ['tools/linter/phpmd.xml']
 
-      ### Finding php errors
-      # github: phpstan/phpstan
       phpstan:
-            configuration: lint/phpstan.neon
-            # autoload_file: ~
-            # level: null
-            # force_patterns: []
-            ignore_patterns: 
-              - /^cest\/.*/
-              - /^spec\/.*/
-              - /^tests\/.*/
-              - /deploy.php/
-            # triggered_by: ['php']
-            # memory_limit: "-1"
-            # use_grumphp_paths: true
+        configuration: tools/linter/phpstan.neon
 
-      
+      # phan is runned from make without ast extension
 
-      ############
-      # BEHAVIOR #
-      ############
-
-      ### Codeception
-      # github: codeception/codeception
+      ### Task Behaviors ###################
       codeception:
-          config_file: codeception.yml
-          fail_fast: false
-          # suite: ~
-          # test: ~
+        config_file: tools/test/codeception.yml
 
-      ### PhpSpec
-      # github: phpspec/phpspec
       phpspec:
-            config_file: phpspec.yml
-      #       format: ~
-      #       stop_on_failure: false
-      #       verbose: false
+        config_file: tools/test/phpspec.yml
 
-      
-
-      ###########
-      # TESTING #
-      ###########
-
-      ### Php paralleles tests
-      # github: brianium/paratest
-      # BUG, cannot open file:
-      # phpunit.xml need to be on the root folder
-      paratest:
-          # configuration: ~
-          # processes: auto
-          # functional: true
-          # group: []
-          # always_execute: false
-          # phpunit: null
-          # runner: null
-          # coverage-clover: null
-          # coverage-html: coverhtml
-          # coverage-php: coverphp
-          # coverage-xml: null
-          # log-junit: null
-          # testsuite: null
-          # verbose: true
-
-      ### Beautify PhpUnit report
-      # github: pestphp/pest
-      pest:
-          config_file: phpunit.xml
-          # testsuite: ~
-          # group: []
-          # always_execute: true
-
-      ### PhpUnit
-      # github: phpunit/phpunit
-      phpunit:
-        config_file: phpunit.xml
-          # testsuite: ~
-          # group: []
-          # always_execute: true
-
-      
-
-      ##############
-      # AUTOMATION #
-      ##############
-
-      
-      #############
-      # SCRIPTING #
-      #############
-
-      # make tasks
       make:
-            make_file: Makefile
-            task: phan
-            triggered_by: [php]
+        make_file: Makefile
+        task: phan
+
+      ### Task Tests #######################
+      paratest:
+        configuration: tools/test/phpunit.xml
+
+      pest:
+        config_file: tools/test/phpunit.xml
+
+      phpunit:
+        config_file: tools/test/phpunit.xml
+
+      # infection:
 
       # shell:
       #     scripts: []
-      #     triggered_by: [php]
-      

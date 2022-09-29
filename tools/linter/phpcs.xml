@@ -13,7 +13,7 @@
     <description>Coding standard</description>
 
     <arg name="basepath" value="../.."/><!-- display path for reporting -->
-    <arg name="cache" value="../var/.phpcs-cache"/>
+    <arg name="cache" value="../../var/.phpcs-cache"/>
     <arg name="colors"/>
     <arg name="extensions" value="php"/>
     <arg name="parallel" value="75"/>
@@ -23,8 +23,7 @@
     <file>../../src/</file>
 
     <exclude-pattern>cest/*</exclude-pattern>
-    <exclude-pattern>spec/*</exclude-pattern>
-    <exclude-pattern>tests/*</exclude-pattern>
+    <exclude-pattern>tools/*</exclude-pattern>
 
     <!-- Include the whole PSR12 standard -->
     <rule ref="PSR12">

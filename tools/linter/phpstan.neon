@@ -23,7 +23,7 @@ parameters:
     level: 8
 
     # Cache path
-    tmpDir: ../var/phpstan
+    tmpDir: ../../var/phpstan
 
     # Analysed folders
     paths:
@@ -34,6 +34,7 @@ parameters:
         - ../../cest/*
         - ../../spec/*
         - ../../tests/*
+        - ../../tools/*
     
     # Stub files, readed for PhpDoc inside
     stubFiles:

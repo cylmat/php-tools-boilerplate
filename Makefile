@@ -127,12 +127,16 @@ fix:
 
 linter:
 	bin/parallel-lint tests --exclude vendor
-	bin/phan --config-file tools/linter/phan.config.php --allow-polyfill-parser
 	bin/phpcpd src
 	bin/phpcs --colors --standard=tools/linter/phpcs.xml -s
 	bin/phpmd src ansi tools/linter/phpmd.xml --reportfile=STDOUT
 	bin/phpstan analyse --level 8 --configuration tools/linter/phpstan.neon --memory-limit 2G
+	make phan
 	@echo -e "\033[1;32mAll good \033[0m"
+
+# --allow-polyfill-parser avoid to use ast-ext
+phan: 
+	bin/phan --config-file tools/linter/phan.config.php --allow-polyfill-parser
 
 ###########
 # TESTING #
