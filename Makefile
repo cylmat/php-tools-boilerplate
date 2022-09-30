@@ -16,37 +16,84 @@ all:
 	@$(call all-scripts)
 
 # Avoid a conflict with a file of the same name, and improve performance
-.PHONY: all-bin all-behav fix all-linters all-tests
+.PHONY: all-bin all-fix all-linters all-behav all-tests all-builds grump
 
 ### Test config from host
 # docker run --rm -it -v tmpvar:/var/www php:7.4-fpm sh -c "apt update && apt install -y git zip && bash"
 ###
 
-#######
-# BIN #
-#######
 all-bin:
 	make codeception-bin
 	make infection-bin
 	make parallel-bin
 	make phan-bin
-	make phpcsfix-bin
+	make csfixer-bin
 	make phpmd-bin
 	make phpstan-bin
+	make psalm-bin
 # -
 	make composer-bin
 	make deployer-bin
 	make kint-bin
-	make pcov-bin
 	make phing-bin
+	make phive-bin
 	@echo -e "\033[1;32mAll good \033[0m"
 
-# @see https://codeception.com
+php-tools:
+	make pcov-bin
+	make stubs
+
+all-fix:
+	make csfixer
+# make cbf
+
+all-linters:
+	make paralint
+	make cpd
+	make cs
+	make md
+	make stan
+	make phan
+# make psalm
+	@echo -e "\033[1;32mAll good \033[0m"
+
+all-behav:
+	make codecept
+	make phpspec
+	@echo -e "\033[1;32mAll good \033[0m"
+
+all-tests:
+	make cover
+	make infection
+	make pest
+# make unit
+
+all-builds:
+	make phing
+
+###########
+# GRUMPHP #
+# @see https://github.com/phpro/grumphp
+###########
+
+grump: 
+	bin/grumphp run
+
+grump-tasks:
+	bin/grumphp run --tasks=$(ts)
+
+#######
+# BIN #
+#######
+
 codeception-bin:
 	curl -L https://codeception.com/codecept.phar -o bin/codecept
 	chmod a+x bin/codecept
 
-# @see https://infection.github.io
+csfixer-bin:
+	curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o bin/php-cs-fixer
+	chmod a+x bin/php-cs-fixer
+
 infection-bin:
 	curl -L https://github.com/infection/infection/releases/download/0.26.6/infection.phar -o bin/infection
 	curl -L https://github.com/infection/infection/releases/download/0.26.6/infection.phar.asc -o /tmp/infection.phar.asc
@@ -55,29 +102,19 @@ infection-bin:
 	rm /tmp/infection.phar.asc
 	chmod +x bin/infection
 
-#@see https://github.com/php-parallel-lint/PHP-Parallel-Lint
 parallel-bin:
 	curl -LO https://github.com/php-parallel-lint/PHP-Parallel-Lint/releases/download/v1.3.2/parallel-lint.phar
 	chmod +x parallel-lint.phar
 	mv parallel-lint.phar bin/parallel-lint
 
-# @see https://github.com/phan/phan/wiki
 phan-bin:
 	curl -L https://github.com/phan/phan/releases/download/5.4.1/phan.phar -o bin/phan
 	chmod +x bin/phan
 
-# @see https://cs.symfony.com
-phpcsfix-bin:
-	curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o bin/php-cs-fixer
-	chmod a+x bin/php-cs-fixer
-
-# @see https://phpmd.org
 phpmd-bin:
-	curl -LO https://github.com/phpmd/phpmd/releases/download/2.13.0/phpmd.phar
-	chmod a+x phpmd.phar
-	mv phpmd.phar bin/phpmd.phar
+	curl -L https://github.com/phpmd/phpmd/releases/download/2.13.0/phpmd.phar -o bin/phpmd
+	chmod a+x bin/phpmd
 
-# @see https://phpstan.org
 phpstan-bin:
 	curl -L https://github.com/phpstan/phpstan/releases/download/1.8.6/phpstan.phar -o bin/phpstan
 	chmod a+x bin/phpstan
@@ -107,6 +144,10 @@ kint-bin:
 	curl -L https://raw.githubusercontent.com/kint-php/kint/master/build/kint.phar -o bin/kint
 	chmod a+x bin/kint
 
+# @see https://github.com/krakjoe/pcov
+pcov-bin:
+	pecl install pcov && docker-php-ext-enable pcov
+
 # @see https://phing.info
 phing-bin:
 	curl -LO https://www.phing.info/get/phing-2.17.4.phar
@@ -115,9 +156,6 @@ phing-bin:
 	rm phing-2.17.4.phar.sha512
 	mv phing-2.17.4.phar /usr/local/bin/phing
 	chmod +x /usr/local/bin/phing
-
-pcov-bin:
-	pecl install pcov && docker-php-ext-enable pcov
 
 # PHAR Installation and Verification Environment
 # https://phar.io
@@ -132,28 +170,14 @@ phive-bin:
 	mv phive.phar /usr/local/bin/phive
 
 ### STUBS ###
+# @see https://github.com/JetBrains
 stubs:
+	test -d vendor/jetbrains/phpstorm-stubs || \
 	git clone https://github.com/JetBrains/phpstorm-stubs.git vendor/jetbrains/phpstorm-stubs
-
-###########
-# GRUMPHP #
-# @see https://github.com/phpro/grumphp
-###########
-
-grump: 
-	bin/grumphp run
-
-grump-tasks:
-	bin/grumphp run --tasks=$(ts)
 
 ############
 # BEHAVIOR #
 ############
-
-all-behav:
-	make codecept
-	make phpspec
-	@echo -e "\033[1;32mAll good \033[0m"
 
 # @see https://codeception.com
 codecept:
@@ -168,27 +192,35 @@ phpspec:
 # @see https://docs.behat.org
 # behat:
 
+##########
+# FIXERS #
+# Please use one or other to avoid conflicts
+##########
+
+# @see https://cs.symfony.com
+csfixer:
+	bin/php-cs-fixer fix --config tools/linter/.php-cs-fixer.php -v
+	@echo -e "\033[1;32mAll good \033[0m"
+
+# @see https://github.com/squizlabs/PHP_CodeSniffer
+cbf:
+	bin/phpcbf --colors --standard=tools/linter/phpcs.xml -v
+
 ###########
 # LINTERS #
 ###########
 
-# @see https://cs.symfony.com
-# @see https://github.com/squizlabs/PHP_CodeSniffer
-fix:
-#	phpparser: Work line by line, use only with GrumPhp
-	bin/php-cs-fixer fix --config tools/linter/.php-cs-fixer.php -v
-	bin/phpcbf --colors --standard=tools/linter/phpcs.xml -v
-	@echo -e "\033[1;32mAll good \033[0m"
+# @see https://github.com/php-parallel-lint/PHP-Parallel-Lint
+paralint:
+	bin/parallel-lint src --exclude vendor
 
-all-linters:
-	bin/parallel-lint tests --exclude vendor
+# @see https://github.com/sebastianbergmann/phpcpd
+cpd:
 	bin/phpcpd src
+
+# @see https://squizlabs.github.io/HTML_CodeSniffer
+cs:
 	bin/phpcs --colors --standard=tools/linter/phpcs.xml -s
-	make md
-	make stan
-	make phan
-	make psalm
-	@echo -e "\033[1;32mAll good \033[0m"
 
 # @see https://phpmd.org
 md:
@@ -212,10 +244,9 @@ psalm:
 # TESTING #
 ###########
 
-all-tests:
-	make pest
-	make infection
-	make cover
+# @see https://phpunitgen.io
+test-gen:
+	bin/phpunitgen --config=tools/test/phpunitgen.yml src
 
 cover:
 	php -dpcov.enabled=1 bin/phpunit -c tools/test/phpunit.xml --coverage-text tests
@@ -227,10 +258,6 @@ infection:
 	test -f /tmp/infection/index.xml || touch /tmp/infection/index.xml
 	bin/infection run -c tools/test/infection.json --debug --show-mutations
 
-# @see https://phpunitgen.io
-test-gen:
-	bin/phpunitgen --config=tools/test/phpunitgen.yml src
-
 # @see https://pestphp.com
 pest:
 	bin/pest -c tools/test/phpunit.xml
@@ -238,7 +265,7 @@ pest:
 
 # @see https://github.com/paratestphp/paratest
 # @see https://phpunit.de
-test:
+unit:
 	bin/paratest -c tools/test/phpunit.xml
 #	bin/phpunit -c tools/test/phpunit.xml
 	@echo -e "\033[1;32mAll good \033[0m"

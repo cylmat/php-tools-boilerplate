@@ -19,9 +19,11 @@ grumphp:
     environment:
         variables: {}
 
-    ##########################
-    # TEST SUITES            #
-    ##########################
+    ###################################
+    # TEST SUITES                     #
+    #                                 #
+    # (Un)comment for your own usage. #
+    ###################################
     testsuites: 
       git_commit_msg:
           tasks: []
@@ -29,15 +31,16 @@ grumphp:
       git_pre_commit:
           tasks: []
 
-      lint:
+      fixers:
         tasks:
-          # Fix code.
-          - phpparser
           - phpcsfixer
-          # Check code.
+          - phpparser
+
+      linters:
+        tasks:
+          - phplint
           - phpcpd
           - phpcs
-          - phplint
           - phpmd
           - phpstan
           - make # run "phan"
@@ -49,9 +52,10 @@ grumphp:
 
       tests:
         tasks:
-          - paratest
+          - infection
           - pest
-          - phpunit
+          #- paratest
+          #- phpunit
 
     #######################
     # TASKS               #
@@ -71,40 +75,37 @@ grumphp:
         metadata:
           priority: 100
 
-      # git_branch_name:
-      #       whitelist:
-      #           - "/JIRA-\d+/"
-      #       blacklist:
-      #           - "develop"
-      #           - "master"
+      git_branch_name:
+        whitelist:
+            - "/.+/"
 
-      # only with git add and git commit
-      #   git_blacklist:
-      #       keywords:
-      #           - "var_dump"
-      #       whitelist_patterns: 
-      #         - /^src\/(.*)/
-      #       triggered_by: ['php']
-      #       regexp_type: G
-      #       match_word: false
+      # Only with git add and git commit.
+      git_blacklist:
+        keywords:
+          - "var_dump"
+          - '_GET'
+          - '_POST'
+          - '_REQUEST'
+        whitelist_patterns:
+          - /^src\/(.*)/
+        regexp_type: G
+        match_word: false
 
-      # max git filesize
-      # file_size:
-      #       max_size: 100M
-      #       ignore_patterns: []
+      file_size:
+          max_size: 5M
+          ignore_patterns: []
 
       ### Task COMPOSER #####################
 
       composer:
         file: composer.json
         no_check_all: true
-        no_check_lock: true
         no_check_publish: true
         no_local_repository: true
-        with_dependencies: false
+        with_dependencies: true
         strict: false
 
-      ### Task LINTERS ######################
+      ### Task FIXERS #######################
 
       phpcsfixer:
         config: tools/linter/.php-cs-fixer.php
@@ -121,16 +122,14 @@ grumphp:
           never_use_else: ~ 
           forbidden_function_calls:
             blacklist:
-            - 'd('
             - 'var_dump'
             - 'dump'
             - 'echo'
             - 'print' 
-            - '_GET'
-            - '_POST'
-            - '_REQUEST'
         metadata:
-            priority: 2
+            priority: 100
+
+      ### Task LINTERS ######################
 
       phpcpd:
         directory: ['./src']
@@ -138,20 +137,21 @@ grumphp:
       phpcs:
         standard: tools/linter/phpcs.xml
 
-      phplint:
-        exclude: []
-        jobs: ~
-        short_open_tag: false
-        ignore_patterns: []
-        triggered_by: ['php', 'phtml']
-
       phpmd:
         ruleset: ['tools/linter/phpmd.xml']
 
       phpstan:
         configuration: tools/linter/phpstan.neon
 
-      # phan is runned from make without ast extension
+      # Phplint as a standalone extension
+      phplint:
+        exclude: []
+        triggered_by: ['php', 'phtml']
+
+      # Phan is runned from make without ast extension
+      make:
+        make_file: Makefile
+        task: phan
 
       ### Task Behaviors ###################
 
@@ -160,10 +160,6 @@ grumphp:
 
       phpspec:
         config_file: tools/test/phpspec.yml
-
-      make:
-        make_file: Makefile
-        task: phan
 
       ### Task Tests #######################
 

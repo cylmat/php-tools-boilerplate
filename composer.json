@@ -2,7 +2,7 @@
     "name": "vendor/project",
     "type": "project",
     "description": "My project",
-    "license": "",
+    "license": "Unlicense",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "config": {
@@ -14,7 +14,6 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "ergebnis/composer-normalize": false,
             "phpro/grumphp": true
         }
     },
