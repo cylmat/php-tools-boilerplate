@@ -1,107 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- WEBSITE -->
-<!-- https://phpunit.de -->
+<!-- 
+Website
+@see https://phpunit.de
 
-<!-- CONFIG DOC -->
-<!-- https://phpunit.readthedocs.io/en/9.5/configuration.html -->
+Doc
+@see https://phpunit.readthedocs.io
+-->
 
 <phpunit 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" 
-        backupGlobals="false"
-        backupStaticAttributes="false"
-        cacheResult="false"
-        cacheResultFile="../../var/.phpunit.result.cache"
-        colors="true"
-        convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
-        executionOrder="random"
-        forceCoversAnnotation="false"
-        processIsolation="false"
-        resolveDependencies="true"
-        stopOnError="false"
-        stopOnFailure="false"
-        stopOnIncomplete="false"
-        stopOnSkipped="false"
-        stopOnRisky="false"
-        timeoutForSmallTests="1"
-        timeoutForMediumTests="10"
-        timeoutForLargeTests="60"
-        verbose="false"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd" 
+    bootstrap="../../vendor/autoload.php"
+    cacheResultFile="../../var/cache/.phpunit.result.cache"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    executionOrder="random"
+    forceCoversAnnotation="false"
+    processIsolation="false"
+    resolveDependencies="true"
+    stopOnError="false"
+    stopOnFailure="false"
+    stopOnIncomplete="false"
+    stopOnSkipped="false"
+    stopOnRisky="false"
+    timeoutForSmallTests="1"
+    timeoutForMediumTests="10"
+    timeoutForLargeTests="60"
+    verbose="false"
 >
-        <!-- bootstrap="tests/bootstrap.php" -->
 
-  <testsuites>
-    <testsuite name="Project">
-      <directory phpVersionOperator=">" phpVersion="7.3">../../tests</directory>
-    </testsuite>
-  </testsuites>
+    <testsuites>
+        <testsuite name="Project">
+            <directory phpVersionOperator=">" phpVersion="7.4">../../tests</directory>
+        </testsuite>
+    </testsuites>
 
-  <coverage 
-          cacheDirectory="../../var/cache" 
-          includeUncoveredFiles="true"
-          processUncoveredFiles="true"
-          pathCoverage="false"
-          ignoreDeprecatedCodeUnits="true"
-          disableCodeCoverageIgnore="true"
-  >
-    <include>
-      <directory suffix=".php">../../src</directory>
-    </include>
-    <report>
-      <clover outputFile="../../var/clover.xml"/>
-      <html outputDirectory="var/coverage/html-coverage" lowUpperBound="50" highLowerBound="90"/>
-      <text outputFile="../../var/coverage/text-coverage.txt" showUncoveredFiles="false" showOnlySummary="false"/>
-    </report>
-  </coverage>
+    <coverage 
+        cacheDirectory="../../var/cache" 
+        includeUncoveredFiles="true"
+        processUncoveredFiles="true"
+        pathCoverage="false"
+        ignoreDeprecatedCodeUnits="true"
+        disableCodeCoverageIgnore="true"
+    >
+        <include>
+            <directory suffix=".php">../../src</directory>
+        </include>
 
-  <logging>
-      <testdoxHtml outputFile="../../var/log/phpunit-testdox.html"/>
-      <testdoxText outputFile="../../var/log/phpunit-testdox.txt"/>
-      <text outputFile="../../var/log/phpunit-logfile.txt"/>
-  </logging>
+        <report>
+            <html outputDirectory="../../var/coverage/html-coverage" lowUpperBound="50" highLowerBound="90"/>
+            <text outputFile="../../var/coverage/text-coverage.txt" showUncoveredFiles="false" showOnlySummary="false"/>
+        </report>
+    </coverage>
 
-  <!-- "@group" annotation -->
-  <groups>
-    <!--include>
-      <group>in</group>
-    </include-->
-    <exclude>
-      <group>ex</group>
-    </exclude>
-  </groups>
+    <php>
+        <server name="SHELL_VERBOSITY" value="-1"/>
+    </php>
 
-  <!--listeners>
-    <listener class="MyListener" file="/optional/path/to/MyListener.php">
-      <arguments>
-        <array>
-          <element key="0">
-            <string>Sebastian</string>
-          </element>
-        </array>
-        <integer>22</integer>
-        <string>April</string>
-        <double>19.78</double>
-        <null/>
-        <object class="stdClass"/>
-      </arguments>
-    </listener>
-  </listeners-->
+    <logging>
+        <testdoxHtml outputFile="../../var/logs/phpunit-testdox.html"/>
+        <testdoxText outputFile="../../var/logs/phpunit-testdox.log"/>
+    </logging>
 
-  <php>
-      <includePath>.</includePath>
-      <const name="foo" value="bar"/>
-      <cookie name="foo" value="bar"/>
-      <env name="foo" value="bar"/>
-      <files name="foo" value="bar"/>
-      <get name="foo" value="bar"/>
-      <ini name="error_reporting" value="-1"/>
-      <post name="foo" value="bar"/>
-      <request name="foo" value="bar"/>
-      <server name="SHELL_VERBOSITY" value="-1"/>
-      <var name="foo" value="bar"/>
-  </php>
+    <!-- "@group" annotation -->
+    <groups>
+    </groups>
+
+    <listeners>
+    </listeners>
 
 </phpunit>

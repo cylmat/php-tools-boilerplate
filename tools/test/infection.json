@@ -9,7 +9,7 @@
         "configDir": ""
     },
     "logs": {
-        "text": "var/log/infection.logs"
+        "text": "var/logs/infection.log"
     },
     "mutators": {
         "@default": true
