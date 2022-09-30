@@ -66,10 +66,8 @@ Doc
     </logging>
 
     <!-- "@group" annotation -->
-    <groups>
-    </groups>
+    <!--groups></groups-->
 
-    <listeners>
-    </listeners>
+    <!--listeners></listeners-->
 
 </phpunit>
