@@ -65,15 +65,8 @@ set('shared_dirs', ['vendor', 'logs', 'var']);
 /* STAGES */
 
 host($REMOTE_HOST)
-    //->alias('prod')
-    //->hostname($REMOTE_HOST)
     ->set('deploy_path', '~/{{application}}')
     ->set('branch', $BRANCH_NAME)
-    //->port(22)
-    /*->forwardAgent(true)
-    ->multiplexing(true)
-    ->addSshOption('UserKnownHostsFile', '/dev/null')
-    ->addSshOption('StrictHostKeyChecking', 'no');*/
 ;
 
 /* CUSTOM TASKS */
