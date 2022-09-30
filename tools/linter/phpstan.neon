@@ -35,6 +35,7 @@ parameters:
         - ../../spec/*
         - ../../tests/*
         - ../../tools/*
+        - ../../deploy.php
     
     # Stub files, readed for PhpDoc inside
     stubFiles:

@@ -17,7 +17,7 @@ require 'recipe/common.php';
 /**
  * Read .env files
  */
-foreach ([__DIR__.'/../.env', __DIR__.'/../.env.local', __DIR__.'/../.env.deploy'] as $env) {
+foreach ([__DIR__ . '/../.env', __DIR__ . '/../.env.local', __DIR__ . '/../.env.deploy'] as $env) {
     if (\file_exists($env) && $env = new SplFileObject($env)) {
         foreach ($env as $line) {
             if (preg_match('/^APPLICATION_NAME|VCS_REPOSITORY|REMOTE_HOST|BRANCH_NAME/', $line)) {
@@ -28,7 +28,7 @@ foreach ([__DIR__.'/../.env', __DIR__.'/../.env.local', __DIR__.'/../.env.deploy
 }
 
 $APPLICATION_NAME = $_ENV['APPLICATION_NAME'] ?? getenv('APPLICATION_NAME') ?? null;
-$VCS_REPOSITORY = $_ENV['VCS_REPOSITORY'] ?? getenv('VCS_REPOSITORY') ?? null; 
+$VCS_REPOSITORY = $_ENV['VCS_REPOSITORY'] ?? getenv('VCS_REPOSITORY') ?? null;
 $REMOTE_HOST = $_ENV['REMOTE_HOST'] ?? getenv('REMOTE_HOST') ?? null;
 $BRANCH_NAME = $_ENV['BRANCH_NAME'] ?? getenv('BRANCH_NAME') ?? 'main'; // optional
 
@@ -44,7 +44,7 @@ set('branch', $BRANCH_NAME);
 
 // Stage //
 set('default_stage', 'prod');
-set('deploy_path', '{{target_directory}}{{application}}'); 
+set('deploy_path', '{{target_directory}}{{application}}');
 set('repository', $VCS_REPOSITORY);
 set('target_directory', '~/{{application}}');
 set('user', function () {
@@ -82,11 +82,11 @@ task('custom:upload', function () {
     upload(__DIR__ . "/", '{{release_path}}');
 });
 
-task('commit:hash', function() {
+task('commit:hash', function () {
     run("cd {{release_path}} && echo $(git rev-parse HEAD) > ./public/COMMIT_ID");
 });
 
-task('cache:clear', function() {
+task('cache:clear', function () {
     $php_bin_path = '/usr/local/php7.4/bin/php';
     run("cd {{release_path}} && rm var/cache/* -rf");
     run("cd {{release_path}} && $php_bin_path bin/console cache:clear");

@@ -82,6 +82,10 @@ phpstan-bin:
 	curl -L https://github.com/phpstan/phpstan/releases/download/1.8.6/phpstan.phar -o bin/phpstan
 	chmod a+x bin/phpstan
 
+psalm-bin:
+	curl -L https://github.com/vimeo/psalm/releases/latest/download/psalm.phar -o bin/psalm
+	chmod +x bin/psalm
+
 ### Utils ###
 
 # @see https://getcomposer.org
@@ -136,11 +140,11 @@ stubs:
 # @see https://github.com/phpro/grumphp
 ###########
 
-grump-pre: 
-	vendor/bin/grumphp git:pre-commit
+grump: 
+	bin/grumphp run
 
 grump-tasks:
-	vendor/bin/grumphp run --tasks=$(ts)
+	bin/grumphp run --tasks=$(ts)
 
 ############
 # BEHAVIOR #
@@ -183,6 +187,7 @@ all-linters:
 	make md
 	make stan
 	make phan
+	make psalm
 	@echo -e "\033[1;32mAll good \033[0m"
 
 # @see https://phpmd.org
@@ -197,6 +202,11 @@ stan:
 # --allow-polyfill-parser avoid to use ast-ext
 phan: 
 	bin/phan --config-file tools/linter/phan.config.php --allow-polyfill-parser
+
+# Caution: can be slow
+# @see https://psalm.dev
+psalm:
+	bin/psalm -c tools/linter/psalm.xml --memory-limit=2G --threads=4
 
 ###########
 # TESTING #

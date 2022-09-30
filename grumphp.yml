@@ -2,9 +2,8 @@
 # Config
 # @see https://github.com/phpro/grumphp
 #
-# Usage: 
-# - bin/grumphp run
-# - bin/grumphp run --tasks=<task>,<task>
+# Usage:
+# - bin/grumphp run --tasks=<task1>,<task2>
 #########
 
 grumphp:
@@ -15,7 +14,7 @@ grumphp:
         max_workers: 32
 
     fixer:
-        enabled: true
+        enabled: false # Don't ask to fix.
 
     environment:
         variables: {}
@@ -32,17 +31,16 @@ grumphp:
 
       lint:
         tasks:
-          # fix
+          # Fix code.
           - phpparser
           - phpcsfixer
-          # check
+          # Check code.
           - phpcpd
           - phpcs
           - phplint
           - phpmd
           - phpstan
-          # run "phan"
-          - make
+          - make # run "phan"
         
       behav:
         tasks:
@@ -81,14 +79,14 @@ grumphp:
       #           - "master"
 
       # only with git add and git commit
-    #   git_blacklist:
-    #       keywords:
-    #           - "var_dump"
-    #       whitelist_patterns: 
-    #         - /^src\/(.*)/
-    #       triggered_by: ['php']
-    #       regexp_type: G
-    #       match_word: false
+      #   git_blacklist:
+      #       keywords:
+      #           - "var_dump"
+      #       whitelist_patterns: 
+      #         - /^src\/(.*)/
+      #       triggered_by: ['php']
+      #       regexp_type: G
+      #       match_word: false
 
       # max git filesize
       # file_size:
@@ -96,6 +94,7 @@ grumphp:
       #       ignore_patterns: []
 
       ### Task COMPOSER #####################
+
       composer:
         file: composer.json
         no_check_all: true
@@ -106,6 +105,7 @@ grumphp:
         strict: false
 
       ### Task LINTERS ######################
+
       phpcsfixer:
         config: tools/linter/.php-cs-fixer.php
 
@@ -117,18 +117,18 @@ grumphp:
           - /^tests\/.*/
           - /deploy.php/
         visitors:
-          # declare_strict_types: ~
-          # custom_NodeVisitor: ~ 
           no_exit_statements: ~
           never_use_else: ~ 
           forbidden_function_calls:
-              blacklist:
-              - 'var_dump'
-              - 'dump'
-              - '_GET'
-              - '_POST'
-              - '_REQUEST'
-        triggered_by: [php]
+            blacklist:
+            - 'd('
+            - 'var_dump'
+            - 'dump'
+            - 'echo'
+            - 'print' 
+            - '_GET'
+            - '_POST'
+            - '_REQUEST'
         metadata:
             priority: 2
 
@@ -154,6 +154,7 @@ grumphp:
       # phan is runned from make without ast extension
 
       ### Task Behaviors ###################
+
       codeception:
         config_file: tools/test/codeception.yml
 
@@ -165,6 +166,10 @@ grumphp:
         task: phan
 
       ### Task Tests #######################
+
+      infection:
+        configuration: tools/test/infection.json
+
       paratest:
         configuration: tools/test/phpunit.xml
 
@@ -173,8 +178,6 @@ grumphp:
 
       phpunit:
         config_file: tools/test/phpunit.xml
-
-      # infection:
 
       # shell:
       #     scripts: []
