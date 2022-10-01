@@ -14,62 +14,58 @@ namespace Deployer;
 
 require 'recipe/common.php';
 
-/**
- * Read .env files
- */
-foreach ([__DIR__ . '/../.env', __DIR__ . '/../.env.local', __DIR__ . '/../.env.deploy'] as $env) {
-    if (\file_exists($env) && $env = new SplFileObject($env)) {
+/** Read .env files */
+foreach ([__DIR__ . '/.env', __DIR__ . '/.env.local', __DIR__ . '/.env.deploy'] as $env) {
+    if (\file_exists($env) && $env = new \SplFileObject($env)) {
         foreach ($env as $line) {
-            if (preg_match('/^APPLICATION_NAME|VCS_REPOSITORY|REMOTE_HOST|BRANCH_NAME/', $line)) {
-                putenv($line);
-            }
+            preg_match('/^VCS_|REMOTE_/', $line) ? putenv($line) : null;
         }
     }
 }
 
-$APPLICATION_NAME = $_ENV['APPLICATION_NAME'] ?? getenv('APPLICATION_NAME') ?? null;
-$VCS_REPOSITORY = $_ENV['VCS_REPOSITORY'] ?? getenv('VCS_REPOSITORY') ?? null;
-$REMOTE_HOST = $_ENV['REMOTE_HOST'] ?? getenv('REMOTE_HOST') ?? null;
-$BRANCH_NAME = $_ENV['BRANCH_NAME'] ?? getenv('BRANCH_NAME') ?? 'main'; // optional
+if (!(
+($VCS_REPOSITORY   = trim($_ENV['VCS_REPOSITORY'] ?? getenv('VCS_REPOSITORY')) ?? null) &&
+($VCS_BRANCH_NAME  = trim($_ENV['VCS_BRANCH_NAME'] ?? getenv('VCS_BRANCH_NAME') ?? 'main')) &&
+($REMOTE_HOST      = trim($_ENV['REMOTE_HOST'] ?? getenv('REMOTE_HOST')) ?? null) &&
+($REMOTE_DIRECTORY = trim($_ENV['REMOTE_DIRECTORY'] ?? getenv('REMOTE_DIRECTORY')) ?? null) &&
+($REMOTE_SSH_KEY   = trim($_ENV['REMOTE_SSH_KEY'] ?? getenv('REMOTE_SSH_KEY')) ?? null)
+ )) {
+    throw new \Exception("Impossible to find all constants, neither in .env(.local) file nor in environment.");
+ }
 
-if (!$APPLICATION_NAME || !$VCS_REPOSITORY || !$REMOTE_HOST) {
-    throw new \Exception("Impossible to find constants, neither in .env(.local) file nor in environment.");
-}
+/*** COMMON PARAMS ***/
 
-/* MAIN PARAMS */
-
-// Project name //
-set('application', $APPLICATION_NAME);
-set('branch', $BRANCH_NAME);
+// Project //
+set('repository', $VCS_REPOSITORY);
+set('branch', $VCS_BRANCH_NAME);
+set('deploy_path', $REMOTE_DIRECTORY);
 
 // Stage //
-set('default_stage', 'prod');
-set('deploy_path', '{{target_directory}}{{application}}');
-set('repository', $VCS_REPOSITORY);
-set('target_directory', '~/{{application}}');
 set('user', function () {
     return runLocally('git config --get user.name');
 });
 
-// OTHERS //
-set('allow_anonymous_stats', false);
+/** If deployed with https, it must contains https://user:vcs_api_key@<vcs>/<vendor>/<repo>.git */
+// Make sur you add Ssh public key in "SSH" section or repository's "Deploy key" of vcs
+// Test Ssh with "ssh -T git@github.com"
+set('shared_dirs', ['node_modules', 'vendor', 'var']);
+
+// others //
 set('clear_paths', []);
-set('clear_use_sudo', false);
-set('cleanup_use_sudo', false);
 set('copy_dirs', []);
 set('env', []);
-set('git_tty', false); // [Optional] Allocate tty for git clone. Default value is false.
 set('keep_releases', 10);
-set('shared_dirs', ['vendor', 'logs', 'var']);
 
-/* STAGES */
+/*** SPECIFIC HOST STAGES ***/
 
 host($REMOTE_HOST)
-    ->set('deploy_path', '~/{{application}}')
-    ->set('branch', $BRANCH_NAME)
+    // Can be used with "bin/dep deploy stage=prod".
+    ->setLabels(['stage' => 'prod'])
+    ->setIdentityFile($REMOTE_SSH_KEY)
+    ->setForwardAgent(true)
 ;
 
-/* CUSTOM TASKS */
+/*** CUSTOM TASKS ***/
 
 task('custom:upload', function () {
     upload(__DIR__ . "/", '{{release_path}}');
@@ -86,25 +82,64 @@ task('cache:clear', function () {
     run("cd {{release_path}} && $php_bin_path bin/composer dump-autoload");
 });
 
-/* RUN TASKS */
+task('fromlocal:update_code', function () {
+    upload(__DIR__ . "/", '{{release_path}}');
+});
 
+task('build', function () {
+    cd('{{release_path}}');
+    run('npm install');
+    run('npm run prod');
+});
+
+/*** RUN TASKS ***/
+
+# @see https://deployer.org/docs/7.x/recipe/symfony
+#prepare->vendor->publish
 desc('Deploy your project');
 task('deploy', [
+#'deploy:prepare',
     'deploy:info',
-    'deploy:prepare',
+    'deploy:setup',
     'deploy:lock',
     'deploy:release',
-    'custom:upload',
+        'deploy:update_code',
+        #'local:update_code', #
     'deploy:shared',
-    'deploy:clear_paths',
-    'deploy:symlink',
-    'commit:hash',
-    'cache:clear',
-    'deploy:unlock',
-    'cleanup',
-    'success'
+    'deploy:writable',
+//'deploy:vendors',
+//'deploy:cache:clear',
+//'deploy:publish',
+        'deploy:symlink',
+        'deploy:unlock',
+        'deploy:cleanup',
+        'deploy:success'
 ]);
+# deploy:push ?
+# deploy:copy_dirs?
+# deploy:check ?
 
 // [Optional] If deploy fails automatically unlock.
-after('deploy:failed', 'deploy:unlock'); // run after task, can be "before"
+after('deploy:failed', 'deploy:unlock');
 fail('deploy:release', 'deploy:unlock');
+
+
+/**
+ * SSH infos
+ */
+
+//ssh-keyscan github.com >> githubKey
+//ssh-keygen -lf githubKey
+//curl -s https://api.github.com/meta | jq ."ssh_key_fingerprints" | grep RSA
+//echo '<copy paste the content of 'cat githubKey' on your machine>'  >> ~/.ssh/known_hosts
+
+//https://deployer.org/docs/7.x/hosts#config_file
+//~/.ssh/config:
+//Host *
+//IdentityFile ~/.ssh/id_rsa
+
+////////////////keygen
+//ssh-keygen -t ed25519 -C "your_email@example.com"
+//eval "$(ssh-agent -s)"
+//ssh-add ~/.ssh/id_ed25519
+//ssh-copy-id -i ~/.ssh/mykey user@host
