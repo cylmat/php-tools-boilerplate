@@ -1,6 +1,6 @@
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
 
-# Php configuration and tests bootstrap
+# Php tools boilerplate for tests and linters
 
 Usage
 ---
