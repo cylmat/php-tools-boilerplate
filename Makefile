@@ -19,7 +19,7 @@ install-all:
 	make install-all-bin
 	make composer-install-dev
 
-.PHONY: install-all-bin composer-install-dev all-fix all-linters all-behav all-tests all-builds grump
+.PHONY: install-all-bin composer-install-dev all-fix all-linters all-behav all-tests all-builds pcov grump
 
 ### Test config from host
 # docker run --rm -it -v tmpvar:/var/www php:7.4-fpm sh -c "apt update && apt install -y git rsync unzip && bash"
@@ -42,7 +42,6 @@ install-all-bin:
 	make composer-bin
 	make deployer-bin
 	make kint-bin
-	make pcov-bin
 	make phing-bin
 	make phive-bin
 	make phpenv-bin
@@ -199,6 +198,11 @@ phive-bin:
 phpenv-bin:
 	curl -L https://raw.githubusercontent.com/phpenv/phpenv-installer/master/bin/phpenv-installer | bash
 
+### PCOV ##
+# @see https://github.com/krakjoe/pcov
+pcov:
+	pecl install pcov && docker-php-ext-enable pcov
+
 ### STUBS ###
 # @see https://github.com/JetBrains
 stubs:
@@ -279,6 +283,7 @@ test-gen:
 	bin/phpunitgen --config=tools/test/phpunitgen.yml src
 
 cover:
+	@echo -e "\033[1;33mYou must install pcov to use code coverage \033[0m"
 	php -dpcov.enabled=1 bin/phpunit -c tools/test/phpunit.xml --coverage-text tests
 #	XDEBUG_MODE=coverage bin/phpunit -c tools/test/phpunit.xml --coverage-html=var/unit-coverage
 #	phpdbg -qrr bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
