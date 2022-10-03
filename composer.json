@@ -2,7 +2,7 @@
     "name": "vendor/project",
     "type": "project",
     "description": "My project",
-    "license": "Unlicense",
+    "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "config": {
@@ -17,11 +17,7 @@
             "phpro/grumphp": true
         }
     },
-    "require": {
-        "php": ">7.3",
-        "ext-ctype": "*",
-        "ext-iconv": "*"
-    },
+    "require": {},
     "require-dev": {
         "brianium/paratest": "^6.2",
         "friends-of-phpspec/phpspec-code-coverage": "^6.0",
