@@ -30,9 +30,6 @@ git clone https://github.com/cylmat/php-tools-boilerplate --depth=1 my_app && rm
 * [PhpUnit v9](https://phpunit.de/)
 * [PhpStan v0.12](https://phpstan.org/)
 
-### Coverage
-* [Codecov.io](https://codecov.io/)
-
 ### Automation
 * [GrumPhp v1](https://github.com/phpro/grumphp)
 * [Phing v6](https://phing.info)
