@@ -30,17 +30,16 @@ all-bin:
 	make phpmd-bin
 	make phpstan-bin
 	make psalm-bin
-# -
+# Utils
 	make composer-bin
 	make deployer-bin
 	make kint-bin
+	make pcov-bin
 	make phing-bin
 	make phive-bin
-	@echo -e "\033[1;32mAll good \033[0m"
-
-php-tools:
-	make pcov-bin
+	make phpenv-bin
 	make stubs
+	@echo -e "\033[1;32mAll good \033[0m"
 
 all-fix:
 	make csfixer
@@ -168,6 +167,9 @@ phive-bin:
 	rm /tmp/phive.phar.asc
 	chmod +x phive.phar
 	mv phive.phar /usr/local/bin/phive
+	
+phpenv-bin:
+	curl -L https://raw.githubusercontent.com/phpenv/phpenv-installer/master/bin/phpenv-installer | bash
 
 ### STUBS ###
 # @see https://github.com/JetBrains
