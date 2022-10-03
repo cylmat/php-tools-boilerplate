@@ -19,6 +19,7 @@ all:
 install-all:
 	make install-all-bin
 	make composer-install-dev
+	@echo -e "\033[1;32m------------\n- All good -\n------------ \033[0m"
 
 .PHONY: install-all-bin composer-install-dev all-fix all-linters all-behav all-tests all-builds grump
 
