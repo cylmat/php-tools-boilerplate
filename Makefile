@@ -15,7 +15,6 @@ endef
 all:
 	@$(call all-scripts)
 
-# Avoid a conflict with a file of the same name, and improve performance
 .PHONY: all-bin all-fix all-linters all-behav all-tests all-builds grump
 
 ### Test config from host
