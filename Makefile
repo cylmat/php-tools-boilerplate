@@ -15,13 +15,17 @@ endef
 all:
 	@$(call all-scripts)
 
-.PHONY: all-bin all-fix all-linters all-behav all-tests all-builds grump
+.PHONY: install-all-bin all-fix all-linters all-behav all-tests all-builds grump
 
 ### Test config from host
 # docker run --rm -it -v tmpvar:/var/www php:7.4-fpm sh -c "apt update && apt install -y git rsync unzip && bash"
 ###
 
-all-bin:
+###########
+# INSTALL #
+###########
+
+install-all-bin:
 	make codeception-bin
 	make infection-bin
 	make parallel-bin
@@ -40,6 +44,28 @@ all-bin:
 	make phpenv-bin
 	make stubs
 	@echo -e "\033[1;32mAll good \033[0m"
+	
+# COMPOSER #
+
+composer-install-dev:
+	test -e bin/composer || make composer-bin
+	bin/composer require --dev \
+	brianium/paratest ^6 \
+	friends-of-phpspec/phpspec-code-coverage ^6 \
+	nikic/php-parser ^4 \
+	pestphp/pest ^1 \
+	phpro/grumphp ^1 \
+	phpspec/phpspec ^7 \
+	phpunit/phpunit ^9 \
+	phpunitgen/console ^1 \
+	phpunitgen/core ^1 \
+	sebastian/phpcpd ^6 \
+	squizlabs/php_codesniffer ^3
+
+	
+###########
+# RUN ALL #
+###########
 
 all-fix:
 	make csfixer
