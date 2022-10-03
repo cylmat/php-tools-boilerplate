@@ -19,7 +19,7 @@ install-all:
 	make install-all-bin
 	make composer-install-dev
 
-.PHONY: install-all-bin composer-install-dev all-fix all-linters all-behav all-tests all-builds pcov grump
+.PHONY: install-all-bin composer-install-dev all-fix all-linters all-behav all-tests all-builds pcov stubs grump
 
 ### Test config from host
 # docker run --rm -it -v tmpvar:/var/www php:7.4-fpm sh -c "apt update && apt install -y git rsync unzip && bash"
@@ -45,7 +45,6 @@ install-all-bin:
 	make phing-bin
 	make phive-bin
 	make phpenv-bin
-	make stubs
 	@echo -e "\033[1;32mAll good \033[0m"
 	
 # COMPOSER #
