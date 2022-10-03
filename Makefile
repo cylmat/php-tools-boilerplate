@@ -6,9 +6,9 @@ SHELL := /bin/bash
 ##########################
 
 define all-scripts
-	make all-behav 
-	make fix
+	make all-fix
 	make all-linters
+	make all-behav 
 	make all-tests
 endef
 
