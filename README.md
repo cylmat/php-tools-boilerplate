@@ -7,8 +7,12 @@ Simply clone the repository and use it as a boilerplate for your PHP project.
 MY_APP=my_app git clone https://github.com/cylmat/php-tools-boilerplate --depth=1 $MY_APP && \
 rm -rf $MY_APP/.git && \
 cd $MY_APP
+```
+You can then run 
+```
 make install-all
 ```
+or select or (un)comment the tools you needs
 
 ### Linters
 * [Codesniffer v3](https://github.com/squizlabs/PHP_CodeSniffer)
