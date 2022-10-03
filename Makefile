@@ -18,7 +18,7 @@ all:
 .PHONY: all-bin all-fix all-linters all-behav all-tests all-builds grump
 
 ### Test config from host
-# docker run --rm -it -v tmpvar:/var/www php:7.4-fpm sh -c "apt update && apt install -y git rsync zip && bash"
+# docker run --rm -it -v tmpvar:/var/www php:7.4-fpm sh -c "apt update && apt install -y git rsync unzip && bash"
 ###
 
 all-bin:
