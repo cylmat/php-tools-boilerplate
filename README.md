@@ -4,7 +4,7 @@ Usage
 ---
 Simply clone the repository and use it as a boilerplate for your PHP project.
 ```
-git clone https://github.com/cylmat/php-tools-boilerplate --depth=1 my_app && rm -rf my_app/.git
+MY_APP=my_app git clone https://github.com/cylmat/php-tools-boilerplate --depth=1 $MY_APP && rm -rf $MY_APP/.git
 ```
 
 ### Linters
