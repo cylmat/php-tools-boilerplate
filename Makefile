@@ -287,7 +287,8 @@ cover:
 
 # @see https://infection.github.io
 infection:
-	test -f /tmp/infection/index.xml || touch /tmp/infection/index.xml
+	@test -d /tmp/infection || mkdir /tmp/infection
+	@test -f /tmp/infection/index.xml || touch /tmp/infection/index.xml
 	bin/infection run -c tools/test/infection.json --debug --show-mutations
 
 # @see https://pestphp.com
