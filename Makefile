@@ -10,6 +10,7 @@ define all-scripts
 	make all-linters
 	make all-behav 
 	make all-tests
+	@echo -e "\033[1;32m------------\n- All good -\n------------ \033[0m"
 endef
 
 all:
@@ -45,23 +46,12 @@ install-all-bin:
 	make phing-bin
 	make phive-bin
 	make phpenv-bin
-	@echo -e "\033[1;32mAll good \033[0m"
+	@echo -e "\033[1;32m------------\n- All good -\n------------ \033[0m"
 	
 # COMPOSER #
 composer-install-dev:
 	test -e bin/composer || make composer-bin
-	bin/composer require --dev \
-	brianium/paratest ^6 \
-	friends-of-phpspec/phpspec-code-coverage ^6 \
-	nikic/php-parser ^4 \
-	pestphp/pest ^1 \
-	phpro/grumphp ^1 \
-	phpspec/phpspec ^7 \
-	phpunit/phpunit ^9 \
-	phpunitgen/console ^1 \
-	phpunitgen/core ^1 \
-	sebastian/phpcpd ^6 \
-	squizlabs/php_codesniffer ^3
+	bin/composer install --dev
 	
 ###########
 # RUN ALL #
@@ -79,18 +69,19 @@ all-linters:
 	make stan
 	make phan
 # make psalm
-	@echo -e "\033[1;32mAll good \033[0m"
+	@echo -e "\033[1;32m------------\n- All good -\n------------ \033[0m"
 
 all-behav:
 	make codecept
 	make phpspec
-	@echo -e "\033[1;32mAll good \033[0m"
+	@echo -e "\033[1;32m------------\n- All good -\n------------ \033[0m"
 
 all-tests:
 	make cover
 	make infection
 	make pest
 # make unit
+	@echo -e "\033[1;32m------------\n- All good -\n------------ \033[0m"
 
 all-builds:
 	make phing
@@ -102,6 +93,7 @@ all-builds:
 
 grump: 
 	bin/grumphp run
+	@echo -e "\033[1;32m------------\n- All good -\n------------ \033[0m"
 
 grump-tasks:
 	bin/grumphp run --tasks=$(ts)
@@ -301,14 +293,12 @@ infection:
 # @see https://pestphp.com
 pest:
 	bin/pest -c tools/test/phpunit.xml
-	@echo -e "\033[1;32mAll good \033[0m"
 
 # @see https://github.com/paratestphp/paratest
 # @see https://phpunit.de
 unit:
 	bin/paratest -c tools/test/phpunit.xml
 #	bin/phpunit -c tools/test/phpunit.xml
-	@echo -e "\033[1;32mAll good \033[0m"
 
 ############
 # BUILDING #
