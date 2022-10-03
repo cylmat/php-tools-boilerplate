@@ -17,7 +17,9 @@
             "phpro/grumphp": true
         }
     },
-    "require": {},
+     "require": {
+        "php": "^7"
+    },
     "require-dev": {
         "brianium/paratest": "^6.2",
         "friends-of-phpspec/phpspec-code-coverage": "^6.0",
