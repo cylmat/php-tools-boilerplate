@@ -280,7 +280,7 @@ test-gen:
 	bin/phpunitgen --config=tools/test/phpunitgen.yml src
 
 cover:
-	@echo -e "\033[1;33mYou must install pcov to use code coverage \033[0m"
+	@echo -e "\033[1;33mYou must install pcov, phpdbg or xdebug to use code coverage \033[0m"
 	php -dpcov.enabled=1 bin/phpunit -c tools/test/phpunit.xml --coverage-text tests
 #	XDEBUG_MODE=coverage bin/phpunit -c tools/test/phpunit.xml --coverage-html=var/unit-coverage
 #	phpdbg -qrr bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
@@ -289,6 +289,7 @@ cover:
 infection:
 	@test -d /tmp/infection || mkdir /tmp/infection
 	@test -f /tmp/infection/index.xml || touch /tmp/infection/index.xml
+	@echo -e "\033[1;33mYou must install pcov, phpdbg or xdebug to use infection \033[0m"
 	bin/infection run -c tools/test/infection.json --debug --show-mutations
 
 # @see https://pestphp.com
