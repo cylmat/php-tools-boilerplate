@@ -19,7 +19,7 @@ install-all:
 	make install-all-bin
 	make composer-install-dev
 
-.PHONY: install-all-bin composer-install-dev all-fix all-linters all-behav all-tests all-builds pcov stubs grump
+.PHONY: install-all-bin composer-install-dev all-fix all-linters all-behav all-tests all-builds grump
 
 ### Test config from host
 # docker run --rm -it -v tmpvar:/var/www php:7.4-fpm sh -c "apt update && apt install -y git rsync unzip && bash"
@@ -194,15 +194,21 @@ phive-bin:
 	chmod +x phive.phar
 	mv phive.phar /usr/local/bin/phive
 	
+#########################
+# SPECIFIC INSTALL      #
+# Not included in 'all' #
+#########################
+# PHP env #
+#@see https://github.com/phpenv/phpenv
 phpenv-bin:
 	curl -L https://raw.githubusercontent.com/phpenv/phpenv-installer/master/bin/phpenv-installer | bash
 
-### PCOV ##
+# PCOV #
 # @see https://github.com/krakjoe/pcov
 pcov:
 	pecl install pcov && docker-php-ext-enable pcov
 
-### STUBS ###
+# STUBS #
 # @see https://github.com/JetBrains
 stubs:
 	test -d vendor/jetbrains/phpstorm-stubs || \
