@@ -44,7 +44,6 @@ git clone https://github.com/cylmat/php-tools-boilerplate my_app --depth=1
 * [Git v2](http://git-scm.com) Git prompt and alias
 
 ## See also
-* [cylmat/homeconfig](https://github.com/cylmat/homeconfig) - Home configuration with custom prompts and editors.
 * [cylmat/phpserver](https://github.com/cylmat/phpserver/) - Functional installation of Php environment using Docker containers.
 * [Phanan - Htaccess snippets](https://github.com/phanan/htaccess)
 * [Phpqa.io - Php Quality Assurance](https://phpqa.io)
