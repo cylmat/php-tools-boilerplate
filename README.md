@@ -9,7 +9,7 @@ Usage
 ---
 Simply clone the repository and use it as a boilerplate for your PHP project.
 ```
-git clone https://github.com/cylmat/phpconfig phpconfig --depth=1
+git clone https://github.com/cylmat/php-tools-boilerplate my_app --depth=1
 ```
 
 **Or include it in your composer.json and get the config files you need**  
