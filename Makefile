@@ -95,6 +95,7 @@ csfixer-bin:
 	chmod a+x bin/php-cs-fixer
 
 infection-bin:
+	apt update && apt install -y gpg
 	curl -L https://github.com/infection/infection/releases/download/0.26.6/infection.phar -o bin/infection
 	curl -L https://github.com/infection/infection/releases/download/0.26.6/infection.phar.asc -o /tmp/infection.phar.asc
 	gpg --recv-keys C6D76C329EBADE2FB9C458CFC5095986493B4AA0
