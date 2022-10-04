@@ -15,37 +15,36 @@ make install-all
 or select or (un)comment the tools you needs
 
 ### Linters
-* [Codesniffer v3](https://github.com/squizlabs/PHP_CodeSniffer)
-* [Composer-normalize v2](https://github.com/ergebnis/composer-normalize)
-* [Phan v4](https://github.com/phan/phan/wiki)
-* [Php-cs-fixer v2](https://cs.symfony.com/)
-* [Php-parser v4](https://github.com/nikic/PHP-Parser)
-* [Php-parallel-lint v1](https://github.com/php-parallel-lint/PHP-Parallel-Lint)
-* [PhpCpd v6](https://github.com/sebastianbergmann/phpcpd)
-* [PhpMd v2](https://phpmd.org)
+* [Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+* [Phan](https://github.com/phan/phan/wiki)
+* [Php-cs-fixer](https://cs.symfony.com/)
+* [Php-parser](https://github.com/nikic/PHP-Parser)
+* [Php-parallel-lint](https://github.com/php-parallel-lint/PHP-Parallel-Lint)
+* [PhpCpd](https://github.com/sebastianbergmann/phpcpd)
+* [PhpMd](https://phpmd.org)
 
 ### Behavior
-* [Codeception v4](https://codeception.com)
-* [PhpSpec v7](http://www.phpspec.net)
+* [Codeception](https://codeception.com)
+* [PhpSpec](http://www.phpspec.net)
 
 ### Testing
-* [Paratest v6](https://github.com/paratestphp/paratest)
-* [PestPhp v1](https://pestphp.com/)
-* [PhpunitGen v1](https://phpunitgen.io/)
-* [PhpUnit v9](https://phpunit.de/)
-* [PhpStan v0.12](https://phpstan.org/)
+* [Paratest](https://github.com/paratestphp/paratest)
+* [PestPhp](https://pestphp.com/)
+* [PhpunitGen](https://phpunitgen.io/)
+* [PhpUnit](https://phpunit.de/)
+* [PhpStan](https://phpstan.org/)
 
 ### Automation
-* [GrumPhp v1](https://github.com/phpro/grumphp)
-* [Phing v6](https://phing.info)
+* [GrumPhp](https://github.com/phpro/grumphp)
+* [Phing](https://phing.info)
 
 ### Deployment
-* [Deployer v6](https://deployer.org)
+* [Deployer](https://deployer.org)
 
 ### Versionning
-* [Git v2](http://git-scm.com) Git prompt and alias
+* [Git](http://git-scm.com) Git prompt and alias
 
 ## See also
-* [cylmat/phpserver](https://github.com/cylmat/phpserver/) - Functional installation of Php environment using Docker containers.
+* [cylmat/php-docker-boilerplate](https://github.com/cylmat/php-docker-boilerplate/) - Functional installation of Php environment using Docker containers.
 * [Phanan - Htaccess snippets](https://github.com/phanan/htaccess)
 * [Phpqa.io - Php Quality Assurance](https://phpqa.io)
