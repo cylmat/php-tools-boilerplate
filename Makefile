@@ -32,11 +32,11 @@ install-all:
 ###########
 
 install-all-bin:
+	make csfixer-bin
 	make codeception-bin
 	make infection-bin
 	make parallel-bin
 	make phan-bin
-	make csfixer-bin
 	make phpmd-bin
 	make phpstan-bin
 	make psalm-bin
