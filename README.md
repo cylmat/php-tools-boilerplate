@@ -14,7 +14,7 @@ You can then run
 ```
 make install-all
 ```
-or select or (un)comment the tools you needs
+or select or (un)comment the tools you needs.
 
 ### Linters
 * [Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)
