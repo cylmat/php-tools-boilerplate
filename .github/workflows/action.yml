@@ -43,7 +43,7 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    - name: Download bins
+    - name: Download bins and composer dependencies
       run: |
         sed -i -e 's/make/sudo make/' Makefile
         sudo make install-all
