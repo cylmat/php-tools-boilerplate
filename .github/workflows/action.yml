@@ -1,17 +1,11 @@
 ##########
 # GITHUB #
 ##########
-##########
-# GITHUB #
-##########
-##########
-# GITHUB #
-##########
 
 # Current workflow
 # @see https://github.com/cylmat/phpconfig/actions
 
-# DOC
+# Doc
 # @see https://github.com/actions/starter-workflows
 
 name: PHP Composer
@@ -54,5 +48,5 @@ jobs:
         sed -i -e 's/make/sudo make/' Makefile
         sudo make install-all
 
-    - name: Run linters
+    - name: Run all linters and tests
       run: make all
