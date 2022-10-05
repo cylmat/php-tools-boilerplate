@@ -1,2 +1,0 @@
-# config
-Configuration and ide
