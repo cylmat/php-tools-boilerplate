@@ -122,24 +122,3 @@ task('deploy', [
 // [Optional] If deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
 fail('deploy:release', 'deploy:unlock');
-
-
-/**
- * SSH infos
- */
-
-//ssh-keyscan github.com >> githubKey
-//ssh-keygen -lf githubKey
-//curl -s https://api.github.com/meta | jq ."ssh_key_fingerprints" | grep RSA
-//echo '<copy paste the content of 'cat githubKey' on your machine>'  >> ~/.ssh/known_hosts
-
-//https://deployer.org/docs/7.x/hosts#config_file
-//~/.ssh/config:
-//Host *
-//IdentityFile ~/.ssh/id_rsa
-
-////////////////keygen
-//ssh-keygen -t ed25519 -C "your_email@example.com"
-//eval "$(ssh-agent -s)"
-//ssh-add ~/.ssh/id_ed25519
-//ssh-copy-id -i ~/.ssh/mykey user@host
