@@ -44,7 +44,7 @@ jobs:
       run: composer validate
 
     - name: Download bins
-      run: make install-all
+      run: sudo make install-all
 
     - name: Run linters
-      run: make linters
+      run: sudo make linters
