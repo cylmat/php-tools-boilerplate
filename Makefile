@@ -52,7 +52,18 @@ install-all-bin:
 # COMPOSER #
 composer-install-dev:
 	test -e bin/composer || make composer-bin
-	bin/composer install --dev
+	bin/composer install --dev \
+	brianium/paratest ^6 \
+        friends-of-phpspec/phpspec-code-coverage ^6 \
+        nikic/php-parser ^4 \
+        pestphp/pest ^1 \
+        phpro/grumphp ^1 \
+        phpspec/phpspec ^7 \
+        phpunit/phpunit ^9 \
+        phpunitgen/console ^1 \
+        phpunitgen/core ^1 \
+        sebastian/phpcpd ^6 \
+        squizlabs/php_codesniffer ^3
 	
 ###########
 # RUN ALL #
