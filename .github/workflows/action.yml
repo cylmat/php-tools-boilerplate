@@ -55,4 +55,4 @@ jobs:
         sudo make install-all
 
     - name: Run linters
-      run: sudo make linters
+      run: make all
