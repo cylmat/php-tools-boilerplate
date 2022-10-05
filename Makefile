@@ -52,7 +52,7 @@ install-all-bin:
 # COMPOSER #
 composer-install-dev:
 	test -e bin/composer || make composer-bin
-	bin/composer install --dev \
+	bin/composer require --dev \
 	brianium/paratest ^6 \
         friends-of-phpspec/phpspec-code-coverage ^6 \
         nikic/php-parser ^4 \
