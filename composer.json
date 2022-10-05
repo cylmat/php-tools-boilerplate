@@ -17,7 +17,9 @@
             "phpro/grumphp": true
         }
     },
-    "require": {},
+    "require": {
+        "php": "^7||^8"
+    },
     "require-dev": {},
     "autoload": {
         "psr-4": {
