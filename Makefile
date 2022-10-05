@@ -318,3 +318,16 @@ phing:
 # @see https://deployer.org
 deploy:
 	bin/dep deploy -f tools/deployer.yaml
+
+#######
+# SSH #
+#######
+ssh-memo:
+	@echo -e "\n\033[1;34mUse following to create an ed25519 ssh key:\033[0m"
+	@echo -e "apt update && apt install -y ssh"
+	@echo -e 'ssh-keygen -t ed25519 -C "your_email@example.com"'
+	@echo 'eval "\$$(ssh-agent -s)"'
+	@echo "ssh-add ~/.ssh/id_ed25519"
+	@echo -e "\n\033[1;34mUse following to send an ssh key on remote host:\033[0m"
+	@echo -e "ssh-copy-id -i ~/.ssh/id_ed25519.pub user@remote-host.com \n"
+.PHONY: ssh-memo
