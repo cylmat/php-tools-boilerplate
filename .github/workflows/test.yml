@@ -1,0 +1,46 @@
+##########
+# GITHUB #
+##########
+
+# Current workflow
+# @see https://github.com/cylmat/phpconfig/actions
+
+# DOC
+# @see https://github.com/actions/starter-workflows
+
+name: PHP Composer
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    name: Build and test
+    strategy:
+      fail-fast: false
+      matrix:
+          php: [7.3, 7.4, 8.0, 8.1]
+
+    steps:
+    - uses: actions/checkout@v3
+      with: 
+        ref: main
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        coverage: xdebug
+        extensions: intl, mbstring
+        php-version: "${{ matrix.php }}"
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Download bins
+      run: make 
+
+    - name: Run linters
+      run: make linters
