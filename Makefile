@@ -53,17 +53,16 @@ install-all-bin:
 composer-install-dev:
 	test -e bin/composer || make composer-bin
 	bin/composer require --dev \
-	brianium/paratest ^6 \
-        friends-of-phpspec/phpspec-code-coverage ^6 \
-        nikic/php-parser ^4 \
-        pestphp/pest ^1 \
-        phpro/grumphp ^1 \
-        phpspec/phpspec ^7 \
-        phpunit/phpunit ^9 \
-        phpunitgen/console ^1 \
-        phpunitgen/core ^1 \
-        sebastian/phpcpd ^6 \
-        squizlabs/php_codesniffer ^3
+	brianium/paratest \
+        friends-of-phpspec/phpspec-code-coverage \
+        nikic/php-parser \
+        pestphp/pest \
+        phpro/grumphp \
+        phpspec/phpspec \
+        phpunit/phpunit \
+	phpunitgen/console \
+        sebastian/phpcpd \
+        squizlabs/php_codesniffer
 	
 ###########
 # RUN ALL #
@@ -203,7 +202,7 @@ phive-bin:
 # Not included in 'all' #
 #########################
 # PHP env #
-#@see https://github.com/phpenv/phpenv
+# @see https://github.com/phpenv/phpenv
 phpenv-bin:
 	curl -L https://raw.githubusercontent.com/phpenv/phpenv-installer/master/bin/phpenv-installer | bash
 
