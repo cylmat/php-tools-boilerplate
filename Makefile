@@ -13,7 +13,7 @@ define all-scripts
 	@echo -e "\033[1;32m------------\n- All good -\n------------ \033[0m"
 endef
 
-all:
+all-lints-and-tests:
 	@$(call all-scripts)
 	
 install-all:
