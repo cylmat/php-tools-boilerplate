@@ -3,10 +3,12 @@
 Usage
 ---
 * Simply clone the repository and use it as a boilerplate for your PHP project.
+1.
 ```
-1. 
 export APP_DIR=app_dir  
-2. 
+```
+2.
+```
 git clone https://github.com/cylmat/php-tools-boilerplate --depth=1 /tmp/php-tools-boilerplate && \
 rm -rf /tmp/php-tools-boilerplate/.git
 cp -r /tmp/php-tools-boilerplate/* $APP_DIR
