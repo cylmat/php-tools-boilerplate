@@ -165,7 +165,6 @@ composer-bin:
 deployer-bin:
 	curl -L https://github.com/deployphp/deployer/releases/download/v7.0.2/deployer.phar -o bin/deployer
 	chmod a+x bin/deployer
-	cd bin && test -f dep || ln -s deployer dep
 
 # @see https://kint-php.github.io
 kint-bin:
@@ -331,7 +330,7 @@ phing:
 
 # @see https://deployer.org
 deploy:
-	bin/dep deploy -f tools/deployer.yaml
+	bin/deployer deploy -f tools/deployer.yaml
 
 #######
 # SSH #
