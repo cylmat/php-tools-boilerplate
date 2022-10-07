@@ -5,7 +5,7 @@ Usage
 * Simply clone the repository and use it as a boilerplate for your PHP project.
 1.
 ```
-export APP_DIR=app_dir  
+export APP_DIR=app_dir
 ```
 2.
 ```
