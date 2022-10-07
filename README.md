@@ -3,7 +3,7 @@
 Usage
 ---
 * Simply copy the repository contents in your application, and use it as a boilerplate for your PHP project.
-1.
+1. _use APP_DIR=. to insall in current dir_
 ```
 export APP_DIR=app_dir
 ```
