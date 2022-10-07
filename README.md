@@ -2,15 +2,25 @@
 
 Usage
 ---
-Simply clone the repository and use it as a boilerplate for your PHP project.
+* Simply clone the repository and use it as a boilerplate for your PHP project.
 ```
-export MY_APP=my_app && \
-git clone https://github.com/cylmat/php-tools-boilerplate --depth=1 $MY_APP && \
-rm -rf $MY_APP/.git && \
-cd $MY_APP && \
-unset MY_APP
+export APP_DIR=app_dir && \
+git clone https://github.com/cylmat/php-tools-boilerplate --depth=1 $APP_DIR && \
+rm -rf $APP_DIR/.git && \
+cd $APP_DIR && \
+unset APP_DIR
 ```
-You can then run 
+or if your directory is NOT empty
+```
+export APP_DIR=. && \
+mkdir -p $APP_DIR && \
+curl -L https://github.com/cylmat/php-tools-boilerplate/archive/refs/heads/main.zip -o /tmp/main.zip && \
+unzip /tmp/main.zip -d /tmp && \
+mv /tmp/php-tools-boilerplate-main/* $APP_DIR && \
+rm -rf /tmp/php-tools-boilerplate-main && \
+unset APP_DIR
+```
+* You can then run 
 ```
 make install-all
 ```
