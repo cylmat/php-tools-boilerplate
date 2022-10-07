@@ -4,6 +4,7 @@ Usage
 ---
 * Simply copy the repository contents in your application, and use it as a boilerplate for your PHP project.
 1.
+_"cd"_ in your application directory then
 ```
 export APP_DIR=.
 ```
