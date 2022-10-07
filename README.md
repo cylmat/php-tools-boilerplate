@@ -14,7 +14,6 @@ rm -rf /tmp/php-tools-boilerplate/.git
 mkdir -p $APP_DIR
 cp -r /tmp/php-tools-boilerplate/* $APP_DIR
 cp /tmp/php-tools-boilerplate/.* $APP_DIR
-cd APP_DIR
 unset APP_DIR
 ```
 * You can then run 
