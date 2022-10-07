@@ -216,6 +216,10 @@ pcov:
 stubs:
 	test -d vendor/jetbrains/phpstorm-stubs || \
 	git clone https://github.com/JetBrains/phpstorm-stubs.git vendor/jetbrains/phpstorm-stubs
+	
+symfony-bin:
+	curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash
+	apt install -y symfony-cli
 
 ############
 # BEHAVIOR #
