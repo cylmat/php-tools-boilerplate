@@ -15,7 +15,7 @@ unset APP_DIR
 ```
 * You can then run 
 ```
-make install-all
+make install-all-tools
 ```
 or select or (un)comment the tools you needs.
 
