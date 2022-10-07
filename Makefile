@@ -16,7 +16,7 @@ endef
 all-lints-and-tests:
 	@$(call all-scripts)
 	
-install-all:
+install-all-tools:
 	make install-all-bin
 	make composer-install-dev
 	@echo -e "\033[1;32m------------\n- All good -\n------------ \033[0m"
