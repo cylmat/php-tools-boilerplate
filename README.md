@@ -3,9 +3,9 @@
 Usage
 ---
 * Simply copy the repository contents in your application, and use it as a boilerplate for your PHP project.
-1. _use APP_DIR=. to insall in current dir_
+1.
 ```
-export APP_DIR=app_dir
+export APP_DIR=app_dir # (use APP_DIR=. to install in current dir)
 ```
 2.
 ```
