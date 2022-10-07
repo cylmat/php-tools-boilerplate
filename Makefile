@@ -60,7 +60,7 @@ composer-install-dev:
         phpro/grumphp \
         phpspec/phpspec \
         phpunit/phpunit \
-	phpunitgen/console \
+        phpunitgen/console \
         sebastian/phpcpd \
         squizlabs/php_codesniffer
 	
