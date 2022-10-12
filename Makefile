@@ -163,6 +163,7 @@ composer-bin:
 
 # @see https://deployer.org
 deployer-bin:
+	mkdir -p bin
 	curl -L https://github.com/deployphp/deployer/releases/download/v7.0.2/deployer.phar -o bin/deployer
 	chmod a+x bin/deployer
 
