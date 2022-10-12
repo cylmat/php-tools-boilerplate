@@ -67,20 +67,20 @@ jobs:
     - name: Run behav
       run: make all-behav
 
-  deploy:
-    runs-on: ubuntu-latest
-    name: Deploy
-    strategy:
-      fail-fast: false  
-    needs: run
+  # deploy:
+    # runs-on: ubuntu-latest
+    # name: Deploy
+    # strategy:
+      # fail-fast: false  
+    # needs: run
     
-    steps:
-    - uses: actions/checkout@v2
+    # steps:
+    # - uses: actions/checkout@v2
     
-    - name: Deploy code
-      env: 
-        VCS_REPOSITORY: ${{ secrets.VCS_REPOSITORY }}
-      run: |
-        sudo make deployer-bin
-        make deploy
+    # - name: Deploy code
+      # env: 
+        # VCS_REPOSITORY: ${{ secrets.VCS_REPOSITORY }}
+      # run: |
+        # sudo make deployer-bin
+        # make deploy
         
