@@ -3,10 +3,10 @@
 ##########
 
 # Current workflow
-# https://github.com/cylmat/phpconfig/actions
+# @see https://github.com/cylmat/phpconfig/actions
 
 # DOC
-# https://github.com/actions/starter-workflows/
+# @see https://github.com/actions/starter-workflows/
 
 name: Workflow
 
