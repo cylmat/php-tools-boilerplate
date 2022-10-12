@@ -8,26 +8,24 @@
 # DOC
 # https://github.com/actions/starter-workflows/
 
-name: PHPConfig
+name: Workflow
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ main ]
 
 ###
 # Jobs
 ###
 jobs:
   run:
-    # Set in repo's "Settings/Environments"
-    environment: Codecov
     
     runs-on: ubuntu-latest
     name: Lint, tests, cover, build
     strategy:
       fail-fast: false
       matrix:
-          php: [7.3, 7.4]
+          php: [7.4]
 
     steps:
     - uses: actions/checkout@v2
@@ -57,66 +55,32 @@ jobs:
       # --no-plugins avoid to install grumphp's git hook
       run: composer install --prefer-dist --no-progress --no-plugins
 
-    ###########
-    # LINTING #
-    ###########
-    - name: Run GrumPhp lint
-      run: make grump-lint
+    #################
+    # LINT AND TEST #
+    #################
+    - name: Run linters
+      run: make all-linters
+  
+    - name: Run tests
+      run: make all-tests
+      
+    - name: Run behav
+      run: make all-behav
 
-    ###########
-    # TESTING #
-    ###########
-    - name: Run GrumPhp tests
-      run: make grump-tests
-
-    ############
-    # BEHAVIOR #
-    ############
-    - name: Run GrumPhp behavior
-      run: |
-        sudo bash cest/server.sh -r
-        make grump-behav
-        sudo bash cest/server.sh -s
-
-    ############
-    # COVERAGE #
-    ############
-    - name: Codecov coverage
-      env: 
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      run: |
-        ./vendor/bin/phpunit --coverage-filter src --coverage-clover coverage.xml
-        bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
-
-    ###########
-    # BUILDER #
-    ###########
-
-    - name: Phing builder
-      run: |
-        make phing-bin
-        make phing
-
-# jobs deploy
   deploy:
-    environment: Codecov
-    
     runs-on: ubuntu-latest
     name: Deploy
     strategy:
-      fail-fast: false
-      
+      fail-fast: false  
     needs: run
+    
     steps:
     - uses: actions/checkout@v2
     
-    ############
-    # DEPLOYER #
-    ############
     - name: Deploy code
       env: 
         VCS_REPOSITORY: ${{ secrets.VCS_REPOSITORY }}
       run: |
         sudo make deployer-bin
-        make deployer
+        make deploy
         
