@@ -6,7 +6,7 @@
 # @see https://github.com/cylmat/phpconfig/actions
 
 # DOC
-# @see https://github.com/actions/starter-workflows/
+# @see https://github.com/actions/starter-workflows
 
 name: Workflow
 
