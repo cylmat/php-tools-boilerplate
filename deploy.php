@@ -18,7 +18,7 @@ require 'recipe/common.php';
 foreach ([__DIR__ . '/.env', __DIR__ . '/.env.local', __DIR__ . '/.env.deploy'] as $env) {
     if (\file_exists($env) && $env = new \SplFileObject($env)) {
         foreach ($env as $line) {
-            preg_match('/^VCS_|REMOTE_/', $line) ? putenv($line) : null;
+            preg_match('/^VCS_|REMOTE_|HOST_/', $line) ? putenv($line) : null;
         }
     }
 }
@@ -28,7 +28,7 @@ if (!(
 ($VCS_BRANCH_NAME  = trim($_ENV['VCS_BRANCH_NAME'] ?? getenv('VCS_BRANCH_NAME') ?? 'main')) &&
 ($REMOTE_HOST      = trim($_ENV['REMOTE_HOST'] ?? getenv('REMOTE_HOST')) ?? null) &&
 ($REMOTE_DIRECTORY = trim($_ENV['REMOTE_DIRECTORY'] ?? getenv('REMOTE_DIRECTORY')) ?? null) &&
-($REMOTE_SSH_KEY   = trim($_ENV['REMOTE_SSH_KEY'] ?? getenv('REMOTE_SSH_KEY')) ?? null)
+($HOST_SSH_KEY     = trim($_ENV['HOST_SSH_KEY'] ?? getenv('HOST_SSH_KEY')) ?? null)
  )) {
     throw new \Exception("Impossible to find all constants, neither in .env(.local) file nor in environment.");
  }
@@ -61,7 +61,7 @@ set('keep_releases', 10);
 host($REMOTE_HOST)
     // Can be used with "bin/dep deploy stage=prod".
     ->setLabels(['stage' => 'prod'])
-    ->setIdentityFile($REMOTE_SSH_KEY)
+    ->setIdentityFile($HOST_SSH_KEY)
     ->setForwardAgent(true)
 ;
 
