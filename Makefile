@@ -311,10 +311,12 @@ pest:
 	bin/pest -c tools/test/phpunit.xml
 
 # @see https://github.com/paratestphp/paratest
+para-unit:
+	bin/paratest -c tools/test/phpunit.xml
+
 # @see https://phpunit.de
 unit:
-	bin/paratest -c tools/test/phpunit.xml
-#	bin/phpunit -c tools/test/phpunit.xml
+	bin/phpunit -c tools/test/phpunit.xml
 
 ############
 # BUILDING #
