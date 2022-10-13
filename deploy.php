@@ -26,6 +26,7 @@ foreach ([__DIR__ . '/.env', __DIR__ . '/.env.local', __DIR__ . '/.env.deploy'] 
 if (!(
 ($VCS_REPOSITORY   = trim($_ENV['VCS_REPOSITORY'] ?? getenv('VCS_REPOSITORY')) ?? null) &&
 ($VCS_BRANCH_NAME  = trim($_ENV['VCS_BRANCH_NAME'] ?? getenv('VCS_BRANCH_NAME') ?? 'main')) &&
+($REMOTE_USER      = trim($_ENV['REMOTE_USER'] ?? getenv('REMOTE_USER')) ?? null) &&
 ($REMOTE_HOST      = trim($_ENV['REMOTE_HOST'] ?? getenv('REMOTE_HOST')) ?? null) &&
 ($REMOTE_DIRECTORY = trim($_ENV['REMOTE_DIRECTORY'] ?? getenv('REMOTE_DIRECTORY')) ?? null) &&
 ($LOCAL_SSH_KEY    = trim($_ENV['LOCAL_SSH_KEY'] ?? getenv('LOCAL_SSH_KEY')) ?? null)
@@ -61,6 +62,7 @@ set('keep_releases', 10);
 host($REMOTE_HOST)
     // Can be used with "bin/dep deploy stage=prod".
     ->setLabels(['stage' => 'prod'])
+    ->setRemoteUser($REMOTE_USER)
     ->setIdentityFile($LOCAL_SSH_KEY)
     ->setForwardAgent(true)
 ;
