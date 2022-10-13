@@ -94,29 +94,14 @@ task('build', function () {
 /*** RUN TASKS ***/
 
 # @see https://deployer.org/docs/7.x/recipe/symfony
-#prepare->vendor->publish
 desc('Deploy your project');
 task('deploy', [
-#'deploy:prepare',
-    'deploy:info',
-    'deploy:setup',
-    'deploy:lock',
-    'deploy:release',
-        'deploy:update_code',
-        #'local:update_code', #
-    'deploy:shared',
-    'deploy:writable',
-//'deploy:vendors',
-//'deploy:cache:clear',
-//'deploy:publish',
-        'deploy:symlink',
-        'deploy:unlock',
-        'deploy:cleanup',
-        'deploy:success'
+    # Run info,setup,lock,release,update_code,shared,writable
+    'deploy:prepare',
+
+    # Run symlink,unlock,cleanup,success
+    'deploy:publish',
 ]);
-# deploy:push ?
-# deploy:copy_dirs?
-# deploy:check ?
 
 // [Optional] If deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
