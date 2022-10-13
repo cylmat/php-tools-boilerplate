@@ -333,7 +333,7 @@ phing:
 
 # @see https://deployer.org
 deploy:
-	bin/deployer deploy -f tools/deployer.yaml
+	bin/deployer deploy -f tools/deployer.yaml -vv
 
 #######
 # SSH #
