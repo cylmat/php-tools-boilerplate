@@ -42,9 +42,6 @@ set('branch', $VCS_BRANCH_NAME);
 set('deploy_path', $REMOTE_DIRECTORY);
 
 // Stage //
-set('user', function () {
-    return runLocally('git config --get user.name');
-});
 
 /** If deployed with https, it must contains https://user:vcs_api_key@<vcs>/<vendor>/<repo>.git */
 // Make sur you add Ssh public key in "SSH" section or repository's "Deploy key" of vcs
