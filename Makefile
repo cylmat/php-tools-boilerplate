@@ -32,6 +32,7 @@ install-all-tools:
 ###########
 
 install-all-bin:
+	mkdir -p bin
 	make csfixer-bin
 	make codeception-bin
 	make infection-bin
