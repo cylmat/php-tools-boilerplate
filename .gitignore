@@ -1,4 +1,5 @@
 /bin/
+!/bin/console
 /.env.deploy
 **/var/
 **/vendor/
