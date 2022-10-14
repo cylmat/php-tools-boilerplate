@@ -1,5 +1,6 @@
 /bin/
 !/bin/console
+!/bin/composer
 /.env.deploy
 **/var/
 **/vendor/
