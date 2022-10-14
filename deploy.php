@@ -15,7 +15,7 @@ namespace Deployer;
 require 'recipe/common.php';
 
 /** Read .env files */
-foreach ([__DIR__ . '/.env.deploy', __DIR__ . '/.env.deploy.dist'] as $env) {
+foreach ([__DIR__ . '/.env.deploy.dist', __DIR__ . '/.env.deploy.local', __DIR__ . '/.env.deploy'] as $env) {
     if (\file_exists($env) && $env = new \SplFileObject($env)) {
         foreach ($env as $line) {
             preg_match('/^VCS_|REMOTE_|LOCAL_/', $line) ? putenv($line) : null;
