@@ -90,6 +90,7 @@ all-behav:
 
 all-tests:
 	make cover
+	make deptrac
 	make infection
 	make pest
 # make unit
@@ -121,6 +122,11 @@ codeception-bin:
 csfixer-bin:
 	curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o bin/php-cs-fixer
 	chmod a+x bin/php-cs-fixer
+	
+deptrac-bin:
+	apt update && apt-get install -y graphviz
+	curl -L https://github.com/qossmic/deptrac/releases/download/1.0.0/deptrac.phar -o bin/deptrac
+	chmod a+x bin/deptrac
 
 infection-bin:
 	apt update && apt install -y gpg
@@ -300,6 +306,10 @@ cover:
 	php -dpcov.enabled=1 bin/phpunit -c tools/test/phpunit.xml --coverage-text tests
 #	XDEBUG_MODE=coverage bin/phpunit -c tools/test/phpunit.xml --coverage-html=var/unit-coverage
 #	phpdbg -qrr bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
+
+# @see https://qossmic.github.io/deptrac
+deptrac:
+	bin/deptrac analyse --config-file=tools/test/deptrac.yaml
 
 # @see https://infection.github.io
 infection:
