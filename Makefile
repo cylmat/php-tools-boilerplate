@@ -337,6 +337,16 @@ unit:
 # @see https://www.phing.info
 phing:
 	phing -f tools/build.xml
+	
+#############
+# STRUCTURE #
+#############
+
+structure:
+	mkdir -p ../shared	
+	mkdir -p ./var 		    && mv ./var ../shared/ 		    && ln -s ../shared/var ./var
+	mkdir -p ./vendor       && mv ./vendor ../shared/       && ln -s ../shared/vendor ./vendor
+	mkdir -p ./node_modules && mv ./node_modules ../shared/ && ln -s ../shared/node_modules ./node_modules
 
 ##########
 # DEPLOY #
