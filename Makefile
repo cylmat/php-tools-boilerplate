@@ -237,6 +237,10 @@ codecept:
 	bin/codecept run -c tools/test/codeception.yml
 	@echo -e "\033[1;32mAll good \033[0m"
 
+spec:
+	@make phpspec
+.PHONY: spec
+
 # @see http://phpspec.net
 phpspec:
 	bin/phpspec run --config=tools/test/phpspec.yml
