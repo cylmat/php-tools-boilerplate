@@ -1,0 +1,221 @@
+#!/usr/bin/env bash
+
+if [ $# -lt 1 ]; then echo "Usage : $0 <script-name>"; exit; fi
+
+echogood () {
+	echo -e "\033[1;32m------------\n- All good -\n------------ \033[0m"
+}
+
+##########################
+# Php Quality Assurance  #
+#  @see https://phpqa.io #
+##########################
+
+case "$1" in
+
+############
+# BEHAVIOR #
+############
+
+"all-behav"|"all-behaviors")
+	$0 behat &&
+	$0 cept &&
+	$0 spec &&
+	echogood
+;;
+
+# @see https://docs.behat.org
+"behat")
+#	@[ -f features/bootstrap/FeatureContext.php ] || bin/behat --init
+	bin/behat -c behat.yml ;;
+
+# @see https://codeception.com
+"cept"|"codecept")
+	bin/codecept run -c tools/test/codeception.yml ;;
+
+# @see http://phpspec.net
+"spec"|"phpspec")
+	bin/phpspec run --config=tools/test/phpspec.yml ;;
+
+##########
+# FIXERS #
+# Please use one or other to avoid conflicts
+##########
+
+"fix")
+	$0 csfixer ;; 
+
+# @see https://cs.symfony.com
+"csfixer")
+	bin/php-cs-fixer fix --config tools/linter/.php-cs-fixer.php -v ;;
+
+# @see https://github.com/squizlabs/PHP_CodeSniffer
+"cbf")
+	bin/phpcbf --colors --standard=tools/linter/phpcs.xml -v ;;
+
+###########
+# LINTERS #
+###########
+
+"lint"|"lints"|"linters"|"all-lints")
+	$0 paralint &&
+	$0 cpd &&
+	$0 cs &&
+	$0 md &&
+	$0 stan &&
+	$0 phan &&
+	# $0 psalm
+	echogood
+;;
+
+# @see https://github.com/php-parallel-lint/PHP-Parallel-Lint
+"paralint")
+	bin/parallel-lint src --exclude vendor ;;
+
+# @see https://github.com/sebastianbergmann/phpcpd
+"cpd")
+	bin/phpcpd src ;;
+
+# @see https://squizlabs.github.io/HTML_CodeSniffer
+"cs")
+	bin/phpcs --colors --standard=tools/linter/phpcs.xml -s ;;
+
+# @see https://phpmd.org
+"md")
+	bin/phpmd src ansi tools/linter/phpmd.xml --reportfile=STDOUT ;;
+
+# @see https://phpstan.org
+"stan")
+	bin/phpstan analyse --level 8 --configuration tools/linter/phpstan.neon --memory-limit 2G ;;
+
+# @see https://github.com/phan/phan/wiki
+# --allow-polyfill-parser avoid to use ast-ext
+"phan") 
+	PHAN_ALLOW_XDEBUG=0 bin/phan --config-file tools/linter/phan.config.php --allow-polyfill-parser ;;
+
+# Caution: can be slow
+# @see https://psalm.dev
+"psalm")
+	bin/psalm -c tools/linter/psalm.xml --memory-limit=2G --threads=4 ;;
+
+###########
+# TESTING #
+###########
+
+"tests"|"all-tests")
+	$0 cover &&
+	$0 deptrac &&
+	$0 infection &&
+	$0 pest && # Run like paratest or phpunit
+	echogood
+;;
+
+# @see https://phpunitgen.io
+"test-gen")
+    bin/phpunitgen --config=tools/test/phpunitgen.yml src ;;
+
+# Specifics
+
+"cover")
+	echo -e "\033[1;33mYou must install pcov, phpdbg or xdebug to use code coverage \033[0m\n"
+	php -dpcov.enabled=1 bin/phpunit -c tools/test/phpunit.xml --coverage-text tests
+    # XDEBUG_MODE=coverage bin/phpunit -c tools/test/phpunit.xml --coverage-html=var/unit-coverage
+    # phpdbg -qrr bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
+;;
+
+# @see https://qossmic.github.io/deptrac
+"deptrac")
+	bin/deptrac analyse --config-file=tools/test/deptrac.yaml ;;
+
+# @see https://infection.github.io
+# -derror_reporting=24575 remove deprecated
+"infection")
+	test -d /tmp/infection || mkdir /tmp/infection
+	test -f /tmp/infection/index.xml || touch /tmp/infection/index.xml
+	echo -e "\033[1;33mYou must install pcov, phpdbg or xdebug to use infection \033[0m"
+	php -derror_reporting=24575 bin/infection run -c tools/test/infection.json --debug --show-mutations
+;;
+
+# @see https://github.com/paratestphp/paratest
+"paratest")
+    bin/paratest -c tools/test/phpunit.xml ;;
+
+# @see https://pestphp.com
+"pest")
+    bin/pest -c tools/test/phpunit.xml ;;
+
+# @see https://phpunit.readthedocs.io
+"phpunit")
+    bin/phpunit -c tools/test/phpunit.xml ;;
+"unit")
+    $0 phpunit ;;
+
+##########################################################
+
+############
+# BUILDING #
+############
+
+"build")
+	npm run build ;;
+
+"watch")
+	npm run watch ;;
+
+"cache")
+	rm var/cache/* -rf
+	bin/console cache:clear
+;;
+
+# @see https://deployer.org
+"deploy")
+	bin/deployer deploy -f tools/deployer.yaml -vvv ;;
+
+# @see https://www.phing.info
+"phing")
+	bin/phing -f tools/build.xml ;;
+
+###########
+# GRUMPHP #
+# @see https://github.com/phpro/grumphp
+###########
+
+"grump"|"grumphp")
+	if [ ! -z $2 ]; then
+		echo "Run task $2"
+		bin/grumphp run --tasks=$2;
+	else 
+		bin/grumphp run
+	fi
+	echo -e "\033[1;32m------------\n- All good -\n------------ \033[0m"
+;;
+
+#############
+# STRUCTURE #
+#############
+
+"structure")
+	mkdir -p ../shared	
+	mkdir -p ./var 		    && mv ./var ../shared/ 		    && ln -s ../shared/var ./var
+	mkdir -p ./vendor       && mv ./vendor ../shared/       && ln -s ../shared/vendor ./vendor
+	mkdir -p ./node_modules && mv ./node_modules ../shared/ && ln -s ../shared/node_modules ./node_modules
+;;
+
+#######
+# SSH #
+#######
+"ssh-memo")
+	echo -e "\n\033[1;34mUse following to create an ed25519 ssh key:\033[0m"
+	echo -e "apt update && apt install -y ssh"
+	echo -e 'ssh-keygen -t ed25519 -C "your_email@example.com"'
+	echo 'eval "$$(ssh-agent -s)"'
+	echo "ssh-add ~/.ssh/id_ed25519"
+	echo -e "\n\033[1;34mUse following to send an ssh key on remote host:\033[0m"
+	echo -e "ssh-copy-id -i ~/.ssh/id_ed25519.pub user@remote-host.com \n"
+;;
+
+###
+
+*) echo "Command \"$1\" not found!" ;;
+
+esac
