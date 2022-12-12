@@ -1,8 +1,10 @@
-/bin/
+/bin
 !/bin/console
 !/bin/composer
+!/bin/install
+!/bin/run
 /.env.deploy
-**/var/
-**/vendor/
+**/var
+**/vendor
 **.local
 **.cache
