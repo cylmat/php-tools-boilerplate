@@ -2,8 +2,10 @@
 
 if [ $# -lt 1 ]; then echo "Usage : $0 <script-name>"; exit; fi
 
+ARGUMENT=$2
+
 echogood () {
-	echo -e "\033[1;32m------------\n- All good -\n------------ \033[0m"
+	echo -e "\033[1;32m------------\n- All good -\n------------\033[0m"
 }
 
 ##########################
@@ -35,7 +37,10 @@ case "$1" in
 
 # @see http://phpspec.net
 "spec"|"phpspec")
-	bin/phpspec run --config=tools/test/phpspec.yml ;;
+	bin/phpspec run --config=tools/test/phpspec.yml ${ARGUMENT} ;;
+"desc"|"spec-desc")
+	echo -e "\033[1;33mUsage: bin/run desc App/Namespace/Class/Generated\033[0m"
+	bin/phpspec desc --config=tools/test/phpspec.yml ${ARGUMENT} ;;
 
 ##########
 # FIXERS #
@@ -106,18 +111,18 @@ case "$1" in
 	$0 cover &&
 	$0 deptrac &&
 	$0 infection &&
-	$0 pest && # Run like paratest or phpunit
+	$0 paratest && # Run like pest or phpunit
 	echogood
 ;;
 
 # @see https://phpunitgen.io
-"test-gen"|"gen")
+"gen"|"test-gen")
     bin/phpunitgen --config=tools/test/phpunitgen.yml src ;;
 
 # Specifics
 
 "cover")
-	echo -e "\033[1;33mYou must install pcov, phpdbg or xdebug to use code coverage \033[0m\n"
+	echo -e "\033[1;33mYou must install pcov, phpdbg or xdebug to use code coverage\033[0m\n"
 	php -dpcov.enabled=1 bin/phpunit -c tools/test/phpunit.xml --coverage-text tests
     # XDEBUG_MODE=coverage bin/phpunit -c tools/test/phpunit.xml --coverage-html=var/unit-coverage
     # phpdbg -qrr bin/phpunit -c phpunit.xml --coverage-html var/unit-coverage
@@ -132,23 +137,21 @@ case "$1" in
 "infection")
 	test -d /tmp/infection || mkdir /tmp/infection
 	test -f /tmp/infection/index.xml || touch /tmp/infection/index.xml
-	echo -e "\033[1;33mYou must install pcov, phpdbg or xdebug to use infection \033[0m"
+	echo -e "\033[1;33mYou must install pcov, phpdbg or xdebug to use infection\033[0m"
 	php -derror_reporting=24575 bin/infection run -c tools/test/infection.json --debug --show-mutations
 ;;
 
 # @see https://github.com/paratestphp/paratest
-"paratest")
-    bin/paratest -c tools/test/phpunit.xml ;;
+"para"|"paratest")
+    bin/paratest -c tools/test/phpunit.xml ${ARGUMENT} ;;
 
 # @see https://pestphp.com
 "pest")
-    bin/pest -c tools/test/phpunit.xml ;;
+    bin/pest -c tools/test/phpunit.xml ${ARGUMENT} ;;
 
 # @see https://phpunit.readthedocs.io
-"phpunit")
-    bin/phpunit -c tools/test/phpunit.xml ;;
-"unit")
-    $0 phpunit ;;
+"unit"|"phpunit")
+    bin/phpunit -v -c tools/test/phpunit.xml ${ARGUMENT} ;;
 
 ##########################################################
 
@@ -181,9 +184,9 @@ case "$1" in
 ###########
 
 "grump"|"grumphp")
-	if [ ! -z $2 ]; then
-		echo "Run task $2"
-		bin/grumphp run --tasks=$2;
+	if [ ! -z ${ARGUMENT} ]; then
+		echo "Run task ${ARGUMENT}"
+		bin/grumphp run --tasks=${ARGUMENT};
 	else 
 		bin/grumphp run
 	fi
