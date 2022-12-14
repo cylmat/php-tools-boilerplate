@@ -3,14 +3,14 @@
 ###############
 
 # WEBSITE
-# https://phpunitgen.io/
+# @see https://phpunitgen.io
 
 # CODE
-# https://github.com/paul-thebaud/phpunitgen-core
-# https://github.com/paul-thebaud/phpunitgen-console
+# @see https://github.com/paul-thebaud/phpunitgen-core
+# @see https://github.com/paul-thebaud/phpunitgen-console
 
 # DOC
-# https://phpunitgen.io/docs#/fr/configuration
+# @see https://phpunitgen.io/docs#/fr/configuration
 
 overwriteFiles: false
 backupFiles: false
@@ -23,11 +23,12 @@ implementations:
   PhpUnitGen\Core\Contracts\Generators\TestGenerator: PhpUnitGen\Core\Generators\Tests\Basic\BasicTestGenerator
   PhpUnitGen\Core\Contracts\Generators\MockGenerator: PhpUnitGen\Core\Generators\Mocks\PhpUnitMockGenerator
 baseNamespace: App
-baseTestNamespace: App
+baseTestNamespace: App\Test
 testCase: PHPUnit\Framework\TestCase
 excludedMethods:
   - __construct
   - __destruct
+  - __clone
 mergedPhpDoc:
   - author
   - copyright
